@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 const Navbar = () => {
-  return (
-    <header className="bg-castelnau-green">
+  return <header className="bg-castelnau-green">
       <div className="container mx-auto px-4 relative">
         <div className="flex justify-between items-center py-3">
           <div className="flex items-center space-x-6">
@@ -32,7 +29,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <NavLink to="/" className="flex items-center">
-              <img src="/logo.svg" alt="Castelnau Group" className="h-10" />
+              <img alt="Castelnau Group" className="h-10" src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" />
             </NavLink>
             
             <nav className="flex space-x-6">
@@ -55,8 +52,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navbar;
