@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
@@ -45,15 +46,23 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-6">
-            <NavLink to="/news" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              News
+            <NavLink to="/news" className={({ isActive }) => 
+              `text-white hover:text-castelnau-cream transition-colors ${isActive ? 'text-castelnau-cream' : ''}`
+            }>
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                News
+              </Button>
             </NavLink>
-            <NavLink to="/castelnau-library" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              Castelnau Library
+            <NavLink to="/castelnau-library" className={({ isActive }) => 
+              `text-white hover:text-castelnau-cream transition-colors ${isActive ? 'text-castelnau-cream' : ''}`
+            }>
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                Castelnau Library
+              </Button>
             </NavLink>
-            <button className="bg-gradient-to-r from-castelnau-gold/90 to-castelnau-gold text-castelnau-darkgreen font-serif font-medium px-6 py-3 rounded-sm shadow-md hover:shadow-lg transition-all">
+            <Button variant="gold" size="lg">
               Contact us
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -62,8 +71,10 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <nav className="flex py-5 space-x-10">
             <DropdownMenu>
-              <DropdownMenuTrigger className="text-white hover:text-castelnau-cream text-base font-medium transition-colors flex items-center gap-1">
-                Who We Are <ChevronDown className="h-4 w-4" />
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent flex items-center gap-1">
+                  Who We Are <ChevronDown className="h-4 w-4" />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white">
                 <Link to="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
@@ -118,17 +129,25 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <NavLink to="/what-we-do" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              What We Do
+            <NavLink to="/what-we-do">
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                What We Do
+              </Button>
             </NavLink>
-            <NavLink to="/explore-the-group" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              Explore the Group
+            <NavLink to="/explore-the-group">
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                Explore the Group
+              </Button>
             </NavLink>
-            <NavLink to="/investor-relations" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              Investor Relations
+            <NavLink to="/investor-relations">
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                Investor Relations
+              </Button>
             </NavLink>
-            <NavLink to="/graduate-programme" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              Graduate Programme
+            <NavLink to="/graduate-programme">
+              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+                Graduate Programme
+              </Button>
             </NavLink>
           </nav>
         </div>
