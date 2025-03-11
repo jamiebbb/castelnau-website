@@ -1,24 +1,17 @@
-
 import React from 'react';
 import MainLayout from '@/layouts/MainLayout';
-
 const ExploreTheGroup = () => {
-  return (
-    <MainLayout>
+  return <MainLayout>
       <section className="page-hero">
         <div className="container mx-auto px-4">
           <h1 className="page-title">Our Distinguished Portfolio</h1>
           <p className="text-xl max-w-3xl text-white/90 mb-8 font-serif">Curated investments in exceptional businesses with enduring value and growth potential</p>
-          <div className="h-1 bg-castelnau-gold w-36"></div>
+          <div className="h-1 w-36 bg-stone-50"></div>
         </div>
         
         <div className="absolute bottom-0 w-full">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" className="w-full">
-            <path 
-              fill="#FFFFFF" 
-              fillOpacity="1" 
-              d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-            ></path>
+            <path fill="#FFFFFF" fillOpacity="1" d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
           </svg>
         </div>
       </section>
@@ -160,8 +153,6 @@ const ExploreTheGroup = () => {
           </div>
         </div>
       </section>
-    </MainLayout>
-  );
+    </MainLayout>;
 };
-
 export default ExploreTheGroup;
