@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -65,21 +66,55 @@ const Navbar = () => {
                 Who We Are <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white">
-                <NavLink to="/who-we-are">
+                <Link to="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
                   <DropdownMenuItem className="cursor-pointer">
                     Overview
                   </DropdownMenuItem>
-                </NavLink>
-                <NavLink to="/who-we-are#our-values">
+                </Link>
+                <Link to="/who-we-are#our-values" onClick={(e) => {
+                  // Force hash update if already on the page
+                  if (window.location.pathname === '/who-we-are') {
+                    e.preventDefault();
+                    window.location.hash = 'our-values';
+                    // Manually trigger scrolling
+                    const element = document.getElementById('our-values');
+                    if (element) {
+                      const navHeight = 120;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                }}>
                   <DropdownMenuItem className="cursor-pointer">
                     Our Values
                   </DropdownMenuItem>
-                </NavLink>
-                <NavLink to="/who-we-are#our-team">
+                </Link>
+                <Link to="/who-we-are#our-team" onClick={(e) => {
+                  // Force hash update if already on the page
+                  if (window.location.pathname === '/who-we-are') {
+                    e.preventDefault();
+                    window.location.hash = 'our-team';
+                    // Manually trigger scrolling
+                    const element = document.getElementById('our-team');
+                    if (element) {
+                      const navHeight = 120;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                }}>
                   <DropdownMenuItem className="cursor-pointer">
                     Our Team
                   </DropdownMenuItem>
-                </NavLink>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
             

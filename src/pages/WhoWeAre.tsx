@@ -1,11 +1,12 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
 const WhoWeAre = () => {
   const location = useLocation();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const scrollToSection = () => {
@@ -28,9 +29,21 @@ const WhoWeAre = () => {
       }
     };
 
+    // Clear any existing timeout to prevent multiple scrolls
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
     // Small delay to ensure DOM is ready
-    setTimeout(scrollToSection, 100);
-  }, [location.hash]);
+    scrollTimeoutRef.current = setTimeout(scrollToSection, 100);
+
+    // Cleanup on unmount
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [location]); // Changed from location.hash to location to detect all changes
 
   return (
     <MainLayout>
