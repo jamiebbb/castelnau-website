@@ -14,6 +14,7 @@ const Navbar = () => {
                 className="h-16" 
                 src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png"
                 loading="eager" // Force eager loading
+                fetchPriority="high" // Even higher priority
               />
             </NavLink>
             
