@@ -1,49 +1,22 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useScrollToElement } from '@/hooks/useScrollToElement';
 
 const WhoWeAre = () => {
   const location = useLocation();
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollToElement = useScrollToElement();
 
   useEffect(() => {
-    const scrollToSection = () => {
-      if (location.hash) {
-        const targetId = location.hash.substring(1);
-        const element = document.getElementById(targetId);
-        
-        if (element) {
-          const navHeight = 120; // Height of fixed navbar
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      } else {
-        window.scrollTo(0, 0);
-      }
-    };
-
-    // Clear any existing timeout to prevent multiple scrolls
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
+    if (location.hash) {
+      const sectionId = location.hash.substring(1);
+      // Small delay to ensure DOM is ready
+      setTimeout(() => scrollToElement(sectionId), 100);
+    } else {
+      window.scrollTo(0, 0);
     }
-
-    // Small delay to ensure DOM is ready
-    scrollTimeoutRef.current = setTimeout(scrollToSection, 100);
-
-    // Cleanup on unmount
-    return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [location]); // Changed from location.hash to location to detect all changes
+  }, [location, scrollToElement]);
 
   return (
     <MainLayout>
