@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
@@ -16,9 +17,13 @@ const Navbar = () => {
   
   const handleSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
+    
     if (location.pathname === '/who-we-are') {
+      // We're already on the page, just scroll to the section
       scrollToElement(sectionId);
     } else {
+      // Navigate to the page with the hash
+      // The hash will be handled by useScrollToSection in the target page
       window.location.href = `/who-we-are#${sectionId}`;
     }
   };
