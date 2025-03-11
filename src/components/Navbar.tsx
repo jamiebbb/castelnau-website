@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 const Navbar = () => {
@@ -17,6 +18,9 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             <NavLink to="/news" className="text-white hover:text-white/80 text-sm font-medium transition-colors">
               News
+            </NavLink>
+            <NavLink to="/castelnau-library" className="text-white hover:text-white/80 text-sm font-medium transition-colors">
+              Castelnau Library
             </NavLink>
             <button className="header-button">
               Contact us
