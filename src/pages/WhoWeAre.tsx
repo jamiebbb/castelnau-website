@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
@@ -154,6 +155,7 @@ const WhoWeAre = () => {
           <div id="our-team" className="scroll-mt-24">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Meet Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+              {/* Gary Channon */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
                 <div className="relative">
                   <img 
@@ -167,13 +169,31 @@ const WhoWeAre = () => {
                   <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Gary Channon</h4>
                   <p className="text-castelnau-green font-medium mb-3">Chief Investment Officer</p>
                   <p className="text-gray-700">
-                    With over 25 years of investment experience, Gary leads our investment strategy and portfolio 
-                    management. His deep understanding of value investing principles has been instrumental in 
-                    shaping our approach.
+                    Gary joined Phoenix in 1998, having previously worked at Nikko Securities Europe and Goldman Sachs International. He leads Phoenix's investment approach, combining deep fundamental research with a behavioural and statistical framework to identify value.
                   </p>
                 </div>
               </div>
 
+              {/* Tristan Chapple */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                    alt="Tristan Chapple" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Tristan Chapple</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Director</p>
+                  <p className="text-gray-700">
+                    Tristan joined Phoenix in 2017 from Barclays Investment Bank, bringing experience in capital markets. As Director, he focuses on private and listed small cap investments. He holds a BSc in Natural Sciences from Durham University and an MBA from London Business School.
+                  </p>
+                </div>
+              </div>
+
+              {/* Charlotte Maby */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
                 <div className="relative">
                   <img 
@@ -185,86 +205,123 @@ const WhoWeAre = () => {
                 </div>
                 <div className="p-6 bg-gradient-to-br from-white to-gray-50">
                   <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Charlotte Maby</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Head of Research</p>
+                  <p className="text-castelnau-green font-medium mb-3">Investment Team</p>
                   <p className="text-gray-700">
-                    Charlotte leads our research team, bringing extensive experience in fundamental analysis 
-                    and market research. Her analytical approach helps identify promising investment opportunities.
+                    Charlotte joined Phoenix in 2018 after graduating from Oxford University with a BA in Philosophy, Politics and Economics. At Phoenix, she is responsible for identifying and analysing investment opportunities as well as for portfolio management.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
-                <div className="relative">
-                  <img 
-                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
-                    alt="David Stevenson" 
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
-                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">David Stevenson</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Portfolio Manager</p>
-                  <p className="text-gray-700">
-                    David manages key portfolio relationships and investment strategies. His expertise in 
-                    value investing and strategic planning contributes to our long-term success.
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
-                <div className="relative">
-                  <img 
-                    src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" 
-                    alt="Sarah Thompson" 
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
-                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Sarah Thompson</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Risk Management Director</p>
-                  <p className="text-gray-700">
-                    Sarah oversees our risk management strategy, ensuring our investments align with our 
-                    risk parameters while maximizing potential returns.
-                  </p>
-                </div>
-              </div>
-
+              {/* James Wilson */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
                 <div className="relative">
                   <img 
                     src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
-                    alt="Michael Chen" 
+                    alt="James Wilson" 
                     className="w-full h-64 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <div className="p-6 bg-gradient-to-br from-white to-gray-50">
-                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Michael Chen</h4>
-                  <p className="text-castelnau-green font-medium mb-3">ESG Integration Lead</p>
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">James Wilson</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Investment Team</p>
                   <p className="text-gray-700">
-                    Michael leads our ESG integration initiatives, ensuring environmental, social, and governance 
-                    factors are considered in our investment decisions.
+                    James joined Phoenix in 2020 from private equity firm Bain Capital, where he evaluated investments across multiple sectors. Prior to this, he was at Goldman Sachs in their Investment Banking Division. He holds a BSc in Economics from the University of Warwick.
                   </p>
                 </div>
               </div>
 
+              {/* Steve Tatters */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
                 <div className="relative">
                   <img 
                     src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
-                    alt="Emma Rodriguez" 
+                    alt="Steve Tatters" 
                     className="w-full h-64 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <div className="p-6 bg-gradient-to-br from-white to-gray-50">
-                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Emma Rodriguez</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Client Relations Director</p>
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Steve Tatters</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Chief Operating Officer</p>
                   <p className="text-gray-700">
-                    Emma manages our client relationships, ensuring clear communication and understanding of 
-                    our investment strategies and performance.
+                    Steve joined Phoenix in 2016 as Chief Operating Officer and oversees the group's operations, risk management and compliance functions. Before Phoenix, he spent 15 years at J.P. Morgan Asset Management in senior operational roles. He is a chartered management accountant.
+                  </p>
+                </div>
+              </div>
+
+              {/* Miles Staude */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
+                    alt="Miles Staude" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Miles Staude</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Non-Executive Director</p>
+                  <p className="text-gray-700">
+                    Miles has over 20 years of experience in financial markets and investment management. He manages the Global Value Fund and serves as director of Staude Capital. Previously, he worked at Metage Capital and was a member of the investment team responsible for global equities at Merrill Lynch.
+                  </p>
+                </div>
+              </div>
+
+              {/* Graham Shircore */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                    alt="Graham Shircore" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Graham Shircore</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Non-Executive Director</p>
+                  <p className="text-gray-700">
+                    Graham is CEO of Gresham House Strategic plc and a Fund Manager at Gresham House Asset Management. He previously spent nine years at Aviva Investors, held roles at Rothschild and was appointed CEO of Stanley Gibbons in 2018. He has a first-class economics degree from Durham University.
+                  </p>
+                </div>
+              </div>
+
+              {/* Christopher Mills */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
+                    alt="Christopher Mills" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Christopher Mills</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Non-Executive Director</p>
+                  <p className="text-gray-700">
+                    Christopher founded Harwood Capital Management in 2011, previously serving as CIO of J.O. Hambro and CEO of North Atlantic Smaller Companies. He manages North Atlantic Smaller Companies Investment Trust and is a multi-award winning fund manager with over 40 years of experience.
+                  </p>
+                </div>
+              </div>
+
+              {/* Andrew Whittaker */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                    alt="Andrew Whittaker" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Andrew Whittaker</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Chairman</p>
+                  <p className="text-gray-700">
+                    Andrew has been Chairman of CGL since its IPO in 2021. With over 30 years in financial services, he was previously a Partner at James Capel and Managing Director at UBS. He's a Non-Executive Director on several boards, including Jupiter UK Growth Investment Trust and Merian Chrysalis.
                   </p>
                 </div>
               </div>
