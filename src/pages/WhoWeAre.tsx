@@ -1,9 +1,28 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const WhoWeAre = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Handle hash navigation
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        // Add a small delay to ensure the page has fully loaded
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      // Scroll to top when no hash is present
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
   return (
     <MainLayout>
       <section className="page-hero">
