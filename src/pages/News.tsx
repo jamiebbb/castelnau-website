@@ -1,9 +1,9 @@
-
 import React from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import WavyDivider from '@/components/WavyDivider';
 
 const News = () => {
   const newsItems = [
@@ -55,8 +55,10 @@ const News = () => {
           </p>
         </div>
       </div>
+      
+      <WavyDivider />
 
-      <div className="container mx-auto px-4 py-20 -mt-32">
+      <div className="container mx-auto px-4 py-20">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {newsItems.map((item, index) => (
             <Card key={index} className="bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">

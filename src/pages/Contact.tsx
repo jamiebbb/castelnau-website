@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import WavyDivider from '@/components/WavyDivider';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -29,8 +30,10 @@ const Contact = () => {
           </p>
         </div>
       </div>
+      
+      <WavyDivider />
 
-      <div className="container mx-auto px-4 py-20 -mt-32">
+      <div className="container mx-auto px-4 py-20">
         <div className="grid gap-8 lg:grid-cols-3">
           <Card className="bg-white shadow-lg lg:col-span-2">
             <CardContent className="p-6">
