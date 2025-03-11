@@ -5,14 +5,24 @@ import MainLayout from '@/layouts/MainLayout';
 const GraduateProgramme = () => {
   return (
     <MainLayout>
-      <section className="bg-castelnau-green py-20">
+      <section className="page-hero">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-white">Graduate Programme</h1>
-          <div className="h-1 bg-white w-24 mt-6"></div>
+          <h1 className="page-title">Graduate Programme</h1>
+          <div className="h-1 bg-white w-36"></div>
+        </div>
+        
+        <div className="absolute bottom-0 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" className="w-full">
+            <path 
+              fill="#FFFFFF" 
+              fillOpacity="1" 
+              d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+          </svg>
         </div>
       </section>
       
-      <section className="py-16 md:py-24">
+      <section className="page-content">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-6">Launch Your Career with Castelnau</h2>
@@ -60,67 +70,6 @@ const GraduateProgramme = () => {
               </div>
             </div>
             
-            <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-6">Programme Structure</h2>
-            <div className="space-y-8 mb-16">
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="md:w-1/4">
-                  <div className="bg-castelnau-green text-white p-4 rounded-lg text-center">
-                    <span className="font-bold text-xl">Year 1</span>
-                  </div>
-                </div>
-                <div className="md:w-3/4 bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold text-castelnau-green mb-3">Foundation</h3>
-                  <p className="text-gray-700 mb-4">
-                    Build a strong foundation in value investing principles, financial analysis, and business assessment. 
-                    Rotate through different teams to gain broad exposure to the investment process.
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Structured learning in investment analysis and valuation techniques</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Departmental rotations (research, operations, portfolio management)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Mentorship from senior team members</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="md:w-1/4">
-                  <div className="bg-castelnau-green text-white p-4 rounded-lg text-center">
-                    <span className="font-bold text-xl">Year 2</span>
-                  </div>
-                </div>
-                <div className="md:w-3/4 bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold text-castelnau-green mb-3">Specialization</h3>
-                  <p className="text-gray-700 mb-4">
-                    Deepen your expertise in your chosen area of focus. Take on more responsibility in projects and 
-                    begin to develop industry-specific knowledge.
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Specialized training in your chosen field</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Increased project responsibility</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-2 w-2 bg-castelnau-green rounded-full mt-2 mr-3"></div>
-                      <span>Secondment opportunities at portfolio companies</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
             <div className="bg-castelnau-green text-white p-8 rounded-lg mb-16">
               <h2 className="text-2xl font-serif font-bold mb-4">Who We're Looking For</h2>
               <ul className="space-y-3">
@@ -157,7 +106,7 @@ const GraduateProgramme = () => {
                 Applications for our 2025 graduate programme are now open. We review applications on a rolling basis, 
                 so we encourage you to apply early.
               </p>
-              <button className="px-8 py-3 bg-castelnau-green text-white rounded-lg hover:bg-castelnau-darkgreen transition-colors font-medium text-lg">
+              <button className="px-8 py-3 bg-castelnau-green text-white rounded hover:bg-castelnau-darkgreen transition-colors font-medium text-lg">
                 Start Your Application
               </button>
             </div>

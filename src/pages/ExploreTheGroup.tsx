@@ -5,14 +5,24 @@ import MainLayout from '@/layouts/MainLayout';
 const ExploreTheGroup = () => {
   return (
     <MainLayout>
-      <section className="bg-castelnau-green py-20">
+      <section className="page-hero">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-white">Explore The Group</h1>
-          <div className="h-1 bg-white w-24 mt-6"></div>
+          <h1 className="page-title">Explore The Group</h1>
+          <div className="h-1 bg-white w-36"></div>
+        </div>
+        
+        <div className="absolute bottom-0 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" className="w-full">
+            <path 
+              fill="#FFFFFF" 
+              fillOpacity="1" 
+              d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+          </svg>
         </div>
       </section>
       
-      <section className="py-16 md:py-24">
+      <section className="page-content">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-6">Our Portfolio Companies</h2>
@@ -72,17 +82,6 @@ const ExploreTheGroup = () => {
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-gray-50 p-10 rounded-lg text-center">
-            <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-4">Future Acquisitions</h3>
-            <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-              We are continually evaluating new investment opportunities that align with our investment philosophy 
-              and meet our strict criteria for value creation potential.
-            </p>
-            <button className="px-6 py-3 bg-castelnau-green text-white rounded-lg hover:bg-castelnau-darkgreen transition-colors font-medium">
-              Contact Our Investment Team
-            </button>
           </div>
         </div>
       </section>

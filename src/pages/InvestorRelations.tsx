@@ -5,42 +5,52 @@ import MainLayout from '@/layouts/MainLayout';
 const InvestorRelations = () => {
   return (
     <MainLayout>
-      <section className="bg-castelnau-green py-20">
+      <section className="page-hero">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-white">Investor Relations</h1>
-          <div className="h-1 bg-white w-24 mt-6"></div>
+          <h1 className="page-title">Investor Relations</h1>
+          <div className="h-1 bg-white w-36"></div>
+        </div>
+        
+        <div className="absolute bottom-0 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" className="w-full">
+            <path 
+              fill="#FFFFFF" 
+              fillOpacity="1" 
+              d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            ></path>
+          </svg>
         </div>
       </section>
       
-      <section className="py-16 md:py-24">
+      <section className="page-content">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:w-2/3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="md:col-span-2">
               <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-8">Financial Information</h2>
               
               <div className="mb-12">
-                <h3 className="text-xl font-bold mb-4">Key Financial Metrics</h3>
+                <h3 className="text-2xl font-bold mb-6">Key Financial Metrics</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <p className="text-sm text-gray-500 mb-1">Share Price</p>
-                    <p className="text-2xl font-bold text-castelnau-green">£0.93</p>
-                    <p className="text-xs text-gray-500">Updated: 25/02/2025</p>
+                    <p className="text-2xl font-bold text-castelnau-green">£0.92</p>
+                    <p className="text-xs text-gray-500">Updated: 10/03/2025</p>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <p className="text-sm text-gray-500 mb-1">NAV per Share</p>
-                    <p className="text-2xl font-bold text-castelnau-green">£1.02</p>
-                    <p className="text-xs text-gray-500">Updated: 31/01/2025</p>
+                    <p className="text-2xl font-bold text-castelnau-green">£1.01</p>
+                    <p className="text-xs text-gray-500">Updated: 28/02/2025</p>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <p className="text-sm text-gray-500 mb-1">Market Cap</p>
                     <p className="text-2xl font-bold text-castelnau-green">£186.2m</p>
-                    <p className="text-xs text-gray-500">Updated: 25/02/2025</p>
+                    <p className="text-xs text-gray-500">Updated: 10/03/2025</p>
                   </div>
                 </div>
               </div>
               
               <div className="mb-12">
-                <h3 className="text-xl font-bold mb-4">Reports & Presentations</h3>
+                <h3 className="text-2xl font-bold mb-6">Reports & Presentations</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between border-b border-gray-200 pb-4">
                     <div>
@@ -71,53 +81,9 @@ const InvestorRelations = () => {
                   </div>
                 </div>
               </div>
-              
-              <div>
-                <h3 className="text-xl font-bold mb-4">Financial Calendar</h3>
-                <div className="bg-gray-50 p-6 rounded-lg">
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="bg-castelnau-green h-6 w-6 rounded-full flex items-center justify-center text-white text-xs font-bold mt-1 mr-3">
-                        Q1
-                      </div>
-                      <div>
-                        <p className="font-medium">Q1 Trading Update</p>
-                        <p className="text-sm text-gray-500">15 April 2025</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="bg-castelnau-green h-6 w-6 rounded-full flex items-center justify-center text-white text-xs font-bold mt-1 mr-3">
-                        Q2
-                      </div>
-                      <div>
-                        <p className="font-medium">Annual General Meeting</p>
-                        <p className="text-sm text-gray-500">20 June 2025</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="bg-castelnau-green h-6 w-6 rounded-full flex items-center justify-center text-white text-xs font-bold mt-1 mr-3">
-                        Q3
-                      </div>
-                      <div>
-                        <p className="font-medium">Half Year Results</p>
-                        <p className="text-sm text-gray-500">25 September 2025</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="bg-castelnau-green h-6 w-6 rounded-full flex items-center justify-center text-white text-xs font-bold mt-1 mr-3">
-                        Q4
-                      </div>
-                      <div>
-                        <p className="font-medium">Q3 Trading Update</p>
-                        <p className="text-sm text-gray-500">15 November 2025</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             
-            <div className="md:w-1/3">
+            <div>
               <div className="bg-gray-50 p-6 rounded-lg mb-8">
                 <h3 className="text-xl font-bold text-castelnau-green mb-4">Investor Contacts</h3>
                 <div className="space-y-4">
