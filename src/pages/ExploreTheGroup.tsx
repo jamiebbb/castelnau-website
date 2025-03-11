@@ -5,10 +5,11 @@ import MainLayout from '@/layouts/MainLayout';
 const ExploreTheGroup = () => {
   return (
     <MainLayout>
-      <section className="page-hero bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green">
+      <section className="page-hero">
         <div className="container mx-auto px-4">
-          <h1 className="page-title">Explore The Group</h1>
-          <div className="h-1 bg-white w-36"></div>
+          <h1 className="page-title">Our Distinguished Portfolio</h1>
+          <p className="text-xl max-w-3xl text-white/90 mb-8 font-serif">Curated investments in exceptional businesses with enduring value and growth potential</p>
+          <div className="h-1 bg-castelnau-gold w-36"></div>
         </div>
         
         <div className="absolute bottom-0 w-full">
@@ -27,9 +28,9 @@ const ExploreTheGroup = () => {
           <div className="max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-6">Our Portfolio Companies</h2>
             <p className="text-lg text-gray-700">
-              Castelnau Group is proud to be partnered with a diverse portfolio of exceptional businesses. 
-              Each company brings unique value and expertise to our group, contributing to our long-term vision 
-              of sustainable growth and innovation.
+              The Castelnau Group cultivates a collection of exceptional businesses with distinctive competitive advantages and 
+              strong growth potential. Our long-term approach allows us to partner with management teams to build enduring value 
+              across diverse sectors.
             </p>
           </div>
           
@@ -41,7 +42,7 @@ const ExploreTheGroup = () => {
               </div>
               <p className="text-gray-700 mb-6">
                 The world's longest established rare stamp merchant, offering authentication services, retail sales, 
-                auctions, and investment products since 1856.
+                auctions, and investment products since 1856. A treasured heritage brand with unparalleled expertise.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -58,7 +59,7 @@ const ExploreTheGroup = () => {
               </div>
               <p className="text-gray-700 mb-6">
                 A leading international hobby products group, specializing in model railways, model cars, and iconic 
-                brands including Scalextric, Airfix, and Corgi.
+                brands including Scalextric, Airfix, and Corgi. Beloved British brands with global appeal and heritage.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -74,8 +75,9 @@ const ExploreTheGroup = () => {
                 <p className="text-sm text-gray-500 uppercase font-medium">Funeral Services</p>
               </div>
               <p className="text-gray-700 mb-6">
-                One of the UK's leading providers of funeral-related services, offering caring and professional 
-                funeral services across the country.
+                One of the UK's leading providers of funeral-related services, offering caring and dignified 
+                funeral arrangements, cremations, and pre-need plans. A service-focused business with an essential 
+                role in communities.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -92,7 +94,7 @@ const ExploreTheGroup = () => {
               </div>
               <p className="text-gray-700 mb-6">
                 A strategic digital agency delivering innovative web solutions and digital transformation for 
-                ambitious organizations.
+                ambitious organizations. Specialized in creating exceptional digital experiences that drive business growth.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -108,8 +110,9 @@ const ExploreTheGroup = () => {
                 <p className="text-sm text-gray-500 uppercase font-medium">Technology Solutions</p>
               </div>
               <p className="text-gray-700 mb-6">
-                Innovative technology solutions provider specializing in digital transformation and software 
-                development services.
+                Innovative technology solutions provider specializing in enterprise software development 
+                and digital transformation initiatives. Enabling businesses to leverage technology for 
+                competitive advantage.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -122,10 +125,12 @@ const ExploreTheGroup = () => {
             <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
               <div className="mb-6">
                 <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-2">Cambium</h3>
-                <p className="text-sm text-gray-500 uppercase font-medium">Asset Management</p>
+                <p className="text-sm text-gray-500 uppercase font-medium">Wedding Gift Lists</p>
               </div>
               <p className="text-gray-700 mb-6">
-                Specialized asset management firm focusing on sustainable and long-term investment strategies.
+                Specializing in luxury wedding gift list services, providing couples and guests with a premium 
+                platform for registry creation and fulfillment. Offering an exceptional service experience for 
+                life's most special moments.
               </p>
               <div className="flex justify-between items-center">
                 <div>
@@ -138,10 +143,12 @@ const ExploreTheGroup = () => {
             <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
               <div className="mb-6">
                 <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-2">Iona Star</h3>
-                <p className="text-sm text-gray-500 uppercase font-medium">Maritime Services</p>
+                <p className="text-sm text-gray-500 uppercase font-medium">Venture Capital</p>
               </div>
               <p className="text-gray-700 mb-6">
-                Maritime services provider specializing in offshore support and specialized vessel operations.
+                A venture capital fund focused on early-stage investments in innovative businesses with 
+                disruptive technologies and significant growth potential. Dedicated to nurturing the next 
+                generation of exceptional companies.
               </p>
               <div className="flex justify-between items-center">
                 <div>

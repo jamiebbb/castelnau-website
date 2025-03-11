@@ -25,9 +25,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				castelnau: {
-					green: '#006644',       // Lighter green
-					lightgreen: '#007a52',  // Accent color
-					darkgreen: '#005538',   // For gradient
+					green: '#007a52',         // Brighter main green
+					lightgreen: '#00916e',    // Lighter accent green
+					darkgreen: '#005b3d',     // Darker green for gradient
+					gold: '#d4af37',          // Luxury gold accent
+					cream: '#f8f5e6',         // Soft cream for backgrounds
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
