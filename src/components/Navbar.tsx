@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
@@ -22,7 +21,7 @@ const Navbar = () => {
         window.history.pushState(null, '', `#${sectionId}`);
         
         // Smooth scroll to the element with proper offset
-        const navHeight = 120; // Adjust based on navbar height
+        const navHeight = 150; // Increased offset for better positioning
         const elementPosition = element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - navHeight;
         
@@ -45,7 +44,6 @@ const Navbar = () => {
                 className="h-16" 
                 src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
                 loading="eager"
-                fetchPriority="high"
               />
             </NavLink>
             

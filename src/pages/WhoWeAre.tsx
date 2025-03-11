@@ -1,51 +1,15 @@
 
-import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import Hero from '@/components/who-we-are/Hero';
 import Story from '@/components/who-we-are/Story';
 import Values from '@/components/who-we-are/Values';
 import Team from '@/components/who-we-are/Team';
+import useScrollToSection from '@/hooks/useScrollToSection';
 
 const WhoWeAre = () => {
-  const location = useLocation();
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const scrollToSection = () => {
-      if (location.hash) {
-        const targetId = location.hash.substring(1);
-        const element = document.getElementById(targetId);
-        
-        if (element) {
-          setTimeout(() => {
-            const navHeight = 120; // Height of fixed navbar
-            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition - navHeight;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }, 300);
-        }
-      } else {
-        window.scrollTo(0, 0);
-      }
-    };
-
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
-
-    scrollTimeoutRef.current = setTimeout(scrollToSection, 100);
-
-    return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [location.hash]);
+  // Use our custom hook with a slightly larger offset for better positioning
+  useScrollToSection({ offset: 150 });
 
   return (
     <MainLayout>
