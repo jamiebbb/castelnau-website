@@ -6,22 +6,31 @@ import { useLocation } from 'react-router-dom';
 
 const WhoWeAre = () => {
   const location = useLocation();
-  
+
   useEffect(() => {
-    // Handle hash navigation
-    if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        // Add a small delay to ensure the page has fully loaded
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+    const scrollToSection = () => {
+      if (location.hash) {
+        const targetId = location.hash.substring(1);
+        const element = document.getElementById(targetId);
+        
+        if (element) {
+          const navHeight = 120; // Height of fixed navbar
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        window.scrollTo(0, 0);
       }
-    } else {
-      // Scroll to top when no hash is present
-      window.scrollTo(0, 0);
-    }
-  }, [location]);
+    };
+
+    // Small delay to ensure DOM is ready
+    setTimeout(scrollToSection, 100);
+  }, [location.hash]);
 
   return (
     <MainLayout>
