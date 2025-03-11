@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,29 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+  const location = useLocation();
+  
+  const scrollToSection = (sectionId: string) => {
+    // Check if we're already on the Who We Are page
+    if (location.pathname === '/who-we-are') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Set the hash in the URL without causing a page jump
+        window.history.pushState(null, '', `#${sectionId}`);
+        
+        // Smooth scroll to the element with proper offset
+        const navHeight = 120; // Adjust based on navbar height
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
   return (
     <header className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen shadow-lg">
       <div className="container mx-auto px-4 py-2">
@@ -82,46 +105,32 @@ const Navbar = () => {
                     Overview
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/who-we-are#our-values" onClick={(e) => {
-                  // Force hash update if already on the page
-                  if (window.location.pathname === '/who-we-are') {
+                <Link 
+                  to="/who-we-are#our-values" 
+                  onClick={(e) => {
                     e.preventDefault();
-                    window.location.hash = 'our-values';
-                    // Manually trigger scrolling
-                    const element = document.getElementById('our-values');
-                    if (element) {
-                      const navHeight = 120;
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
+                    if (location.pathname === '/who-we-are') {
+                      scrollToSection('our-values');
+                    } else {
+                      window.location.href = '/who-we-are#our-values';
                     }
-                  }
-                }}>
+                  }}
+                >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Values
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/who-we-are#our-team" onClick={(e) => {
-                  // Force hash update if already on the page
-                  if (window.location.pathname === '/who-we-are') {
+                <Link 
+                  to="/who-we-are#our-team" 
+                  onClick={(e) => {
                     e.preventDefault();
-                    window.location.hash = 'our-team';
-                    // Manually trigger scrolling
-                    const element = document.getElementById('our-team');
-                    if (element) {
-                      const navHeight = 120;
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
+                    if (location.pathname === '/who-we-are') {
+                      scrollToSection('our-team');
+                    } else {
+                      window.location.href = '/who-we-are#our-team';
                     }
-                  }
-                }}>
+                  }}
+                >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Team
                   </DropdownMenuItem>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
@@ -15,14 +14,16 @@ const WhoWeAre = () => {
         const element = document.getElementById(targetId);
         
         if (element) {
-          const navHeight = 120; // Height of fixed navbar
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+          setTimeout(() => {
+            const navHeight = 120; // Height of fixed navbar
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - navHeight;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }, 300);
         }
       } else {
         window.scrollTo(0, 0);
@@ -43,7 +44,7 @@ const WhoWeAre = () => {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, [location]); // Changed from location.hash to location to detect all changes
+  }, [location.hash]); // Only react to hash changes
 
   return (
     <MainLayout>
@@ -107,7 +108,7 @@ const WhoWeAre = () => {
             </div>
           </div>
 
-          <div id="our-values" className="mb-20 scroll-mt-24">
+          <div id="our-values" className="mb-20 scroll-mt-32">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Our Core Values</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
@@ -152,7 +153,7 @@ const WhoWeAre = () => {
             </div>
           </div>
 
-          <div id="our-team" className="scroll-mt-24">
+          <div id="our-team" className="scroll-mt-32">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Meet Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
               {/* Gary Channon */}
