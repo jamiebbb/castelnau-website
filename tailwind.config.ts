@@ -26,9 +26,9 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				castelnau: {
-					green: '#006241',
-					lightgreen: '#007a52',
-					darkgreen: '#004d33',
+					green: '#004d33',       // Darker green matching screenshot
+					lightgreen: '#007a52',  // Kept as accent color
+					darkgreen: '#003d29',   // Even darker green for gradient
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',

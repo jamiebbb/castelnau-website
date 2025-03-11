@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <MainLayout>
       <div className="animate-fade-in">
-        <section className="bg-castelnau-green text-white pt-24 pb-48 relative">
+        <section className="bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white pt-24 pb-48 relative">
           <div className="container mx-auto px-4">
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold max-w-4xl leading-tight mb-10">
               We compound shareholders' capital at high rates of return.

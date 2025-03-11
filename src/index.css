@@ -118,7 +118,7 @@
   }
 
   .page-hero {
-    @apply bg-castelnau-green text-white pt-24 pb-48 relative;
+    @apply bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white pt-24 pb-48 relative;
   }
 
   .page-title {
