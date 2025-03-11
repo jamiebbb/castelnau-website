@@ -16,6 +16,11 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
 
   useEffect(() => {
     const scrollToSection = () => {
+      // Skip if hash hasn't changed and is the same as lastHash
+      if (location.hash && location.hash === lastHashRef.current) {
+        return;
+      }
+      
       if (location.hash) {
         const targetId = location.hash.substring(1);
         const element = document.getElementById(targetId);
@@ -57,16 +62,19 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
   }, [location.hash, offset, behavior, delay]);
 
   // Return a function to manually scroll to a section
-  const scrollToElement = (elementId: string) => {
+  const scrollToElement = (elementId: string, forceScroll = false) => {
     const element = document.getElementById(elementId);
     if (element) {
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
+      // If forceScroll is true or hash is different, perform scroll
+      if (forceScroll || `#${elementId}` !== lastHashRef.current) {
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior
+        });
+      }
       
       // Update URL hash without reloading
       window.history.pushState(null, '', `#${elementId}`);

@@ -9,19 +9,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import useScrollToSection from '@/hooks/useScrollToSection';
 
 const Navbar = () => {
   const location = useLocation();
+  const { scrollToElement } = useScrollToSection({ offset: 150 });
   
   const scrollToSection = (sectionId: string) => {
     // Check if we're already on the Who We Are page
     if (location.pathname === '/who-we-are') {
       const element = document.getElementById(sectionId);
       if (element) {
-        // Set the hash in the URL without causing a page jump
-        window.history.pushState(null, '', `#${sectionId}`);
-        
-        // Smooth scroll to the element with proper offset
+        // Force scroll regardless of current hash
         const navHeight = 150; // Increased offset for better positioning
         const elementPosition = element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - navHeight;
@@ -30,6 +29,9 @@ const Navbar = () => {
           top: offsetPosition,
           behavior: 'smooth'
         });
+        
+        // Update URL hash without reloading
+        window.history.pushState(null, '', `#${sectionId}`);
       }
     }
   };
@@ -109,7 +111,7 @@ const Navbar = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     if (location.pathname === '/who-we-are') {
-                      // Always force scrolling regardless of current hash
+                      // Always force scroll regardless of current hash
                       scrollToSection('our-values');
                     } else {
                       window.location.href = '/who-we-are#our-values';
@@ -125,7 +127,7 @@ const Navbar = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     if (location.pathname === '/who-we-are') {
-                      // Always force scrolling regardless of current hash
+                      // Always force scroll regardless of current hash
                       scrollToSection('our-team');
                     } else {
                       window.location.href = '/who-we-are#our-team';

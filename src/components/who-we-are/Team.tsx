@@ -85,7 +85,7 @@ const Team = () => {
   ];
 
   return (
-    <div id="our-team" className="scroll-mt-32">
+    <div id="our-team" className="scroll-mt-40">
       <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Meet Our Team</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
         {teamMembers.map((member, index) => (
