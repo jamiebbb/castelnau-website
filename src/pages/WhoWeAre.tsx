@@ -10,8 +10,28 @@ import { useLocation } from 'react-router-dom';
 
 const WhoWeAre = () => {
   const location = useLocation();
-  // Use our custom hook with a slightly larger offset for better positioning
-  useScrollToSection({ offset: 150 });
+  // Use our custom hook with a larger offset for better positioning
+  useScrollToSection({ offset: 150, delay: 500 });
+
+  // Add an additional manual scroll handler for direct access
+  useEffect(() => {
+    if (location.hash) {
+      // Small delay to ensure everything is loaded
+      const timer = setTimeout(() => {
+        const targetId = location.hash.substring(1);
+        const element = document.getElementById(targetId);
+        if (element) {
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - 150,
+            behavior: 'smooth'
+          });
+        }
+      }, 700);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash]);
 
   return (
     <MainLayout>

@@ -21,9 +21,20 @@ const Navbar = () => {
     if (location.pathname === '/who-we-are') {
       // We're already on the page, just scroll to the section
       scrollToElement(sectionId);
+      
+      // Force a second scroll after a short delay as a backup
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - 150,
+            behavior: 'auto'
+          });
+        }
+      }, 100);
     } else {
       // Navigate to the page with the hash
-      // The hash will be handled by useScrollToSection in the target page
       window.location.href = `/who-we-are#${sectionId}`;
     }
   };

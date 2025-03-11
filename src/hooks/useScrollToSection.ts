@@ -11,20 +11,17 @@ interface ScrollOptions {
 const useScrollToSection = (options: ScrollOptions = {}) => {
   const location = useLocation();
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { offset = 120, behavior = 'smooth', delay = 100 } = options;
+  const { offset = 120, behavior = 'smooth', delay = 300 } = options;
   const isInitialRender = useRef(true);
+  const hasScrolledRef = useRef(false);
   
   // Handle hash changes including initial load
   useEffect(() => {
-    // Skip on initial render if no hash is present
-    if (isInitialRender.current && !location.hash) {
-      isInitialRender.current = false;
-      return;
-    }
-    
-    // This will handle both direct URL access with hash and navigation changes
-    const scrollToSection = () => {
-      if (location.hash) {
+    // This flag helps us track if we've already attempted to scroll
+    if (location.hash && !hasScrolledRef.current) {
+      hasScrolledRef.current = true;
+      
+      const scrollToSection = () => {
         const targetId = location.hash.substring(1);
         const element = document.getElementById(targetId);
         
@@ -34,7 +31,7 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
             clearTimeout(scrollTimeoutRef.current);
           }
           
-          // Delay scrolling to ensure DOM is ready
+          // Use a longer delay to ensure DOM is fully rendered
           scrollTimeoutRef.current = setTimeout(() => {
             // Calculate position with offset
             const elementPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -46,22 +43,36 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
               behavior
             });
             
+            // Double-check scroll position after a short delay
+            // This helps ensure we really get to the right position
+            setTimeout(() => {
+              const newElementPosition = element.getBoundingClientRect().top + window.scrollY;
+              if (Math.abs(window.scrollY - (newElementPosition - offset)) > 10) {
+                window.scrollTo({
+                  top: newElementPosition - offset,
+                  behavior: 'auto' // Instant jump as a fallback
+                });
+              }
+            }, 500);
+            
             // Clear the timeout reference
             scrollTimeoutRef.current = null;
           }, delay);
         }
-      } else {
-        // If no hash, scroll to top with a brief delay
-        scrollTimeoutRef.current = setTimeout(() => {
-          window.scrollTo({ top: 0, behavior });
-          scrollTimeoutRef.current = null;
-        }, delay);
-      }
-    };
+      };
 
-    // Execute scroll logic
-    scrollToSection();
-    isInitialRender.current = false;
+      // Execute scroll logic
+      scrollToSection();
+    } else if (!location.hash) {
+      // Reset flag when navigating to a page without hash
+      hasScrolledRef.current = false;
+      
+      // If no hash, scroll to top with a brief delay
+      scrollTimeoutRef.current = setTimeout(() => {
+        window.scrollTo({ top: 0, behavior });
+        scrollTimeoutRef.current = null;
+      }, delay);
+    }
 
     return () => {
       if (scrollTimeoutRef.current) {
@@ -75,18 +86,21 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
     const element = document.getElementById(elementId);
     
     if (element) {
+      // Update URL hash first (to maintain browsing history)
+      window.history.pushState(null, '', `#${elementId}`);
+      
       // Calculate position with offset
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;
       
-      // Update URL hash first (to maintain browsing history)
-      window.history.pushState(null, '', `#${elementId}`);
-      
-      // Then perform the explicit scroll
+      // Perform the explicit scroll
       window.scrollTo({
         top: offsetPosition,
         behavior
       });
+      
+      // Set our flag to indicate we've scrolled
+      hasScrolledRef.current = true;
     }
   };
 
