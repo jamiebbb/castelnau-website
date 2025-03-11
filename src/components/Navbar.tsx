@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
@@ -108,6 +109,7 @@ const Navbar = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     if (location.pathname === '/who-we-are') {
+                      // Always force scrolling regardless of current hash
                       scrollToSection('our-values');
                     } else {
                       window.location.href = '/who-we-are#our-values';
@@ -123,6 +125,7 @@ const Navbar = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     if (location.pathname === '/who-we-are') {
+                      // Always force scrolling regardless of current hash
                       scrollToSection('our-team');
                     } else {
                       window.location.href = '/who-we-are#our-team';

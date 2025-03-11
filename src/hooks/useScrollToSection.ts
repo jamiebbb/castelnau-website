@@ -11,6 +11,7 @@ interface ScrollOptions {
 const useScrollToSection = (options: ScrollOptions = {}) => {
   const location = useLocation();
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastHashRef = useRef<string | null>(null);
   const { offset = 120, behavior = 'smooth', delay = 100 } = options;
 
   useEffect(() => {
@@ -34,6 +35,9 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
       } else {
         window.scrollTo(0, 0);
       }
+      
+      // Update lastHash after scrolling
+      lastHashRef.current = location.hash;
     };
 
     // Clear any existing timeout
@@ -63,6 +67,12 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
         top: offsetPosition,
         behavior
       });
+      
+      // Update URL hash without reloading
+      window.history.pushState(null, '', `#${elementId}`);
+      
+      // Update lastHash after scrolling
+      lastHashRef.current = `#${elementId}`;
     }
   };
 
