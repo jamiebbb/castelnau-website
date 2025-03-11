@@ -71,9 +71,11 @@ const Navbar = () => {
                 Castelnau Library
               </Button>
             </NavLink>
-            <Button variant="primary" size="lg" className="font-medium tracking-wide">
-              Contact us
-            </Button>
+            <NavLink to="/contact">
+              <Button variant="primary" size="lg" className="font-medium tracking-wide">
+                Contact us
+              </Button>
+            </NavLink>
           </div>
         </div>
       </div>

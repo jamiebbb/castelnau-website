@@ -33,15 +33,12 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
       }
     };
 
-    // Clear any existing timeout
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);
     }
 
-    // Set a new timeout
     scrollTimeoutRef.current = setTimeout(scrollToSection, delay);
 
-    // Cleanup function
     return () => {
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
@@ -49,20 +46,20 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
     };
   }, [location.hash, offset, behavior, delay]);
 
-  // Return a function to manually scroll to a section
   const scrollToElement = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;
 
+      // Force scroll regardless of current location
       window.scrollTo({
         top: offsetPosition,
         behavior
       });
       
-      // Update URL hash without reloading
-      window.history.pushState(null, '', `#${elementId}`);
+      // Update URL hash without triggering a new scroll
+      window.history.replaceState(null, '', `#${elementId}`);
     }
   };
 

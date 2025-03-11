@@ -12,6 +12,8 @@ import ExploreTheGroup from "./pages/ExploreTheGroup";
 import InvestorRelations from "./pages/InvestorRelations";
 import GraduateProgramme from "./pages/GraduateProgramme";
 import CastelnauLibrary from "./pages/CastelnauLibrary";
+import News from "./pages/News";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,8 @@ const App = () => (
           <Route path="/investor-relations" element={<InvestorRelations />} />
           <Route path="/graduate-programme" element={<GraduateProgramme />} />
           <Route path="/castelnau-library" element={<CastelnauLibrary />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/news" element={<News />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
