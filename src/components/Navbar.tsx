@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
@@ -15,24 +14,12 @@ const Navbar = () => {
   const location = useLocation();
   const { scrollToElement } = useScrollToSection({ offset: 150 });
   
-  const scrollToSection = (sectionId: string) => {
-    // Check if we're already on the Who We Are page
+  const handleSectionClick = (sectionId: string, e: React.MouseEvent) => {
+    e.preventDefault();
     if (location.pathname === '/who-we-are') {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        // Force scroll regardless of current hash
-        const navHeight = 150; // Increased offset for better positioning
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - navHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-        
-        // Update URL hash without reloading
-        window.history.pushState(null, '', `#${sectionId}`);
-      }
+      scrollToElement(sectionId);
+    } else {
+      window.location.href = `/who-we-are#${sectionId}`;
     }
   };
 
@@ -108,15 +95,7 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/who-we-are#our-values" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (location.pathname === '/who-we-are') {
-                      // Always force scroll regardless of current hash
-                      scrollToSection('our-values');
-                    } else {
-                      window.location.href = '/who-we-are#our-values';
-                    }
-                  }}
+                  onClick={(e) => handleSectionClick('our-values', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Values
@@ -124,15 +103,7 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/who-we-are#our-team" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (location.pathname === '/who-we-are') {
-                      // Always force scroll regardless of current hash
-                      scrollToSection('our-team');
-                    } else {
-                      window.location.href = '/who-we-are#our-team';
-                    }
-                  }}
+                  onClick={(e) => handleSectionClick('our-team', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Team
