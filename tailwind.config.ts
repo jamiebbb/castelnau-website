@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,9 +25,9 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				castelnau: {
-					green: '#00a36e',         // Even brighter main green
-					lightgreen: '#00c288',    // Much lighter accent green
-					darkgreen: '#00714d',     // Darker but not too dark green
+					green: '#0d846b',         // Updated main green - more muted, closer to teal
+					lightgreen: '#10a188',    // Updated lighter accent green
+					darkgreen: '#085446',     // Updated darker green
 					gold: '#d4af37',          // Luxury gold accent
 					cream: '#f8f5e6',         // Soft cream for backgrounds
 				},
