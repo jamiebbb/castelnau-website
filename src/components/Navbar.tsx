@@ -1,6 +1,12 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -54,9 +60,29 @@ const Navbar = () => {
       <div className="border-t border-white/20">
         <div className="container mx-auto px-4">
           <nav className="flex py-5 space-x-10">
-            <NavLink to="/who-we-are" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
-              Who We Are
-            </NavLink>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-white hover:text-castelnau-cream text-base font-medium transition-colors flex items-center gap-1">
+                Who We Are <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white">
+                <NavLink to="/who-we-are">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Overview
+                  </DropdownMenuItem>
+                </NavLink>
+                <NavLink to="/who-we-are#our-values">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Our Values
+                  </DropdownMenuItem>
+                </NavLink>
+                <NavLink to="/who-we-are#our-team">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Our Team
+                  </DropdownMenuItem>
+                </NavLink>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             <NavLink to="/what-we-do" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
               What We Do
             </NavLink>
