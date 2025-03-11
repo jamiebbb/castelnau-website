@@ -47,20 +47,20 @@ const Navbar = () => {
           
           <div className="flex items-center space-x-6">
             <NavLink to="/news" className={({ isActive }) => 
-              `text-white hover:text-castelnau-cream transition-colors ${isActive ? 'text-castelnau-cream' : ''}`
+              `transition-colors ${isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`
             }>
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 News
               </Button>
             </NavLink>
             <NavLink to="/castelnau-library" className={({ isActive }) => 
-              `text-white hover:text-castelnau-cream transition-colors ${isActive ? 'text-castelnau-cream' : ''}`
+              `transition-colors ${isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`
             }>
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 Castelnau Library
               </Button>
             </NavLink>
-            <Button variant="gold" size="lg">
+            <Button variant="primary" size="lg" className="font-medium tracking-wide">
               Contact us
             </Button>
           </div>
@@ -72,13 +72,13 @@ const Navbar = () => {
           <nav className="flex py-5 space-x-10">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent flex items-center gap-1">
+                <Button variant="transparent" className="font-medium">
                   Who We Are <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white">
+              <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
                 <Link to="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Overview
                   </DropdownMenuItem>
                 </Link>
@@ -100,7 +100,7 @@ const Navbar = () => {
                     }
                   }
                 }}>
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Values
                   </DropdownMenuItem>
                 </Link>
@@ -122,7 +122,7 @@ const Navbar = () => {
                     }
                   }
                 }}>
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Team
                   </DropdownMenuItem>
                 </Link>
@@ -130,22 +130,22 @@ const Navbar = () => {
             </DropdownMenu>
             
             <NavLink to="/what-we-do">
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 What We Do
               </Button>
             </NavLink>
             <NavLink to="/explore-the-group">
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 Explore the Group
               </Button>
             </NavLink>
             <NavLink to="/investor-relations">
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 Investor Relations
               </Button>
             </NavLink>
             <NavLink to="/graduate-programme">
-              <Button variant="ghost" className="text-white hover:text-castelnau-cream hover:bg-transparent">
+              <Button variant="transparent" className="font-medium">
                 Graduate Programme
               </Button>
             </NavLink>

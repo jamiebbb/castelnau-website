@@ -20,10 +20,12 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         castelnau: "bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white hover:from-castelnau-green hover:to-castelnau-lightgreen transform hover:-translate-y-0.5",
-        gold: "bg-gradient-to-r from-castelnau-gold/90 to-castelnau-gold text-castelnau-darkgreen hover:brightness-105 transform hover:-translate-y-0.5",
+        gold: "bg-white text-castelnau-darkgreen border border-castelnau-darkgreen/30 hover:bg-castelnau-cream/50 transform hover:-translate-y-0.5",
         subtle: "bg-castelnau-cream text-castelnau-darkgreen hover:bg-castelnau-cream/80 border border-castelnau-green/20",
         action: "bg-white text-castelnau-green border border-castelnau-green hover:bg-castelnau-green hover:text-white transform hover:-translate-y-0.5",
         soft: "bg-castelnau-green/10 text-castelnau-darkgreen hover:bg-castelnau-green/20 border border-castelnau-green/30",
+        primary: "bg-castelnau-darkgreen text-white hover:bg-castelnau-green transform hover:-translate-y-0.5 shadow-md",
+        transparent: "bg-transparent text-white hover:bg-white/10 backdrop-blur-sm border border-white/20",
       },
       size: {
         default: "h-10 px-4 py-2",
