@@ -16,9 +16,8 @@ const Navbar = () => {
   const { data: sharePrice } = useSharePrice();
 
   const handleSectionClick = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
     if (location.pathname === '/who-we-are') {
-      e.preventDefault();
-      window.location.hash = sectionId;
       scrollToElement(sectionId);
     }
   };

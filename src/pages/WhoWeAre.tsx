@@ -11,12 +11,11 @@ const WhoWeAre = () => {
   useEffect(() => {
     if (location.hash) {
       const sectionId = location.hash.substring(1);
-      // Small delay to ensure DOM is ready
-      setTimeout(() => scrollToElement(sectionId), 100);
+      scrollToElement(sectionId);
     } else {
       window.scrollTo(0, 0);
     }
-  }, [location, scrollToElement]);
+  }, [location.hash, scrollToElement]);
 
   return (
     <MainLayout>
