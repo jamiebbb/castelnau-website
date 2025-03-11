@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,21 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { useScrollToElement } from '@/hooks/useScrollToElement';
-import { useSharePrice } from '@/hooks/useSharePrice';
 
 const Navbar = () => {
-  const location = useLocation();
-  const scrollToElement = useScrollToElement();
-  const { data: sharePrice } = useSharePrice();
-
-  const handleSectionClick = (e: React.MouseEvent, sectionId: string) => {
-    e.preventDefault();
-    if (location.pathname === '/who-we-are') {
-      scrollToElement(sectionId);
-    }
-  };
-
   return (
     <header className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen shadow-lg">
       <div className="container mx-auto px-4 py-2">
@@ -33,6 +21,7 @@ const Navbar = () => {
                 className="h-16" 
                 src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
                 loading="eager"
+                fetchPriority="high"
               />
             </NavLink>
             
@@ -40,9 +29,9 @@ const Navbar = () => {
               <div className="text-white">
                 <p className="flex items-center text-lg font-serif">
                   <span className="mr-2 text-castelnau-cream/90">Share price:</span> 
-                  <strong className="font-serif">{sharePrice?.price || '0.92'}</strong>
+                  <strong className="font-serif">0.92</strong>
                 </p>
-                <p className="text-xs italic text-white/80">Updated: {sharePrice?.date || '10/03/2025'}</p>
+                <p className="text-xs italic text-white/80">Updated: 10/03/2025</p>
               </div>
               
               <div className="text-white">
@@ -82,18 +71,46 @@ const Navbar = () => {
                     Overview
                   </DropdownMenuItem>
                 </Link>
-                <Link 
-                  to="/who-we-are#our-values" 
-                  onClick={(e) => handleSectionClick(e, 'our-values')}
-                >
+                <Link to="/who-we-are#our-values" onClick={(e) => {
+                  // Force hash update if already on the page
+                  if (window.location.pathname === '/who-we-are') {
+                    e.preventDefault();
+                    window.location.hash = 'our-values';
+                    // Manually trigger scrolling
+                    const element = document.getElementById('our-values');
+                    if (element) {
+                      const navHeight = 120;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                }}>
                   <DropdownMenuItem className="cursor-pointer">
                     Our Values
                   </DropdownMenuItem>
                 </Link>
-                <Link 
-                  to="/who-we-are#our-team" 
-                  onClick={(e) => handleSectionClick(e, 'our-team')}
-                >
+                <Link to="/who-we-are#our-team" onClick={(e) => {
+                  // Force hash update if already on the page
+                  if (window.location.pathname === '/who-we-are') {
+                    e.preventDefault();
+                    window.location.hash = 'our-team';
+                    // Manually trigger scrolling
+                    const element = document.getElementById('our-team');
+                    if (element) {
+                      const navHeight = 120;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                }}>
                   <DropdownMenuItem className="cursor-pointer">
                     Our Team
                   </DropdownMenuItem>
