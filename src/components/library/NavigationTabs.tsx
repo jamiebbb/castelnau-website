@@ -22,7 +22,7 @@ const NavigationTabs = ({ activeSection, setActiveSection }: NavigationTabsProps
         >
           Books
           {activeSection === 'books' && (
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+            <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen rounded-t-full"></span>
           )}
         </button>
         <button 
@@ -36,7 +36,7 @@ const NavigationTabs = ({ activeSection, setActiveSection }: NavigationTabsProps
         >
           Videos
           {activeSection === 'videos' && (
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+            <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen rounded-t-full"></span>
           )}
         </button>
         <button 
@@ -50,7 +50,7 @@ const NavigationTabs = ({ activeSection, setActiveSection }: NavigationTabsProps
         >
           Podcasts
           {activeSection === 'podcasts' && (
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+            <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen rounded-t-full"></span>
           )}
         </button>
       </div>

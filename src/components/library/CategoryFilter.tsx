@@ -15,7 +15,7 @@ const CategoryFilter = ({ categories, selectedCategory, setSelectedCategory }: C
         <Button
           key={category}
           onClick={() => setSelectedCategory(category)}
-          variant={selectedCategory === category ? "castelnau" : "outline"}
+          variant={selectedCategory === category ? "castelnau" : "soft"}
           size="sm"
           className={`rounded-full transition-all ${
             selectedCategory === category
