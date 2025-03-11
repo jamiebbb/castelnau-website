@@ -1,6 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { BookOpen, Clock, User } from "lucide-react";
 
 interface Book {
   id: number;
@@ -9,6 +12,7 @@ interface Book {
   coverImg: string;
   category: string;
   description: string;
+  summary?: string;
 }
 
 interface Video {
@@ -34,6 +38,8 @@ const CastelnauLibrary = () => {
   const [flippedBookId, setFlippedBookId] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeSection, setActiveSection] = useState<'books' | 'videos' | 'podcasts'>('books');
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   
   useEffect(() => {
     // Scroll to top when page loads
@@ -47,7 +53,8 @@ const CastelnauLibrary = () => {
       author: "Benjamin Graham",
       coverImg: "https://m.media-amazon.com/images/I/91yj3mbz4JL._AC_UF1000,1000_QL80_.jpg",
       category: "Value Investing",
-      description: "The classic text on value investing. Graham's philosophy of 'value investing' has made this book the investment bible for generations of investors."
+      description: "The classic text on value investing. Graham's philosophy of 'value investing' has made this book the investment bible for generations of investors.",
+      summary: "The Intelligent Investor teaches a realistic approach to investing in stocks, focusing on fundamental analysis rather than market speculation. Graham introduces the concept of 'margin of safety' as a principle of investment operations, encouraging investors to focus on intrinsic business value rather than market fluctuations. This defensive, conservative approach to investing has influenced many successful investors, most notably Warren Buffett."
     },
     {
       id: 2,
@@ -55,15 +62,17 @@ const CastelnauLibrary = () => {
       author: "Philip Fisher",
       coverImg: "https://m.media-amazon.com/images/I/81ofrCfBYsL._AC_UF1000,1000_QL80_.jpg",
       category: "Business Analysis",
-      description: "Fisher's investment philosophies, introduced almost forty years ago, are not only studied and applied by today's finance professionals, but are also regarded by many as gospel."
+      description: "Fisher's investment philosophies, introduced almost forty years ago, are not only studied and applied by today's finance professionals, but are also regarded by many as gospel.",
+      summary: "Philip Fisher presents a growth-oriented investment strategy focusing on companies with potential for sustainable expansion. The book introduces his famous 'Fifteen Points to Look for in a Common Stock' - a comprehensive framework for evaluating a company's long-term potential. Fisher emphasizes the importance of qualitative factors in investment decisions and advocates for a concentrated portfolio of quality companies held for the long term."
     },
     {
       id: 3,
       title: "Margin of Safety",
       author: "Seth Klarman",
-      coverImg: "https://m.media-amazon.com/images/I/41RPWCRbiPL._AC_UY436_QL65_.jpg",
+      coverImg: "https://cdn.kobo.com/book-images/8a05d6c1-0637-4a68-944e-9e9d49524be8/1200/1200/False/margin-of-safety-30.jpg",
       category: "Value Investing",
-      description: "A rare book on risk-averse value investing strategies for the average investor. Klarman explains his approach to finding values in any type of market."
+      description: "A rare book on risk-averse value investing strategies for the average investor. Klarman explains his approach to finding values in any type of market.",
+      summary: "Seth Klarman's rare investment classic focuses on risk management as the primary consideration in investment. He argues that preserving capital should take precedence over seeking returns, introducing the concept of 'margin of safety' as a buffer against errors in judgment or market volatility. The book provides practical strategies for finding value in various market conditions, including distressed debt, bankruptcies, and spinoffs."
     },
     {
       id: 4,
@@ -71,7 +80,8 @@ const CastelnauLibrary = () => {
       author: "Howard Marks",
       coverImg: "https://m.media-amazon.com/images/I/71EiEWiZ8QL._AC_UF1000,1000_QL80_.jpg",
       category: "Market Perspectives",
-      description: "Howard Marks, the chairman and cofounder of Oaktree Capital Management, is renowned for his insightful assessments of market opportunity and risk."
+      description: "Howard Marks, the chairman and cofounder of Oaktree Capital Management, is renowned for his insightful assessments of market opportunity and risk.",
+      summary: "Howard Marks distills decades of investment wisdom into his concept of 'second-level thinking'—going beyond the obvious to understand broader implications and counterintuitive outcomes. The book emphasizes the cyclical nature of markets and the importance of understanding investor psychology. Marks stresses that superior investment results come from spotting and taking advantage of market inefficiencies while maintaining a strong awareness of risk."
     },
     {
       id: 5,
@@ -79,7 +89,8 @@ const CastelnauLibrary = () => {
       author: "Edward Chancellor",
       coverImg: "https://m.media-amazon.com/images/I/71MYz7NzdWL._AC_UF1000,1000_QL80_.jpg",
       category: "Capital Allocation",
-      description: "This book focuses on the practical implementation of the capital cycle approach to investment. Edited by Edward Chancellor, the book collects the best insights from Marathon Asset Management."
+      description: "This book focuses on the practical implementation of the capital cycle approach to investment. Edited by Edward Chancellor, the book collects the best insights from Marathon Asset Management.",
+      summary: "Edward Chancellor presents the capital cycle approach to investment, focusing on how changes in the supply of capital affect investment returns. The book demonstrates how excessive capital allocation to successful industries eventually leads to poor returns, while capital scarcity in struggling sectors can set the stage for future outperformance. This framework provides investors with a contrarian perspective that can identify potential investment opportunities by following capital flows."
     },
     {
       id: 6,
@@ -87,7 +98,8 @@ const CastelnauLibrary = () => {
       author: "Charles T. Munger",
       coverImg: "https://m.media-amazon.com/images/I/61YvqYX0-yL._SY466_.jpg",
       category: "Business Analysis",
-      description: "Charlie Munger's insights on decision-making, psychology, and mental models that have guided his investment approaches."
+      description: "Charlie Munger's insights on decision-making, psychology, and mental models that have guided his investment approaches.",
+      summary: "Charlie Munger's collected wisdom emphasizes the importance of multidisciplinary thinking in decision-making and investment. The book introduces Munger's concept of a 'latticework of mental models' drawn from various disciplines such as psychology, mathematics, and physics. His approach focuses on avoiding mistakes through awareness of cognitive biases and developing a checklist-based framework for evaluating investment opportunities."
     },
     {
       id: 7,
@@ -95,7 +107,8 @@ const CastelnauLibrary = () => {
       author: "Morgan Housel",
       coverImg: "https://m.media-amazon.com/images/I/71J3+5lrCKL._AC_UF1000,1000_QL80_.jpg",
       category: "Behavioral Finance",
-      description: "Timeless lessons on wealth, greed, and happiness. Doing well with money isn't necessarily about what you know. It's about how you behave."
+      description: "Timeless lessons on wealth, greed, and happiness. Doing well with money isn't necessarily about what you know. It's about how you behave.",
+      summary: "Morgan Housel explores how psychology affects financial decisions more than financial knowledge. Through a series of short stories, he illustrates that successful investing is less about technical skills and more about behavior, patience, and the right mindset. The book emphasizes that personal history, unique experiences, and worldview shape how individuals interact with money, often in ways that traditional economic theory fails to capture."
     },
     {
       id: 8,
@@ -103,7 +116,8 @@ const CastelnauLibrary = () => {
       author: "Benjamin Graham & David Dodd",
       coverImg: "https://m.media-amazon.com/images/I/91jKSQTG6GL._AC_UF1000,1000_QL80_.jpg",
       category: "Value Investing",
-      description: "The classic text that first articulated value investing. A must-read for serious investors seeking long-term success."
+      description: "The classic text that first articulated value investing. A must-read for serious investors seeking long-term success.",
+      summary: "Benjamin Graham and David Dodd's foundational text established the framework for value investing, focusing on analyzing financial statements to find companies trading below their intrinsic value. The book provides detailed approaches to evaluating stocks, bonds, and other securities, with an emphasis on finding a 'margin of safety' in investments. This methodical, numbers-based approach to investment analysis revolutionized how investors evaluate securities."
     }
   ];
   
@@ -189,6 +203,12 @@ const CastelnauLibrary = () => {
     } else {
       setFlippedBookId(id);
     }
+  };
+
+  const openBookSummary = (book: Book, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the flip card
+    setSelectedBook(book);
+    setDialogOpen(true);
   };
   
   const filteredBooks = selectedCategory === 'All' 
@@ -326,7 +346,11 @@ const CastelnauLibrary = () => {
                           {book.category}
                         </span>
                         <p className="text-gray-700 flex-grow overflow-y-auto">{book.description}</p>
-                        <button className="mt-4 text-sm bg-castelnau-green text-white py-2 px-4 rounded hover:bg-castelnau-green/90 transition-colors">
+                        <button 
+                          className="mt-4 text-sm bg-castelnau-green text-white py-2 px-4 rounded hover:bg-castelnau-green/90 transition-colors flex items-center justify-center gap-2"
+                          onClick={(e) => openBookSummary(book, e)}
+                        >
+                          <BookOpen className="h-4 w-4" />
                           Read Summary
                         </button>
                       </div>
@@ -473,6 +497,64 @@ const CastelnauLibrary = () => {
           )}
         </div>
       </section>
+
+      {/* Book Summary Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          {selectedBook && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-serif text-castelnau-green">{selectedBook.title}</DialogTitle>
+                <DialogDescription className="flex items-center gap-2 text-gray-600">
+                  <User className="h-4 w-4" /> {selectedBook.author}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col md:flex-row gap-6 mt-2">
+                <div className="md:w-1/3">
+                  <div className="aspect-[2/3] overflow-hidden rounded-md shadow-md">
+                    <img 
+                      src={selectedBook.coverImg} 
+                      alt={selectedBook.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium">
+                      {selectedBook.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="md:w-2/3">
+                  <h4 className="text-lg font-medium text-castelnau-darkgreen mb-2">Book Summary</h4>
+                  <ScrollArea className="h-48 rounded-md border p-4">
+                    <p className="text-gray-700 leading-relaxed">
+                      {selectedBook.summary}
+                    </p>
+                  </ScrollArea>
+                  <div className="mt-6">
+                    <h4 className="text-lg font-medium text-castelnau-darkgreen mb-2">Overview</h4>
+                    <p className="text-gray-700">{selectedBook.description}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end mt-4">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setDialogOpen(false)}
+                  className="mr-2"
+                >
+                  Close
+                </Button>
+                <Button 
+                  className="bg-castelnau-green hover:bg-castelnau-green/90 text-white"
+                >
+                  Add to Reading List
+                </Button>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </MainLayout>
   );
 };
