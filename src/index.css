@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -118,7 +117,7 @@
   }
 
   .page-hero {
-    @apply bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen text-white pt-24 pb-48 relative;
+    @apply bg-gradient-to-r from-[#004225] via-castelnau-green to-[#009725] text-white pt-24 pb-48 relative;
   }
 
   .page-title {
