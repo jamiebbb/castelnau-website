@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <header className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen shadow-md">
+    <header className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen shadow-lg">
       <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
@@ -22,7 +22,7 @@ const Navbar = () => {
               <div className="text-white">
                 <p className="flex items-center text-lg font-serif">
                   <span className="mr-2 text-castelnau-cream/90">Share price:</span> 
-                  <strong>0.92</strong>
+                  <strong className="font-serif">0.92</strong>
                 </p>
                 <p className="text-xs italic text-white/80">Updated: 10/03/2025</p>
               </div>
@@ -30,21 +30,21 @@ const Navbar = () => {
               <div className="text-white">
                 <p className="flex items-center text-lg font-serif">
                   <span className="mr-2 text-castelnau-cream/90">NAV price:</span> 
-                  <strong>1.01</strong>
+                  <strong className="font-serif">1.01</strong>
                 </p>
                 <p className="text-xs italic text-white/80">Updated: 28/02/2025</p>
               </div>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             <NavLink to="/news" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
               News
             </NavLink>
             <NavLink to="/castelnau-library" className="text-white hover:text-castelnau-cream text-base font-medium transition-colors">
               Castelnau Library
             </NavLink>
-            <button className="bg-gradient-to-r from-castelnau-gold/90 to-castelnau-gold text-castelnau-darkgreen font-medium px-6 py-3 rounded-sm shadow-sm hover:shadow-md transition-all">
+            <button className="bg-gradient-to-r from-castelnau-gold/90 to-castelnau-gold text-castelnau-darkgreen font-serif font-medium px-6 py-3 rounded-sm shadow-md hover:shadow-lg transition-all">
               Contact us
             </button>
           </div>

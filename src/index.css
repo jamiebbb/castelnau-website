@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -127,6 +128,18 @@
   .page-content {
     @apply py-20;
   }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:translate-y-[-5px];
+  }
+  
+  .gold-gradient {
+    @apply bg-gradient-to-r from-castelnau-gold/80 to-castelnau-gold;
+  }
+  
+  .green-gradient {
+    @apply bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen;
+  }
 }
 
 @layer utilities {
@@ -158,4 +171,20 @@
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }

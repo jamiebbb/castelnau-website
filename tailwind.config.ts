@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,9 +26,9 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				castelnau: {
-					green: '#007a52',         // Brighter main green
-					lightgreen: '#00916e',    // Lighter accent green
-					darkgreen: '#005b3d',     // Darker green for gradient
+					green: '#00a36e',         // Even brighter main green
+					lightgreen: '#00c288',    // Much lighter accent green
+					darkgreen: '#00714d',     // Darker but not too dark green
 					gold: '#d4af37',          // Luxury gold accent
 					cream: '#f8f5e6',         // Soft cream for backgrounds
 				},
@@ -103,13 +104,23 @@ export default {
 				'slide-up': {
 					'0%': { transform: 'translateY(10px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'flip': {
+					'0%': { transform: 'rotateY(0deg)' },
+					'100%': { transform: 'rotateY(180deg)' }
+				},
+				'book-bounce': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-8px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-in-out',
-				'slide-up': 'slide-up 0.5s ease-out'
+				'slide-up': 'slide-up 0.5s ease-out',
+				'flip': 'flip 0.6s ease-in-out',
+				'book-bounce': 'book-bounce 1s ease-in-out'
 			}
 		}
 	},

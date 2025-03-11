@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 
 interface Book {
@@ -17,6 +17,7 @@ interface Video {
   thumbnail: string;
   duration: string;
   category: string;
+  description: string;
 }
 
 interface Podcast {
@@ -26,10 +27,18 @@ interface Podcast {
   thumbnail: string;
   duration: string;
   category: string;
+  description: string;
 }
 
 const CastelnauLibrary = () => {
   const [flippedBookId, setFlippedBookId] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [activeSection, setActiveSection] = useState<'books' | 'videos' | 'podcasts'>('books');
+  
+  useEffect(() => {
+    // Scroll to top when page loads
+    window.scrollTo(0, 0);
+  }, []);
   
   const books: Book[] = [
     {
@@ -79,6 +88,22 @@ const CastelnauLibrary = () => {
       coverImg: "https://m.media-amazon.com/images/I/61YvqYX0-yL._SY466_.jpg",
       category: "Business Analysis",
       description: "Charlie Munger's insights on decision-making, psychology, and mental models that have guided his investment approaches."
+    },
+    {
+      id: 7,
+      title: "The Psychology of Money",
+      author: "Morgan Housel",
+      coverImg: "https://m.media-amazon.com/images/I/71J3+5lrCKL._AC_UF1000,1000_QL80_.jpg",
+      category: "Behavioral Finance",
+      description: "Timeless lessons on wealth, greed, and happiness. Doing well with money isn't necessarily about what you know. It's about how you behave."
+    },
+    {
+      id: 8,
+      title: "Security Analysis",
+      author: "Benjamin Graham & David Dodd",
+      coverImg: "https://m.media-amazon.com/images/I/91jKSQTG6GL._AC_UF1000,1000_QL80_.jpg",
+      category: "Value Investing",
+      description: "The classic text that first articulated value investing. A must-read for serious investors seeking long-term success."
     }
   ];
   
@@ -88,21 +113,32 @@ const CastelnauLibrary = () => {
       title: "Value Investing in a Changing World",
       thumbnail: "https://i.ytimg.com/vi/2MZQn5NBuGc/maxresdefault.jpg",
       duration: "45:30",
-      category: "Value Investing"
+      category: "Value Investing",
+      description: "An in-depth exploration of how value investing principles adapt to today's rapidly evolving markets while maintaining core fundamentals."
     },
     {
       id: 2,
       title: "Building Sustainable Business Models",
       thumbnail: "https://i.ytimg.com/vi/NiAZ5S76ags/maxresdefault.jpg",
       duration: "38:15",
-      category: "Business Strategy"
+      category: "Business Strategy",
+      description: "This presentation details the key components of creating business models that thrive through market cycles and technological disruption."
     },
     {
       id: 3,
       title: "Capital Allocation: The Art of Decision Making",
       thumbnail: "https://i.ytimg.com/vi/MrDmnN7FQXU/maxresdefault.jpg",
       duration: "52:40",
-      category: "Capital Allocation"
+      category: "Capital Allocation",
+      description: "Learn the strategic frameworks used by successful capital allocators to make decisions that compound value over decades."
+    },
+    {
+      id: 4,
+      title: "The Future of Investing: AI and Technological Disruption",
+      thumbnail: "https://i.ytimg.com/vi/7sRjonStJv0/maxresdefault.jpg",
+      duration: "41:25",
+      category: "Market Perspectives",
+      description: "How artificial intelligence and emerging technologies are reshaping investment strategies and market dynamics."
     }
   ];
   
@@ -113,7 +149,8 @@ const CastelnauLibrary = () => {
       host: "James Anderson",
       thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-template-design-podcast-icon-modern-podcast-logo-template_625493-430.jpg",
       duration: "1:12:45",
-      category: "Value Investing"
+      category: "Value Investing",
+      description: "A deep dive into the advantages of long-term investment strategies, featuring insights from renowned market veterans."
     },
     {
       id: 2,
@@ -121,9 +158,30 @@ const CastelnauLibrary = () => {
       host: "Sarah Reynolds",
       thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-design-template_474309-186.jpg",
       duration: "58:20",
-      category: "Market Perspectives"
+      category: "Market Perspectives",
+      description: "Weekly analysis of market movements and emerging trends that matter for long-term investors."
+    },
+    {
+      id: 3,
+      title: "The Capital Cycle",
+      host: "Edward Chancellor",
+      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-template_93835-212.jpg",
+      duration: "1:05:30",
+      category: "Capital Allocation",
+      description: "Understanding how capital flows influence economic cycles and create investment opportunities."
+    },
+    {
+      id: 4,
+      title: "Behavioral Finance: The Psychology of Investing",
+      host: "Daniel Kahneman & Richard Thaler",
+      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-design-template_688905-24.jpg",
+      duration: "1:24:15",
+      category: "Behavioral Finance",
+      description: "Two Nobel laureates discuss how cognitive biases impact investment decisions and market dynamics."
     }
   ];
+  
+  const categories = ['All', 'Value Investing', 'Business Analysis', 'Market Perspectives', 'Capital Allocation', 'Behavioral Finance'];
   
   const toggleFlip = (id: number) => {
     if (flippedBookId === id) {
@@ -133,13 +191,30 @@ const CastelnauLibrary = () => {
     }
   };
   
+  const filteredBooks = selectedCategory === 'All' 
+    ? books 
+    : books.filter(book => book.category === selectedCategory);
+  
+  const filteredVideos = selectedCategory === 'All' 
+    ? videos 
+    : videos.filter(video => video.category === selectedCategory);
+  
+  const filteredPodcasts = selectedCategory === 'All' 
+    ? podcasts 
+    : podcasts.filter(podcast => podcast.category === selectedCategory);
+  
   return (
     <MainLayout>
-      <section className="page-hero">
-        <div className="container mx-auto px-4">
-          <h1 className="page-title">The Castelnau Library</h1>
-          <p className="text-xl max-w-3xl text-white/90 mb-8 font-serif">A curated collection of exceptional investment wisdom and business insights</p>
-          <div className="h-1 bg-castelnau-gold w-36"></div>
+      <section className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen text-white pt-24 pb-48 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/clean-gray-paper.png')] opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold max-w-4xl leading-tight mb-10">
+            The Castelnau Library
+          </h1>
+          <p className="text-xl max-w-3xl text-white/90 mb-8 font-serif">
+            A curated collection of exceptional investment wisdom and business insights
+          </p>
+          <div className="h-1 bg-gradient-to-r from-castelnau-gold/70 to-castelnau-gold w-36"></div>
         </div>
         
         <div className="absolute bottom-0 w-full">
@@ -153,7 +228,7 @@ const CastelnauLibrary = () => {
         </div>
       </section>
       
-      <section className="page-content">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-6">Investment Knowledge Hub</h2>
@@ -162,181 +237,240 @@ const CastelnauLibrary = () => {
               and thought leadership. Explore our resources to deepen your understanding of value investing principles 
               and long-term business building.
             </p>
-          </div>
-          
-          {/* Book Collection */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-8">Book Collection</h3>
-            <p className="text-gray-700 mb-8 max-w-4xl">Explore our carefully selected collection of investment classics and contemporary wisdom. Hover or tap on a book to learn more.</p>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-              {books.map((book) => (
-                <div 
-                  key={book.id} 
-                  className="perspective-1000 cursor-pointer h-80"
-                  onClick={() => toggleFlip(book.id)}
+            {/* Category Filters */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-castelnau-green text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
                 >
-                  <div className={`relative w-full h-full transition-all duration-500 transform-style-3d ${flippedBookId === book.id ? 'rotate-y-180' : ''}`}>
-                    {/* Front of book (cover) */}
-                    <div className="absolute w-full h-full backface-hidden shadow-lg rounded-md overflow-hidden">
-                      <img 
-                        src={book.coverImg} 
-                        alt={book.title} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    
-                    {/* Back of book (description) */}
-                    <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-castelnau-cream p-4 rounded-md shadow-lg flex flex-col">
-                      <h4 className="text-lg font-bold text-castelnau-green mb-2">{book.title}</h4>
-                      <p className="text-sm text-gray-600 mb-1">by {book.author}</p>
-                      <span className="inline-block px-2 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-3">
-                        {book.category}
-                      </span>
-                      <p className="text-sm text-gray-700 flex-grow overflow-y-auto">{book.description}</p>
-                      <button className="mt-2 text-sm text-castelnau-green hover:underline">Read more</button>
-                    </div>
-                  </div>
-                </div>
+                  {category}
+                </button>
               ))}
             </div>
-          </div>
-          
-          {/* Videos & Podcasts */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-8">Media Collection</h3>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Videos */}
-              <div>
-                <h4 className="text-xl font-serif font-bold text-castelnau-green mb-6 flex items-center">
-                  <span className="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                  Video Insights
-                </h4>
-                
-                <div className="space-y-6">
-                  {videos.map((video) => (
-                    <div key={video.id} className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col md:flex-row">
-                      <div className="relative md:w-2/5">
-                        <img 
-                          src={video.thumbnail} 
-                          alt={video.title} 
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors cursor-pointer">
-                          <div className="h-14 w-14 rounded-full bg-castelnau-green/80 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                        </div>
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 text-xs rounded">
-                          {video.duration}
-                        </div>
-                      </div>
-                      <div className="p-4 md:w-3/5">
-                        <span className="inline-block px-2 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-2">
-                          {video.category}
-                        </span>
-                        <h5 className="text-lg font-bold text-castelnau-green mb-2">{video.title}</h5>
-                        <p className="text-sm text-gray-600">
-                          A comprehensive exploration of investment methodologies and market dynamics in the context of changing global economic landscapes.
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Podcasts */}
-              <div>
-                <h4 className="text-xl font-serif font-bold text-castelnau-green mb-6 flex items-center">
-                  <span className="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                    </svg>
-                  </span>
-                  Audio Perspectives
-                </h4>
-                
-                <div className="space-y-6">
-                  {podcasts.map((podcast) => (
-                    <div key={podcast.id} className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col md:flex-row">
-                      <div className="md:w-1/3">
-                        <img 
-                          src={podcast.thumbnail} 
-                          alt={podcast.title} 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-4 md:w-2/3">
-                        <span className="inline-block px-2 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-2">
-                          {podcast.category}
-                        </span>
-                        <h5 className="text-lg font-bold text-castelnau-green mb-1">{podcast.title}</h5>
-                        <p className="text-sm text-gray-600 mb-3">Hosted by {podcast.host}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex space-x-2">
-                            <button className="p-2 rounded-full bg-castelnau-green text-white hover:bg-castelnau-green/90 transition-colors">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                            <button className="text-sm text-castelnau-green hover:underline">
-                              Subscribe
-                            </button>
-                          </div>
-                          <span className="text-xs text-gray-500">{podcast.duration}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="mt-8 bg-castelnau-green/5 p-6 rounded-lg">
-                  <h5 className="text-lg font-bold text-castelnau-green mb-3">Subscribe to Our Podcast</h5>
-                  <p className="text-sm text-gray-700 mb-4">
-                    Never miss an episode. Subscribe to receive updates when new content is available.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <input 
-                      type="email" 
-                      placeholder="Your email address" 
-                      className="flex-grow px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-castelnau-green/50"
-                    />
-                    <button className="px-6 py-2 bg-castelnau-green text-white rounded hover:bg-castelnau-green/90 transition-colors">
-                      Subscribe
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* More resources section */}
-          <div className="col-span-1">
-            <div className="bg-castelnau-cream p-6 rounded-lg mb-8">
-              <h4 className="text-xl font-bold text-castelnau-green mb-4">Stay Informed</h4>
-              <p className="mb-4 text-gray-700">
-                Receive our latest insights and investment perspectives delivered directly to your inbox.
-              </p>
-              <div className="space-y-3">
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  className="w-full px-4 py-2 rounded bg-white border border-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-castelnau-green/50"
-                />
-                <button className="w-full bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white font-medium py-2 rounded hover:shadow-md transition-all">
-                  Subscribe
+            {/* Navigation Tabs */}
+            <div className="mt-12 border-b border-gray-200">
+              <div className="flex space-x-8">
+                <button 
+                  onClick={() => setActiveSection('books')}
+                  className={`pb-4 font-medium text-lg transition-colors ${
+                    activeSection === 'books' 
+                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+                      : 'text-gray-500 hover:text-castelnau-green'
+                  }`}
+                >
+                  Books
+                </button>
+                <button 
+                  onClick={() => setActiveSection('videos')}
+                  className={`pb-4 font-medium text-lg transition-colors ${
+                    activeSection === 'videos' 
+                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+                      : 'text-gray-500 hover:text-castelnau-green'
+                  }`}
+                >
+                  Videos
+                </button>
+                <button 
+                  onClick={() => setActiveSection('podcasts')}
+                  className={`pb-4 font-medium text-lg transition-colors ${
+                    activeSection === 'podcasts' 
+                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+                      : 'text-gray-500 hover:text-castelnau-green'
+                  }`}
+                >
+                  Podcasts
                 </button>
               </div>
             </div>
           </div>
+          
+          {/* Books Section */}
+          {activeSection === 'books' && (
+            <div className="mb-20 animate-fade-in">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
+                {filteredBooks.map((book) => (
+                  <div 
+                    key={book.id} 
+                    className="perspective-1000 cursor-pointer group h-96"
+                    onClick={() => toggleFlip(book.id)}
+                    onMouseEnter={() => toggleFlip(book.id)}
+                    onMouseLeave={() => setFlippedBookId(null)}
+                  >
+                    <div className={`relative w-full h-full transition-all duration-500 transform-style-3d hover:shadow-xl ${flippedBookId === book.id ? 'rotate-y-180' : 'group-hover:animate-book-bounce'}`}>
+                      {/* Front of book (cover) */}
+                      <div className="absolute w-full h-full backface-hidden shadow-lg rounded-md overflow-hidden">
+                        <img 
+                          src={book.coverImg} 
+                          alt={book.title} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                          <h4 className="text-white font-bold">{book.title}</h4>
+                          <p className="text-white/80 text-sm">{book.author}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Back of book (description) */}
+                      <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-b from-castelnau-cream to-white p-6 rounded-md shadow-lg flex flex-col">
+                        <h4 className="text-xl font-bold text-castelnau-green mb-2">{book.title}</h4>
+                        <p className="text-gray-600 mb-2">by {book.author}</p>
+                        <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-4">
+                          {book.category}
+                        </span>
+                        <p className="text-gray-700 flex-grow overflow-y-auto">{book.description}</p>
+                        <button className="mt-4 text-sm bg-castelnau-green text-white py-2 px-4 rounded hover:bg-castelnau-green/90 transition-colors">
+                          Read Summary
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {filteredBooks.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500">No books found in this category.</p>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Videos Section */}
+          {activeSection === 'videos' && (
+            <div className="mb-20 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                {filteredVideos.map((video) => (
+                  <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow">
+                    <div className="relative md:w-2/5 overflow-hidden">
+                      <img 
+                        src={video.thumbnail} 
+                        alt={video.title} 
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-colors cursor-pointer">
+                        <div className="h-16 w-16 rounded-full bg-castelnau-green/80 flex items-center justify-center transform transition-transform hover:scale-110">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-3 py-1 text-xs rounded-full">
+                        {video.duration}
+                      </div>
+                    </div>
+                    <div className="p-6 md:w-3/5">
+                      <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-3">
+                        {video.category}
+                      </span>
+                      <h5 className="text-xl font-bold text-castelnau-green mb-3">{video.title}</h5>
+                      <p className="text-gray-600 mb-4">
+                        {video.description}
+                      </p>
+                      <div className="flex space-x-3">
+                        <button className="text-castelnau-green hover:underline font-medium flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                          </svg>
+                          Save
+                        </button>
+                        <button className="text-castelnau-green hover:underline font-medium flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                          </svg>
+                          Share
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {filteredVideos.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500">No videos found in this category.</p>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Podcasts Section */}
+          {activeSection === 'podcasts' && (
+            <div className="animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                {filteredPodcasts.map((podcast) => (
+                  <div key={podcast.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={podcast.thumbnail} 
+                        alt={podcast.title} 
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                      <div className="absolute bottom-0 left-0 w-full p-4">
+                        <span className="inline-block px-3 py-1 bg-castelnau-gold/80 text-white text-xs font-medium rounded-full mb-2">
+                          {podcast.category}
+                        </span>
+                        <h5 className="text-xl font-bold text-white">{podcast.title}</h5>
+                        <p className="text-white/80">Hosted by {podcast.host}</p>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-gray-600 mb-4">{podcast.description}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex space-x-3">
+                          <button className="p-3 rounded-full bg-castelnau-green text-white hover:bg-castelnau-green/90 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                          <button className="p-3 rounded-full bg-castelnau-gold/80 text-white hover:bg-castelnau-gold transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                          </button>
+                        </div>
+                        <span className="text-sm px-3 py-1 rounded-full bg-gray-100 text-gray-600">{podcast.duration}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {filteredPodcasts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500">No podcasts found in this category.</p>
+                </div>
+              )}
+              
+              <div className="mt-16 bg-gradient-to-r from-castelnau-darkgreen/5 to-castelnau-green/5 p-8 rounded-lg border border-castelnau-green/10">
+                <h5 className="text-2xl font-serif font-bold text-castelnau-green mb-4">Subscribe to Our Investment Insights</h5>
+                <p className="text-gray-700 mb-6">
+                  Receive our latest podcasts, articles, and investment perspectives delivered directly to your inbox.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <input 
+                    type="email" 
+                    placeholder="Your email address" 
+                    className="flex-grow px-4 py-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-castelnau-green/50"
+                  />
+                  <button className="px-8 py-3 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white rounded font-medium hover:shadow-md transition-all">
+                    Subscribe
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-3">
+                  By subscribing, you agree to receive marketing communications from Castelnau Group. You can unsubscribe at any time.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </MainLayout>
