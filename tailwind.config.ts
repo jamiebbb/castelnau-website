@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,9 +25,9 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				castelnau: {
-					green: '#004d33',       // Darker green matching screenshot
-					lightgreen: '#007a52',  // Kept as accent color
-					darkgreen: '#003d29',   // Even darker green for gradient
+					green: '#006644',       // Lighter green
+					lightgreen: '#007a52',  // Accent color
+					darkgreen: '#005538',   // For gradient
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
