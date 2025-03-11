@@ -1,6 +1,7 @@
 
 import React from 'react';
 import MainLayout from '@/layouts/MainLayout';
+import { Check, Heart, HandHeart, Users } from 'lucide-react';
 
 const WhoWeAre = () => {
   return (
@@ -8,7 +9,10 @@ const WhoWeAre = () => {
       <section className="page-hero">
         <div className="container mx-auto px-4">
           <h1 className="page-title">Who We Are</h1>
-          <div className="h-1 bg-white w-36"></div>
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-8">
+            We are value investors focused on long-term growth through careful analysis and active engagement with exceptional businesses.
+          </p>
+          <div className="h-1 bg-gradient-to-r from-white/40 via-white to-white/40 w-36"></div>
         </div>
         
         <div className="absolute bottom-0 w-full">
@@ -63,67 +67,102 @@ const WhoWeAre = () => {
           </div>
 
           <div id="our-values" className="mb-20 scroll-mt-24">
-            <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Our Values</h2>
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <li className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-                <div className="bg-castelnau-green h-12 w-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-white font-bold">1</span>
+            <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Our Core Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+                <div className="bg-castelnau-green h-16 w-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Heart className="h-8 w-8 text-white" />
                 </div>
-                <h4 className="font-bold text-xl mb-3">Long-term Perspective</h4>
+                <h4 className="text-xl font-bold text-center mb-4">Integrity</h4>
                 <p className="text-gray-700 text-center">
-                  We take a multi-year view on all of our investment decisions, focusing on sustainable value 
-                  creation rather than short-term market movements.
+                  We maintain the highest standards of professional conduct and always put our investors' interests first.
                 </p>
-              </li>
-              <li className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-                <div className="bg-castelnau-green h-12 w-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-white font-bold">2</span>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+                <div className="bg-castelnau-green h-16 w-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <HandHeart className="h-8 w-8 text-white" />
                 </div>
-                <h4 className="font-bold text-xl mb-3">Value Creation</h4>
+                <h4 className="text-xl font-bold text-center mb-4">Partnership</h4>
                 <p className="text-gray-700 text-center">
-                  Our focus is on building lasting value through careful analysis, strategic thinking, and 
-                  active engagement with our portfolio companies.
+                  We build lasting relationships with our portfolio companies, working together to create sustainable value.
                 </p>
-              </li>
-              <li className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-                <div className="bg-castelnau-green h-12 w-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-white font-bold">3</span>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+                <div className="bg-castelnau-green h-16 w-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Check className="h-8 w-8 text-white" />
                 </div>
-                <h4 className="font-bold text-xl mb-3">Partnership</h4>
+                <h4 className="text-xl font-bold text-center mb-4">Excellence</h4>
                 <p className="text-gray-700 text-center">
-                  We believe in building strong, collaborative relationships with our portfolio companies, 
-                  working together to achieve mutual success.
+                  We strive for excellence in everything we do, from research and analysis to portfolio management.
                 </p>
-              </li>
-            </ul>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+                <div className="bg-castelnau-green h-16 w-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Users className="h-8 w-8 text-white" />
+                </div>
+                <h4 className="text-xl font-bold text-center mb-4">Collaboration</h4>
+                <p className="text-gray-700 text-center">
+                  We believe in the power of teamwork and diverse perspectives to achieve exceptional results.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div id="our-team" className="scroll-mt-24">
-            <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Our Team</h2>
+            <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Meet Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h4 className="font-bold text-xl mb-2">Gary Channon</h4>
-                <p className="text-gray-600 mb-2">Chief Investment Officer</p>
-                <p className="text-gray-700">
-                  With over 25 years of investment experience, Gary leads our investment strategy and portfolio 
-                  management team, bringing deep expertise in value investing and business analysis.
-                </p>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
+                  alt="Gary Channon" 
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-xl font-bold mb-2">Gary Channon</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Chief Investment Officer</p>
+                  <p className="text-gray-700">
+                    With over 25 years of investment experience, Gary leads our investment strategy and portfolio 
+                    management. His deep understanding of value investing principles has been instrumental in 
+                    shaping our investment approach.
+                  </p>
+                </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h4 className="font-bold text-xl mb-2">Investment Team</h4>
-                <p className="text-gray-600 mb-2">Portfolio Management</p>
-                <p className="text-gray-700">
-                  Our experienced investment team combines diverse expertise in financial analysis, industry 
-                  research, and portfolio management to identify and execute investment opportunities.
-                </p>
+
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" 
+                  alt="Investment Team" 
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-xl font-bold mb-2">Investment Team</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Portfolio Management</p>
+                  <p className="text-gray-700">
+                    Our experienced investment team combines diverse expertise in financial analysis, 
+                    industry research, and portfolio management. Each member brings unique insights 
+                    and perspectives to our investment process.
+                  </p>
+                </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h4 className="font-bold text-xl mb-2">Operations Team</h4>
-                <p className="text-gray-600 mb-2">Business Operations</p>
-                <p className="text-gray-700">
-                  Our operations team ensures smooth functioning of all business processes, supporting our 
-                  investment activities with efficient administrative and operational support.
-                </p>
+
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                  alt="Operations Team" 
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-xl font-bold mb-2">Operations Team</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Business Operations</p>
+                  <p className="text-gray-700">
+                    Our operations team ensures the smooth functioning of all business processes. 
+                    Their dedication to operational excellence enables our investment professionals 
+                    to focus on what they do best.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
