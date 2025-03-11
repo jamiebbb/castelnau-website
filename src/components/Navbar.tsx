@@ -12,7 +12,7 @@ const Navbar = () => {
               <img 
                 alt="Castelnau Group" 
                 className="h-16" 
-                src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png"
+                src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
                 loading="eager" // Force eager loading
                 fetchPriority="high" // Even higher priority
               />
