@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { cn } from "@/lib/utils";
 
 interface NavigationTabsProps {
   activeSection: 'books' | 'videos' | 'podcasts';
@@ -12,33 +13,45 @@ const NavigationTabs = ({ activeSection, setActiveSection }: NavigationTabsProps
       <div className="flex space-x-8">
         <button 
           onClick={() => setActiveSection('books')}
-          className={`pb-4 font-medium text-lg transition-colors ${
+          className={cn(
+            "pb-4 font-medium text-lg transition-all relative",
             activeSection === 'books' 
-              ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+              ? 'text-castelnau-green' 
               : 'text-gray-500 hover:text-castelnau-green'
-          }`}
+          )}
         >
           Books
+          {activeSection === 'books' && (
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+          )}
         </button>
         <button 
           onClick={() => setActiveSection('videos')}
-          className={`pb-4 font-medium text-lg transition-colors ${
+          className={cn(
+            "pb-4 font-medium text-lg transition-all relative",
             activeSection === 'videos' 
-              ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+              ? 'text-castelnau-green' 
               : 'text-gray-500 hover:text-castelnau-green'
-          }`}
+          )}
         >
           Videos
+          {activeSection === 'videos' && (
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+          )}
         </button>
         <button 
           onClick={() => setActiveSection('podcasts')}
-          className={`pb-4 font-medium text-lg transition-colors ${
+          className={cn(
+            "pb-4 font-medium text-lg transition-all relative",
             activeSection === 'podcasts' 
-              ? 'text-castelnau-green border-b-2 border-castelnau-green' 
+              ? 'text-castelnau-green' 
               : 'text-gray-500 hover:text-castelnau-green'
-          }`}
+          )}
         >
           Podcasts
+          {activeSection === 'podcasts' && (
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-lightgreen"></span>
+          )}
         </button>
       </div>
     </div>

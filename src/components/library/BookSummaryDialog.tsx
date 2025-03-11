@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Book } from '@/types/library';
-import { User } from "lucide-react";
+import { User, BookOpen, Share2 } from "lucide-react";
 
 interface BookSummaryDialogProps {
   selectedBook: Book | null;
@@ -34,7 +34,7 @@ const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSumm
                   />
                 </div>
                 <div className="mt-4">
-                  <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium">
+                  <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full">
                     {selectedBook.category}
                   </span>
                 </div>
@@ -52,18 +52,22 @@ const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSumm
                 </div>
               </div>
             </div>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-between mt-4">
+              <div className="flex space-x-2">
+                <Button variant="outline" size="sm" className="gap-1">
+                  <BookOpen className="h-4 w-4" />
+                  Add to Reading List
+                </Button>
+                <Button variant="outline" size="sm" className="gap-1">
+                  <Share2 className="h-4 w-4" />
+                  Share
+                </Button>
+              </div>
               <Button 
-                variant="outline" 
+                variant="castelnau"
                 onClick={() => setDialogOpen(false)}
-                className="mr-2"
               >
                 Close
-              </Button>
-              <Button 
-                className="bg-castelnau-green hover:bg-castelnau-green/90 text-white"
-              >
-                Add to Reading List
               </Button>
             </div>
           </>

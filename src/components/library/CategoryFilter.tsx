@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Button } from "@/components/ui/button";
 
 interface CategoryFilterProps {
   categories: string[];
@@ -11,17 +12,19 @@ const CategoryFilter = ({ categories, selectedCategory, setSelectedCategory }: C
   return (
     <div className="mt-8 flex flex-wrap gap-3">
       {categories.map((category) => (
-        <button
+        <Button
           key={category}
           onClick={() => setSelectedCategory(category)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+          variant={selectedCategory === category ? "castelnau" : "outline"}
+          size="sm"
+          className={`rounded-full transition-all ${
             selectedCategory === category
-              ? 'bg-castelnau-green text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'shadow-md'
+              : 'hover:text-castelnau-green'
           }`}
         >
           {category}
-        </button>
+        </Button>
       ))}
     </div>
   );
