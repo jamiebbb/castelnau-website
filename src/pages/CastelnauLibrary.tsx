@@ -1,38 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { BookOpen, Clock, User } from "lucide-react";
-
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  coverImg: string;
-  category: string;
-  description: string;
-  summary?: string;
-}
-
-interface Video {
-  id: number;
-  title: string;
-  thumbnail: string;
-  duration: string;
-  category: string;
-  description: string;
-}
-
-interface Podcast {
-  id: number;
-  title: string;
-  host: string;
-  thumbnail: string;
-  duration: string;
-  category: string;
-  description: string;
-}
+import { books, videos, podcasts, categories } from '@/data/libraryData';
+import { Book } from '@/types/library';
+import CategoryFilter from '@/components/library/CategoryFilter';
+import NavigationTabs from '@/components/library/NavigationTabs';
+import BooksSection from '@/components/library/BooksSection';
+import VideosSection from '@/components/library/VideosSection';
+import PodcastsSection from '@/components/library/PodcastsSection';
+import BookSummaryDialog from '@/components/library/BookSummaryDialog';
+import '../styles/library.css';
 
 const CastelnauLibrary = () => {
   const [flippedBookId, setFlippedBookId] = useState<number | null>(null);
@@ -45,157 +22,6 @@ const CastelnauLibrary = () => {
     // Scroll to top when page loads
     window.scrollTo(0, 0);
   }, []);
-  
-  const books: Book[] = [
-    {
-      id: 1,
-      title: "The Intelligent Investor",
-      author: "Benjamin Graham",
-      coverImg: "https://m.media-amazon.com/images/I/91yj3mbz4JL._AC_UF1000,1000_QL80_.jpg",
-      category: "Value Investing",
-      description: "The classic text on value investing. Graham's philosophy of 'value investing' has made this book the investment bible for generations of investors.",
-      summary: "The Intelligent Investor teaches a realistic approach to investing in stocks, focusing on fundamental analysis rather than market speculation. Graham introduces the concept of 'margin of safety' as a principle of investment operations, encouraging investors to focus on intrinsic business value rather than market fluctuations. This defensive, conservative approach to investing has influenced many successful investors, most notably Warren Buffett."
-    },
-    {
-      id: 2,
-      title: "Common Stocks and Uncommon Profits",
-      author: "Philip Fisher",
-      coverImg: "https://m.media-amazon.com/images/I/81ofrCfBYsL._AC_UF1000,1000_QL80_.jpg",
-      category: "Business Analysis",
-      description: "Fisher's investment philosophies, introduced almost forty years ago, are not only studied and applied by today's finance professionals, but are also regarded by many as gospel.",
-      summary: "Philip Fisher presents a growth-oriented investment strategy focusing on companies with potential for sustainable expansion. The book introduces his famous 'Fifteen Points to Look for in a Common Stock' - a comprehensive framework for evaluating a company's long-term potential. Fisher emphasizes the importance of qualitative factors in investment decisions and advocates for a concentrated portfolio of quality companies held for the long term."
-    },
-    {
-      id: 3,
-      title: "Margin of Safety",
-      author: "Seth Klarman",
-      coverImg: "https://cdn.kobo.com/book-images/8a05d6c1-0637-4a68-944e-9e9d49524be8/1200/1200/False/margin-of-safety-30.jpg",
-      category: "Value Investing",
-      description: "A rare book on risk-averse value investing strategies for the average investor. Klarman explains his approach to finding values in any type of market.",
-      summary: "Seth Klarman's rare investment classic focuses on risk management as the primary consideration in investment. He argues that preserving capital should take precedence over seeking returns, introducing the concept of 'margin of safety' as a buffer against errors in judgment or market volatility. The book provides practical strategies for finding value in various market conditions, including distressed debt, bankruptcies, and spinoffs."
-    },
-    {
-      id: 4,
-      title: "The Most Important Thing",
-      author: "Howard Marks",
-      coverImg: "https://m.media-amazon.com/images/I/71EiEWiZ8QL._AC_UF1000,1000_QL80_.jpg",
-      category: "Market Perspectives",
-      description: "Howard Marks, the chairman and cofounder of Oaktree Capital Management, is renowned for his insightful assessments of market opportunity and risk.",
-      summary: "Howard Marks distills decades of investment wisdom into his concept of 'second-level thinking'—going beyond the obvious to understand broader implications and counterintuitive outcomes. The book emphasizes the cyclical nature of markets and the importance of understanding investor psychology. Marks stresses that superior investment results come from spotting and taking advantage of market inefficiencies while maintaining a strong awareness of risk."
-    },
-    {
-      id: 5,
-      title: "Capital Returns",
-      author: "Edward Chancellor",
-      coverImg: "https://m.media-amazon.com/images/I/71MYz7NzdWL._AC_UF1000,1000_QL80_.jpg",
-      category: "Capital Allocation",
-      description: "This book focuses on the practical implementation of the capital cycle approach to investment. Edited by Edward Chancellor, the book collects the best insights from Marathon Asset Management.",
-      summary: "Edward Chancellor presents the capital cycle approach to investment, focusing on how changes in the supply of capital affect investment returns. The book demonstrates how excessive capital allocation to successful industries eventually leads to poor returns, while capital scarcity in struggling sectors can set the stage for future outperformance. This framework provides investors with a contrarian perspective that can identify potential investment opportunities by following capital flows."
-    },
-    {
-      id: 6,
-      title: "Poor Charlie's Almanack",
-      author: "Charles T. Munger",
-      coverImg: "https://m.media-amazon.com/images/I/61YvqYX0-yL._SY466_.jpg",
-      category: "Business Analysis",
-      description: "Charlie Munger's insights on decision-making, psychology, and mental models that have guided his investment approaches.",
-      summary: "Charlie Munger's collected wisdom emphasizes the importance of multidisciplinary thinking in decision-making and investment. The book introduces Munger's concept of a 'latticework of mental models' drawn from various disciplines such as psychology, mathematics, and physics. His approach focuses on avoiding mistakes through awareness of cognitive biases and developing a checklist-based framework for evaluating investment opportunities."
-    },
-    {
-      id: 7,
-      title: "The Psychology of Money",
-      author: "Morgan Housel",
-      coverImg: "https://m.media-amazon.com/images/I/71J3+5lrCKL._AC_UF1000,1000_QL80_.jpg",
-      category: "Behavioral Finance",
-      description: "Timeless lessons on wealth, greed, and happiness. Doing well with money isn't necessarily about what you know. It's about how you behave.",
-      summary: "Morgan Housel explores how psychology affects financial decisions more than financial knowledge. Through a series of short stories, he illustrates that successful investing is less about technical skills and more about behavior, patience, and the right mindset. The book emphasizes that personal history, unique experiences, and worldview shape how individuals interact with money, often in ways that traditional economic theory fails to capture."
-    },
-    {
-      id: 8,
-      title: "Security Analysis",
-      author: "Benjamin Graham & David Dodd",
-      coverImg: "https://m.media-amazon.com/images/I/91jKSQTG6GL._AC_UF1000,1000_QL80_.jpg",
-      category: "Value Investing",
-      description: "The classic text that first articulated value investing. A must-read for serious investors seeking long-term success.",
-      summary: "Benjamin Graham and David Dodd's foundational text established the framework for value investing, focusing on analyzing financial statements to find companies trading below their intrinsic value. The book provides detailed approaches to evaluating stocks, bonds, and other securities, with an emphasis on finding a 'margin of safety' in investments. This methodical, numbers-based approach to investment analysis revolutionized how investors evaluate securities."
-    }
-  ];
-  
-  const videos: Video[] = [
-    {
-      id: 1,
-      title: "Value Investing in a Changing World",
-      thumbnail: "https://i.ytimg.com/vi/2MZQn5NBuGc/maxresdefault.jpg",
-      duration: "45:30",
-      category: "Value Investing",
-      description: "An in-depth exploration of how value investing principles adapt to today's rapidly evolving markets while maintaining core fundamentals."
-    },
-    {
-      id: 2,
-      title: "Building Sustainable Business Models",
-      thumbnail: "https://i.ytimg.com/vi/NiAZ5S76ags/maxresdefault.jpg",
-      duration: "38:15",
-      category: "Business Strategy",
-      description: "This presentation details the key components of creating business models that thrive through market cycles and technological disruption."
-    },
-    {
-      id: 3,
-      title: "Capital Allocation: The Art of Decision Making",
-      thumbnail: "https://i.ytimg.com/vi/MrDmnN7FQXU/maxresdefault.jpg",
-      duration: "52:40",
-      category: "Capital Allocation",
-      description: "Learn the strategic frameworks used by successful capital allocators to make decisions that compound value over decades."
-    },
-    {
-      id: 4,
-      title: "The Future of Investing: AI and Technological Disruption",
-      thumbnail: "https://i.ytimg.com/vi/7sRjonStJv0/maxresdefault.jpg",
-      duration: "41:25",
-      category: "Market Perspectives",
-      description: "How artificial intelligence and emerging technologies are reshaping investment strategies and market dynamics."
-    }
-  ];
-  
-  const podcasts: Podcast[] = [
-    {
-      id: 1,
-      title: "The Long View: Investment Horizons",
-      host: "James Anderson",
-      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-template-design-podcast-icon-modern-podcast-logo-template_625493-430.jpg",
-      duration: "1:12:45",
-      category: "Value Investing",
-      description: "A deep dive into the advantages of long-term investment strategies, featuring insights from renowned market veterans."
-    },
-    {
-      id: 2,
-      title: "Market Analysis & Trends",
-      host: "Sarah Reynolds",
-      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-design-template_474309-186.jpg",
-      duration: "58:20",
-      category: "Market Perspectives",
-      description: "Weekly analysis of market movements and emerging trends that matter for long-term investors."
-    },
-    {
-      id: 3,
-      title: "The Capital Cycle",
-      host: "Edward Chancellor",
-      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-template_93835-212.jpg",
-      duration: "1:05:30",
-      category: "Capital Allocation",
-      description: "Understanding how capital flows influence economic cycles and create investment opportunities."
-    },
-    {
-      id: 4,
-      title: "Behavioral Finance: The Psychology of Investing",
-      host: "Daniel Kahneman & Richard Thaler",
-      thumbnail: "https://img.freepik.com/premium-vector/podcast-cover-art-design-template_688905-24.jpg",
-      duration: "1:24:15",
-      category: "Behavioral Finance",
-      description: "Two Nobel laureates discuss how cognitive biases impact investment decisions and market dynamics."
-    }
-  ];
-  
-  const categories = ['All', 'Value Investing', 'Business Analysis', 'Market Perspectives', 'Capital Allocation', 'Behavioral Finance'];
   
   const toggleFlip = (id: number) => {
     if (flippedBookId === id) {
@@ -259,302 +85,47 @@ const CastelnauLibrary = () => {
             </p>
             
             {/* Category Filters */}
-            <div className="mt-8 flex flex-wrap gap-3">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-castelnau-green text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+            <CategoryFilter 
+              categories={categories}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
             
             {/* Navigation Tabs */}
-            <div className="mt-12 border-b border-gray-200">
-              <div className="flex space-x-8">
-                <button 
-                  onClick={() => setActiveSection('books')}
-                  className={`pb-4 font-medium text-lg transition-colors ${
-                    activeSection === 'books' 
-                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
-                      : 'text-gray-500 hover:text-castelnau-green'
-                  }`}
-                >
-                  Books
-                </button>
-                <button 
-                  onClick={() => setActiveSection('videos')}
-                  className={`pb-4 font-medium text-lg transition-colors ${
-                    activeSection === 'videos' 
-                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
-                      : 'text-gray-500 hover:text-castelnau-green'
-                  }`}
-                >
-                  Videos
-                </button>
-                <button 
-                  onClick={() => setActiveSection('podcasts')}
-                  className={`pb-4 font-medium text-lg transition-colors ${
-                    activeSection === 'podcasts' 
-                      ? 'text-castelnau-green border-b-2 border-castelnau-green' 
-                      : 'text-gray-500 hover:text-castelnau-green'
-                  }`}
-                >
-                  Podcasts
-                </button>
-              </div>
-            </div>
+            <NavigationTabs 
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+            />
           </div>
           
           {/* Books Section */}
           {activeSection === 'books' && (
-            <div className="mb-20 animate-fade-in">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
-                {filteredBooks.map((book) => (
-                  <div 
-                    key={book.id} 
-                    className="perspective-1000 cursor-pointer group h-96"
-                    onClick={() => toggleFlip(book.id)}
-                    onMouseEnter={() => toggleFlip(book.id)}
-                    onMouseLeave={() => setFlippedBookId(null)}
-                  >
-                    <div className={`relative w-full h-full transition-all duration-500 transform-style-3d hover:shadow-xl ${flippedBookId === book.id ? 'rotate-y-180' : 'group-hover:animate-book-bounce'}`}>
-                      {/* Front of book (cover) */}
-                      <div className="absolute w-full h-full backface-hidden shadow-lg rounded-md overflow-hidden">
-                        <img 
-                          src={book.coverImg} 
-                          alt={book.title} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                          <h4 className="text-white font-bold">{book.title}</h4>
-                          <p className="text-white/80 text-sm">{book.author}</p>
-                        </div>
-                      </div>
-                      
-                      {/* Back of book (description) */}
-                      <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-b from-castelnau-cream to-white p-6 rounded-md shadow-lg flex flex-col">
-                        <h4 className="text-xl font-bold text-castelnau-green mb-2">{book.title}</h4>
-                        <p className="text-gray-600 mb-2">by {book.author}</p>
-                        <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-4">
-                          {book.category}
-                        </span>
-                        <p className="text-gray-700 flex-grow overflow-y-auto">{book.description}</p>
-                        <button 
-                          className="mt-4 text-sm bg-castelnau-green text-white py-2 px-4 rounded hover:bg-castelnau-green/90 transition-colors flex items-center justify-center gap-2"
-                          onClick={(e) => openBookSummary(book, e)}
-                        >
-                          <BookOpen className="h-4 w-4" />
-                          Read Summary
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {filteredBooks.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No books found in this category.</p>
-                </div>
-              )}
-            </div>
+            <BooksSection 
+              filteredBooks={filteredBooks}
+              flippedBookId={flippedBookId}
+              toggleFlip={toggleFlip}
+              openBookSummary={openBookSummary}
+            />
           )}
           
           {/* Videos Section */}
           {activeSection === 'videos' && (
-            <div className="mb-20 animate-fade-in">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-                {filteredVideos.map((video) => (
-                  <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow">
-                    <div className="relative md:w-2/5 overflow-hidden">
-                      <img 
-                        src={video.thumbnail} 
-                        alt={video.title} 
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-colors cursor-pointer">
-                        <div className="h-16 w-16 rounded-full bg-castelnau-green/80 flex items-center justify-center transform transition-transform hover:scale-110">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-3 py-1 text-xs rounded-full">
-                        {video.duration}
-                      </div>
-                    </div>
-                    <div className="p-6 md:w-3/5">
-                      <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full mb-3">
-                        {video.category}
-                      </span>
-                      <h5 className="text-xl font-bold text-castelnau-green mb-3">{video.title}</h5>
-                      <p className="text-gray-600 mb-4">
-                        {video.description}
-                      </p>
-                      <div className="flex space-x-3">
-                        <button className="text-castelnau-green hover:underline font-medium flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                          </svg>
-                          Save
-                        </button>
-                        <button className="text-castelnau-green hover:underline font-medium flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                          </svg>
-                          Share
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {filteredVideos.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No videos found in this category.</p>
-                </div>
-              )}
-            </div>
+            <VideosSection filteredVideos={filteredVideos} />
           )}
           
           {/* Podcasts Section */}
           {activeSection === 'podcasts' && (
-            <div className="animate-fade-in">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-                {filteredPodcasts.map((podcast) => (
-                  <div key={podcast.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={podcast.thumbnail} 
-                        alt={podcast.title} 
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 w-full p-4">
-                        <span className="inline-block px-3 py-1 bg-castelnau-gold/80 text-white text-xs font-medium rounded-full mb-2">
-                          {podcast.category}
-                        </span>
-                        <h5 className="text-xl font-bold text-white">{podcast.title}</h5>
-                        <p className="text-white/80">Hosted by {podcast.host}</p>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <p className="text-gray-600 mb-4">{podcast.description}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex space-x-3">
-                          <button className="p-3 rounded-full bg-castelnau-green text-white hover:bg-castelnau-green/90 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                            </svg>
-                          </button>
-                          <button className="p-3 rounded-full bg-castelnau-gold/80 text-white hover:bg-castelnau-gold transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                          </button>
-                        </div>
-                        <span className="text-sm px-3 py-1 rounded-full bg-gray-100 text-gray-600">{podcast.duration}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {filteredPodcasts.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No podcasts found in this category.</p>
-                </div>
-              )}
-              
-              <div className="mt-16 bg-gradient-to-r from-castelnau-darkgreen/5 to-castelnau-green/5 p-8 rounded-lg border border-castelnau-green/10">
-                <h5 className="text-2xl font-serif font-bold text-castelnau-green mb-4">Subscribe to Our Investment Insights</h5>
-                <p className="text-gray-700 mb-6">
-                  Receive our latest podcasts, articles, and investment perspectives delivered directly to your inbox.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    className="flex-grow px-4 py-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-castelnau-green/50"
-                  />
-                  <button className="px-8 py-3 bg-gradient-to-r from-castelnau-darkgreen to-castelnau-green text-white rounded font-medium hover:shadow-md transition-all">
-                    Subscribe
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-3">
-                  By subscribing, you agree to receive marketing communications from Castelnau Group. You can unsubscribe at any time.
-                </p>
-              </div>
-            </div>
+            <PodcastsSection filteredPodcasts={filteredPodcasts} />
           )}
         </div>
       </section>
 
       {/* Book Summary Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          {selectedBook && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-serif text-castelnau-green">{selectedBook.title}</DialogTitle>
-                <DialogDescription className="flex items-center gap-2 text-gray-600">
-                  <User className="h-4 w-4" /> {selectedBook.author}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex flex-col md:flex-row gap-6 mt-2">
-                <div className="md:w-1/3">
-                  <div className="aspect-[2/3] overflow-hidden rounded-md shadow-md">
-                    <img 
-                      src={selectedBook.coverImg} 
-                      alt={selectedBook.title} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium">
-                      {selectedBook.category}
-                    </span>
-                  </div>
-                </div>
-                <div className="md:w-2/3">
-                  <h4 className="text-lg font-medium text-castelnau-darkgreen mb-2">Book Summary</h4>
-                  <ScrollArea className="h-48 rounded-md border p-4">
-                    <p className="text-gray-700 leading-relaxed">
-                      {selectedBook.summary}
-                    </p>
-                  </ScrollArea>
-                  <div className="mt-6">
-                    <h4 className="text-lg font-medium text-castelnau-darkgreen mb-2">Overview</h4>
-                    <p className="text-gray-700">{selectedBook.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-end mt-4">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setDialogOpen(false)}
-                  className="mr-2"
-                >
-                  Close
-                </Button>
-                <Button 
-                  className="bg-castelnau-green hover:bg-castelnau-green/90 text-white"
-                >
-                  Add to Reading List
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      <BookSummaryDialog 
+        selectedBook={selectedBook}
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+      />
     </MainLayout>
   );
 };
