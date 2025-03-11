@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Check, Heart, HandHeart, Users } from 'lucide-react';
@@ -154,54 +153,118 @@ const WhoWeAre = () => {
 
           <div id="our-team" className="scroll-mt-24">
             <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Meet Our Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img 
-                  src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
-                  alt="Gary Channon" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <h4 className="text-xl font-bold mb-2">Gary Channon</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
+                    alt="Gary Channon" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Gary Channon</h4>
                   <p className="text-castelnau-green font-medium mb-3">Chief Investment Officer</p>
                   <p className="text-gray-700">
                     With over 25 years of investment experience, Gary leads our investment strategy and portfolio 
                     management. His deep understanding of value investing principles has been instrumental in 
-                    shaping our investment approach.
+                    shaping our approach.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img 
-                  src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" 
-                  alt="Investment Team" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <h4 className="text-xl font-bold mb-2">Investment Team</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Portfolio Management</p>
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" 
+                    alt="Charlotte Maby" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Charlotte Maby</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Head of Research</p>
                   <p className="text-gray-700">
-                    Our experienced investment team combines diverse expertise in financial analysis, 
-                    industry research, and portfolio management. Each member brings unique insights 
-                    and perspectives to our investment process.
+                    Charlotte leads our research team, bringing extensive experience in fundamental analysis 
+                    and market research. Her analytical approach helps identify promising investment opportunities.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img 
-                  src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
-                  alt="Operations Team" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <h4 className="text-xl font-bold mb-2">Operations Team</h4>
-                  <p className="text-castelnau-green font-medium mb-3">Business Operations</p>
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                    alt="David Stevenson" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">David Stevenson</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Portfolio Manager</p>
                   <p className="text-gray-700">
-                    Our operations team ensures the smooth functioning of all business processes. 
-                    Their dedication to operational excellence enables our investment professionals 
-                    to focus on what they do best.
+                    David manages key portfolio relationships and investment strategies. His expertise in 
+                    value investing and strategic planning contributes to our long-term success.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/d0c87d8a-b6c8-4b43-bc85-feec0bab9862.png" 
+                    alt="Sarah Thompson" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Sarah Thompson</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Risk Management Director</p>
+                  <p className="text-gray-700">
+                    Sarah oversees our risk management strategy, ensuring our investments align with our 
+                    risk parameters while maximizing potential returns.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png" 
+                    alt="Michael Chen" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Michael Chen</h4>
+                  <p className="text-castelnau-green font-medium mb-3">ESG Integration Lead</p>
+                  <p className="text-gray-700">
+                    Michael leads our ESG integration initiatives, ensuring environmental, social, and governance 
+                    factors are considered in our investment decisions.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png" 
+                    alt="Emma Rodriguez" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+                  <h4 className="text-xl font-bold mb-2 text-castelnau-darkgreen">Emma Rodriguez</h4>
+                  <p className="text-castelnau-green font-medium mb-3">Client Relations Director</p>
+                  <p className="text-gray-700">
+                    Emma manages our client relationships, ensuring clear communication and understanding of 
+                    our investment strategies and performance.
                   </p>
                 </div>
               </div>
