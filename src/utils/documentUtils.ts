@@ -79,9 +79,12 @@ export const uploadDocument = async ({ title, category, file }: DocumentUploadPa
     const filePath = `${category}/${fileName}`;
     
     // Upload file to Supabase Storage
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError, data } = await supabase.storage
       .from('documents')
-      .upload(filePath, file);
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
       
     if (uploadError) {
       console.error('Error uploading file:', uploadError);
@@ -106,16 +109,17 @@ export const uploadDocument = async ({ title, category, file }: DocumentUploadPa
       await supabase.storage.from('documents').remove([filePath]);
       throw new Error('Failed to save document information');
     }
+
+    toast.success('Document uploaded successfully');
   } catch (error) {
     console.error('Document upload failed:', error);
+    toast.error('Failed to upload document');
     throw error;
   }
 };
 
 /**
  * Initiates download of a document from Supabase storage
- * @param filePath Path to the document within the storage bucket
- * @param fileName Name to use for the downloaded file
  */
 export const downloadDocument = async (filePath: string, fileName: string) => {
   try {
@@ -143,9 +147,9 @@ export const downloadDocument = async (filePath: string, fileName: string) => {
     // Clean up the URL
     URL.revokeObjectURL(url);
     
-    toast.success("Document download started");
+    toast.success('Document download started');
   } catch (error) {
     console.error('Error downloading document:', error);
-    toast.error("Failed to download document");
+    toast.error('Failed to download document');
   }
 };
