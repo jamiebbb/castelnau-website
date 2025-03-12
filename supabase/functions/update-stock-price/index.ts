@@ -10,7 +10,7 @@ const corsHeaders = {
 
 const ALPHA_VANTAGE_API_KEY = Deno.env.get("ALPHA_VANTAGE_API_KEY");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
-const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") || "";
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -19,14 +19,15 @@ serve(async (req) => {
   }
 
   try {
-    // Initialize Supabase client
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Initialize Supabase client with service role key for admin privileges
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     
-    // Castelnau Group is listed on the London Stock Exchange with symbol CGI.L
-    const symbol = "CGI.L"; // Castelnau Group Ltd on London Stock Exchange
-
+    // Castelnau Group is listed on the London Stock Exchange with symbol CGL.L
+    const symbol = "CGL.L"; // Correct symbol for Castelnau Group Ltd on London Stock Exchange
+    
+    console.log(`Fetching stock data for Castelnau Group (${symbol})`);
+    
     // Fetch data from Alpha Vantage
-    console.log("Fetching stock data for Castelnau Group (CGI.L)");
     const response = await fetch(
       `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`
     );
@@ -59,7 +60,7 @@ serve(async (req) => {
 
     console.log("Parsed stock data for Castelnau Group:", stockData);
 
-    // Update database
+    // Update database using service role privileges
     const { error: upsertError } = await supabase
       .from("stock_prices")
       .upsert({ id: 1, ...stockData })
