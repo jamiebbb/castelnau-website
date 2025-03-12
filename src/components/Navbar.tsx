@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
@@ -10,6 +9,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useScrollToSection from '@/hooks/useScrollToSection';
+import StockPriceDisplay from './StockPriceDisplay';
 
 const Navbar = () => {
   const location = useLocation();
@@ -54,13 +54,7 @@ const Navbar = () => {
             </NavLink>
             
             <div className="flex items-center space-x-8">
-              <div className="text-white">
-                <p className="flex items-center text-lg font-serif">
-                  <span className="mr-2 text-castelnau-cream/90">Share price:</span> 
-                  <strong className="font-serif">0.92</strong>
-                </p>
-                <p className="text-xs italic text-white/80">Updated: 10/03/2025</p>
-              </div>
+              <StockPriceDisplay />
               
               <div className="text-white">
                 <p className="flex items-center text-lg font-serif">
