@@ -16,6 +16,28 @@ export interface Document {
 }
 
 /**
+ * Document upload parameters
+ */
+export interface DocumentUploadParams {
+  title: string;
+  category: Document['category'];
+  file: File;
+}
+
+/**
+ * Formats file size for display
+ */
+export const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 Bytes';
+  
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+/**
  * Fetches documents from Supabase
  */
 export const fetchDocuments = async (): Promise<Document[]> => {
@@ -42,6 +64,51 @@ export const fetchDocuments = async (): Promise<Document[]> => {
     console.error('Error fetching documents:', error);
     toast.error("Failed to fetch documents");
     return [];
+  }
+};
+
+/**
+ * Uploads a document to Supabase storage and adds record to the documents table
+ */
+export const uploadDocument = async ({ title, category, file }: DocumentUploadParams): Promise<void> => {
+  try {
+    // Create a unique file path
+    const timestamp = new Date().getTime();
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
+    const filePath = `${category}/${fileName}`;
+    
+    // Upload file to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from('documents')
+      .upload(filePath, file);
+      
+    if (uploadError) {
+      console.error('Error uploading file:', uploadError);
+      throw new Error('Failed to upload file');
+    }
+    
+    // Add entry to documents table
+    const { error: insertError } = await supabase
+      .from('documents')
+      .insert({
+        title,
+        category,
+        file_path: filePath,
+        file_name: file.name,
+        file_size: formatFileSize(file.size),
+        publish_date: new Date().toISOString().split('T')[0]
+      });
+      
+    if (insertError) {
+      console.error('Error inserting document record:', insertError);
+      // If record insertion fails, try to delete the uploaded file
+      await supabase.storage.from('documents').remove([filePath]);
+      throw new Error('Failed to save document information');
+    }
+  } catch (error) {
+    console.error('Document upload failed:', error);
+    throw error;
   }
 };
 
