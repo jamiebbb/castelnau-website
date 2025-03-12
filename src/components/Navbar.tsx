@@ -140,11 +140,37 @@ const Navbar = () => {
                 Explore the Group
               </Button>
             </NavLink>
-            <NavLink to="/investor-relations">
-              <Button variant="transparent" className="font-medium">
-                Investor Relations
-              </Button>
-            </NavLink>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="transparent" className="font-medium">
+                  Investor Relations <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
+                <Link to="/investor-relations#share-price">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
+                    Share Price
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/investor-relations#regulatory-documents">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
+                    Regulatory Documents
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/investor-relations#factsheets">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
+                    Factsheets
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/investor-relations#rns">
+                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
+                    RNS
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             <NavLink to="/graduate-programme">
               <Button variant="transparent" className="font-medium">
                 Graduate Programme
