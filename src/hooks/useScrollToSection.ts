@@ -70,8 +70,38 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
     }
   };
 
-  return { scrollToElement };
+  // Force re-scroll to current hash - use this when clicking the same link
+  const refreshScroll = () => {
+    if (location.hash) {
+      const targetId = location.hash.substring(1);
+      const element = document.getElementById(targetId);
+      
+      if (element) {
+        // Force browser to "forget" previous scroll position
+        // by slightly modifying the hash and then restoring it
+        const tempHash = `${targetId}-temp`;
+        window.history.pushState(null, '', `#${tempHash}`);
+        
+        // Force layout recalculation
+        document.body.offsetHeight;
+        
+        // Restore original hash
+        window.history.pushState(null, '', `#${targetId}`);
+        
+        // Calculate position with offset
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
+        
+        // Perform the scroll
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'auto' // Use 'auto' for immediate scroll
+        });
+      }
+    }
+  };
+
+  return { scrollToElement, refreshScroll };
 };
 
 export default useScrollToSection;
-

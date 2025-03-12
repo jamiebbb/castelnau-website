@@ -6,15 +6,21 @@ import useScrollToSection from '@/hooks/useScrollToSection';
 const InvestorSidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { scrollToElement } = useScrollToSection({ offset: 120 });
+  const { scrollToElement, refreshScroll } = useScrollToSection({ offset: 120 });
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     
     // Check if we're already on the investor-relations page
     if (location.pathname === '/investor-relations') {
-      // Already on the page, just scroll to the section
-      scrollToElement(sectionId);
+      // Check if we're clicking the same hash that's already in the URL
+      if (location.hash === `#${sectionId}`) {
+        // We need to force a re-scroll
+        refreshScroll();
+      } else {
+        // Different section, just scroll to it
+        scrollToElement(sectionId);
+      }
     } else {
       // Navigate to the page with the hash
       navigate(`/investor-relations#${sectionId}`);

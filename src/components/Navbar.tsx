@@ -15,26 +15,20 @@ import StockPriceDisplay from './StockPriceDisplay';
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { scrollToElement } = useScrollToSection({ offset: 150 });
+  const { scrollToElement, refreshScroll } = useScrollToSection({ offset: 150 });
   
   const handleWhoWeAreSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
     if (location.pathname === '/who-we-are') {
-      // We're already on the page, just scroll to the section
-      scrollToElement(sectionId);
-      
-      // Force a second scroll after a short delay as a backup
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: elementPosition - 150,
-            behavior: 'auto'
-          });
-        }
-      }, 100);
+      // Check if we're clicking the same hash that's already in the URL
+      if (location.hash === `#${sectionId}`) {
+        // We need to force a re-scroll
+        refreshScroll();
+      } else {
+        // Different section, just scroll to it
+        scrollToElement(sectionId);
+      }
     } else {
       // Navigate to the page with the hash
       window.location.href = `/who-we-are#${sectionId}`;
@@ -45,8 +39,14 @@ const Navbar = () => {
     e.preventDefault();
     
     if (location.pathname === '/investor-relations') {
-      // We're already on the page, just scroll to the section
-      scrollToElement(sectionId);
+      // Check if we're clicking the same hash that's already in the URL
+      if (location.hash === `#${sectionId}`) {
+        // We need to force a re-scroll
+        refreshScroll();
+      } else {
+        // Different section, just scroll to it
+        scrollToElement(sectionId);
+      }
     } else {
       // Navigate to the page with the hash
       navigate(`/investor-relations#${sectionId}`);
