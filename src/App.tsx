@@ -1,17 +1,19 @@
 
 'use client';
 
+import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import React from "react";
-
-const queryClient = new QueryClient();
 
 interface AppProps {
   children: React.ReactNode;
 }
 
 function App({ children }: AppProps) {
+  // Create a client instance that persists across renders
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
       {children}
