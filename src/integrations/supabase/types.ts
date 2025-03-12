@@ -42,6 +42,39 @@ export type Database = {
         }
         Relationships: []
       }
+      stock_prices: {
+        Row: {
+          change: string
+          change_percent: string
+          id: number
+          latest_trading_day: string
+          price: string
+          symbol: string
+          updated_at: string
+          volume: number
+        }
+        Insert: {
+          change: string
+          change_percent: string
+          id?: number
+          latest_trading_day: string
+          price: string
+          symbol: string
+          updated_at?: string
+          volume: number
+        }
+        Update: {
+          change?: string
+          change_percent?: string
+          id?: number
+          latest_trading_day?: string
+          price?: string
+          symbol?: string
+          updated_at?: string
+          volume?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
