@@ -1,17 +1,20 @@
 
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+'use client';
+
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import Link from 'next/link';
 import MainLayout from '@/layouts/MainLayout';
 
 const NotFound = () => {
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     console.error(
       "404 Error: User attempted to access non-existent route:",
-      location.pathname
+      pathname
     );
-  }, [location.pathname]);
+  }, [pathname]);
 
   return (
     <MainLayout>
@@ -19,9 +22,9 @@ const NotFound = () => {
         <div className="text-center">
           <h1 className="text-4xl font-serif font-bold mb-4 text-castelnau-green">404</h1>
           <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-          <a href="/" className="text-castelnau-green hover:text-castelnau-darkgreen transition-colors underline">
+          <Link href="/" className="text-castelnau-green hover:text-castelnau-darkgreen transition-colors underline">
             Return to Home
-          </a>
+          </Link>
         </div>
       </div>
     </MainLayout>

@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,16 +14,15 @@ import useScrollToSection from '@/hooks/useScrollToSection';
 import StockPriceDisplay from './StockPriceDisplay';
 
 const Navbar = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
   const { scrollToElement, refreshScroll } = useScrollToSection({ offset: 150 });
   
   const handleWhoWeAreSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (location.pathname === '/who-we-are') {
+    if (pathname === '/who-we-are') {
       // Check if we're clicking the same hash that's already in the URL
-      if (location.hash === `#${sectionId}`) {
+      if (window.location.hash === `#${sectionId}`) {
         // We need to force a re-scroll
         refreshScroll();
       } else {
@@ -38,9 +38,9 @@ const Navbar = () => {
   const handleInvestorSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (location.pathname === '/investor-relations') {
+    if (pathname === '/investor-relations') {
       // Check if we're clicking the same hash that's already in the URL
-      if (location.hash === `#${sectionId}`) {
+      if (window.location.hash === `#${sectionId}`) {
         // We need to force a re-scroll
         refreshScroll();
       } else {
@@ -49,7 +49,7 @@ const Navbar = () => {
       }
     } else {
       // Navigate to the page with the hash
-      navigate(`/investor-relations#${sectionId}`);
+      window.location.href = `/investor-relations#${sectionId}`;
     }
   };
 
@@ -58,14 +58,14 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <NavLink to="/" className="mr-10">
+            <Link href="/" className="mr-10">
               <img 
                 alt="Castelnau Group" 
                 className="h-16" 
                 src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
                 loading="eager"
               />
-            </NavLink>
+            </Link>
             
             <div className="flex items-center space-x-8">
               <StockPriceDisplay />
@@ -81,25 +81,21 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-6">
-            <NavLink to="/news" className={({ isActive }) => 
-              `transition-colors ${isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`
-            }>
+            <Link href="/news" className={`transition-colors ${pathname === '/news' ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}>
               <Button variant="transparent" className="font-medium">
                 News
               </Button>
-            </NavLink>
-            <NavLink to="/castelnau-library" className={({ isActive }) => 
-              `transition-colors ${isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`
-            }>
+            </Link>
+            <Link href="/castelnau-library" className={`transition-colors ${pathname === '/castelnau-library' ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}>
               <Button variant="transparent" className="font-medium">
                 Castelnau Library
               </Button>
-            </NavLink>
-            <NavLink to="/contact">
+            </Link>
+            <Link href="/contact">
               <Button variant="primary" size="lg" className="font-medium tracking-wide">
                 Contact us
               </Button>
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>
@@ -114,13 +110,13 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
-                <Link to="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
+                <Link href="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Overview
                   </DropdownMenuItem>
                 </Link>
                 <Link 
-                  to="/who-we-are#our-values" 
+                  href="/who-we-are#our-values" 
                   onClick={(e) => handleWhoWeAreSectionClick('our-values', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
@@ -128,7 +124,7 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </Link>
                 <Link 
-                  to="/who-we-are#our-team" 
+                  href="/who-we-are#our-team" 
                   onClick={(e) => handleWhoWeAreSectionClick('our-team', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
@@ -138,16 +134,16 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <NavLink to="/what-we-do">
+            <Link href="/what-we-do">
               <Button variant="transparent" className="font-medium">
                 What We Do
               </Button>
-            </NavLink>
-            <NavLink to="/explore-the-group">
+            </Link>
+            <Link href="/explore-the-group">
               <Button variant="transparent" className="font-medium">
                 Explore the Group
               </Button>
-            </NavLink>
+            </Link>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -156,22 +152,22 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
-                <Link to="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
+                <Link href="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Share Price
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
+                <Link href="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Regulatory Documents
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
+                <Link href="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Factsheets
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
+                <Link href="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     RNS
                   </DropdownMenuItem>
@@ -179,11 +175,11 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <NavLink to="/graduate-programme">
+            <Link href="/graduate-programme">
               <Button variant="transparent" className="font-medium">
                 Graduate Programme
               </Button>
-            </NavLink>
+            </Link>
           </nav>
         </div>
       </div>
