@@ -22,11 +22,11 @@ serve(async (req) => {
     // Initialize Supabase client
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
-    // For this example, we'll use a specific stock symbol for Castelnau Group
+    // Castelnau Group is listed on the London Stock Exchange with symbol CGI.L
     const symbol = "CGI.L"; // Castelnau Group Ltd on London Stock Exchange
 
     // Fetch data from Alpha Vantage
-    console.log("Fetching stock data for", symbol);
+    console.log("Fetching stock data for Castelnau Group (CGI.L)");
     const response = await fetch(
       `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`
     );
@@ -57,7 +57,7 @@ serve(async (req) => {
       updated_at: new Date().toISOString(),
     };
 
-    console.log("Parsed stock data:", stockData);
+    console.log("Parsed stock data for Castelnau Group:", stockData);
 
     // Update database
     const { error: upsertError } = await supabase
@@ -66,16 +66,16 @@ serve(async (req) => {
       .select();
 
     if (upsertError) {
-      console.error("Error updating stock price:", upsertError);
+      console.error("Error updating Castelnau Group stock price:", upsertError);
       throw upsertError;
     }
 
-    console.log("Stock price updated successfully");
+    console.log("Castelnau Group stock price updated successfully");
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Stock price updated successfully",
+        message: "Castelnau Group stock price updated successfully",
         data: stockData 
       }),
       { 
@@ -89,7 +89,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        message: error.message || "An error occurred while updating stock price" 
+        message: error.message || "An error occurred while updating Castelnau Group stock price" 
       }),
       { 
         headers: { ...corsHeaders, "Content-Type": "application/json" },
