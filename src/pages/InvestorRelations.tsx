@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Button } from '@/components/ui/button';
 import { downloadDocument, Document, fetchDocuments } from '@/utils/documentUtils';
@@ -85,7 +86,7 @@ const InvestorRelations = () => {
                     <div key={doc.id} className="flex items-center justify-between border-b border-gray-200 pb-4">
                       <div>
                         <p className="font-medium">{doc.title}</p>
-                        <p className="text-sm text-gray-500">Published: {doc.publishDate} {doc.fileSize && `• ${doc.fileSize}`}</p>
+                        <p className="text-sm text-gray-500">Published: {doc.publish_date} {doc.file_size && `• ${doc.file_size}`}</p>
                       </div>
                       <Button 
                         onClick={() => handleDownload(doc)}
@@ -106,7 +107,7 @@ const InvestorRelations = () => {
                     <div key={doc.id} className="flex items-center justify-between border-b border-gray-200 pb-4">
                       <div>
                         <p className="font-medium">{doc.title}</p>
-                        <p className="text-sm text-gray-500">Published: {doc.publishDate} {doc.fileSize && `• ${doc.fileSize}`}</p>
+                        <p className="text-sm text-gray-500">Published: {doc.publish_date} {doc.file_size && `• ${doc.file_size}`}</p>
                       </div>
                       <Button 
                         onClick={() => handleDownload(doc)}
@@ -127,7 +128,7 @@ const InvestorRelations = () => {
                     <div key={doc.id} className="flex items-center justify-between border-b border-gray-200 pb-4">
                       <div>
                         <p className="font-medium">{doc.title}</p>
-                        <p className="text-sm text-gray-500">Published: {doc.publishDate} {doc.fileSize && `• ${doc.fileSize}`}</p>
+                        <p className="text-sm text-gray-500">Published: {doc.publish_date} {doc.file_size && `• ${doc.file_size}`}</p>
                       </div>
                       <Button 
                         onClick={() => handleDownload(doc)}
@@ -148,7 +149,7 @@ const InvestorRelations = () => {
                     <div key={doc.id} className="flex items-center justify-between border-b border-gray-200 pb-4">
                       <div>
                         <p className="font-medium">{doc.title}</p>
-                        <p className="text-sm text-gray-500">Published: {doc.publishDate} {doc.fileSize && `• ${doc.fileSize}`}</p>
+                        <p className="text-sm text-gray-500">Published: {doc.publish_date} {doc.file_size && `• ${doc.file_size}`}</p>
                       </div>
                       <Button 
                         onClick={() => handleDownload(doc)}

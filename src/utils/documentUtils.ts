@@ -31,7 +31,13 @@ export const fetchDocuments = async (): Promise<Document[]> => {
       return [];
     }
 
-    return data || [];
+    // Ensure the category field matches our expected types
+    const typedData = data?.map(item => ({
+      ...item,
+      category: item.category as 'report' | 'factsheet' | 'regulatory' | 'rns'
+    })) || [];
+    
+    return typedData;
   } catch (error) {
     console.error('Error fetching documents:', error);
     toast.error("Failed to fetch documents");
@@ -76,4 +82,3 @@ export const downloadDocument = async (filePath: string, fileName: string) => {
     toast.error("Failed to download document");
   }
 };
-
