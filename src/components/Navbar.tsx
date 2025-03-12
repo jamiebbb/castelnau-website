@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +14,10 @@ import StockPriceDisplay from './StockPriceDisplay';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { scrollToElement } = useScrollToSection({ offset: 150 });
   
-  const handleSectionClick = (sectionId: string, e: React.MouseEvent) => {
+  const handleWhoWeAreSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
     if (location.pathname === '/who-we-are') {
@@ -36,6 +38,18 @@ const Navbar = () => {
     } else {
       // Navigate to the page with the hash
       window.location.href = `/who-we-are#${sectionId}`;
+    }
+  };
+  
+  const handleInvestorSectionClick = (sectionId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (location.pathname === '/investor-relations') {
+      // We're already on the page, just scroll to the section
+      scrollToElement(sectionId);
+    } else {
+      // Navigate to the page with the hash
+      navigate(`/investor-relations#${sectionId}`);
     }
   };
 
@@ -107,7 +121,7 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/who-we-are#our-values" 
-                  onClick={(e) => handleSectionClick('our-values', e)}
+                  onClick={(e) => handleWhoWeAreSectionClick('our-values', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Values
@@ -115,7 +129,7 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/who-we-are#our-team" 
-                  onClick={(e) => handleSectionClick('our-team', e)}
+                  onClick={(e) => handleWhoWeAreSectionClick('our-team', e)}
                 >
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Our Team
@@ -142,22 +156,22 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
-                <Link to="/investor-relations#share-price">
+                <Link to="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Share Price
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#regulatory-documents">
+                <Link to="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Regulatory Documents
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#factsheets">
+                <Link to="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     Factsheets
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/investor-relations#rns">
+                <Link to="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
                   <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10">
                     RNS
                   </DropdownMenuItem>

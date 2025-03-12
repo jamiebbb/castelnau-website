@@ -7,25 +7,25 @@ import PageHero from '@/components/investor/PageHero';
 import FinancialMetrics from '@/components/investor/FinancialMetrics';
 import DocumentList from '@/components/investor/DocumentList';
 import InvestorSidebar from '@/components/investor/InvestorSidebar';
+import { useLocation } from 'react-router-dom';
+import useScrollToSection from '@/hooks/useScrollToSection';
 
 const InvestorRelations = () => {
   const { data: documents = [], isLoading } = useQuery({
     queryKey: ['documents'],
     queryFn: fetchDocuments
   });
+  
+  const location = useLocation();
+  const { scrollToElement } = useScrollToSection({ offset: 120 });
 
   useEffect(() => {
-    // Handle hash navigation when page loads
-    const hash = window.location.hash;
-    if (hash) {
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+    // Handle hash navigation when page loads or hash changes
+    if (location.hash) {
+      const targetId = location.hash.substring(1);
+      scrollToElement(targetId);
     }
-  }, []);
+  }, [location.hash, scrollToElement]);
 
   const getDocumentsByCategory = (category: Document['category']) => {
     return documents.filter(doc => doc.category === category);
