@@ -1,6 +1,7 @@
 
 'use client';
 
+import React from "react";
 import Index from "@/pages/Index";
 import App from "../App";
 

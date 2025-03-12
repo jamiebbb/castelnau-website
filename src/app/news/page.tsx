@@ -1,6 +1,7 @@
 
 'use client';
 
+import React from "react";
 import News from '@/pages/News';
 import App from '@/App';
 
