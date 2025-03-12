@@ -23,7 +23,6 @@ serve(async (req) => {
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
     // For this example, we'll use a specific stock symbol for Castelnau Group
-    // In production, you might want to make this configurable
     const symbol = "CGI.L"; // Castelnau Group Ltd on London Stock Exchange
 
     // Fetch data from Alpha Vantage
