@@ -1,14 +1,15 @@
-
 'use client';
 
-import React from "react";
-import Contact from '@/pages/Contact';
-import MainLayout from '@/layouts/MainLayout';
+import React from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import Contact from '@/components/contact/Contact';
 
-export default function ContactPage() {
+const ContactPage = () => {
   return (
     <MainLayout>
       <Contact />
     </MainLayout>
   );
-}
+};
+
+export default ContactPage;

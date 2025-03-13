@@ -1,9 +1,8 @@
-
 'use client';
 
 import React from "react";
-import News from '@/pages/News';
 import MainLayout from '@/layouts/MainLayout';
+import News from '@/components/news/News';
 
 export default function NewsPage() {
   return (

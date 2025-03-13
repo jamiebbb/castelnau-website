@@ -1,6 +1,7 @@
+'use client';
 
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 interface ScrollOptions {
   offset?: number;
@@ -9,14 +10,16 @@ interface ScrollOptions {
 }
 
 const useScrollToSection = (options: ScrollOptions = {}) => {
-  const location = useLocation();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { offset = 120, behavior = 'smooth', delay = 300 } = options;
   
   // Handle hash changes including initial load
   useEffect(() => {
-    if (location.hash) {
-      const targetId = location.hash.substring(1);
+    const hash = window.location.hash;
+    if (hash) {
+      const targetId = hash.substring(1);
       
       // Cancel any previous scroll animation
       if (scrollTimeoutRef.current) {
@@ -48,7 +51,7 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, [location.hash, offset, behavior, delay]);
+  }, [pathname, searchParams, offset, behavior, delay]);
 
   // Function to manually scroll to an element by ID
   const scrollToElement = (elementId: string) => {
@@ -72,8 +75,9 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
 
   // Force re-scroll to current hash - use this when clicking the same link
   const refreshScroll = () => {
-    if (location.hash) {
-      const targetId = location.hash.substring(1);
+    const hash = window.location.hash;
+    if (hash) {
+      const targetId = hash.substring(1);
       const element = document.getElementById(targetId);
       
       if (element) {

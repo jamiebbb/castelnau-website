@@ -1,14 +1,15 @@
-
 'use client';
 
-import React from "react";
-import ExploreTheGroup from '@/pages/ExploreTheGroup';
-import MainLayout from '@/layouts/MainLayout';
+import React from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import ExploreTheGroup from '@/components/explore-the-group/ExploreTheGroup';
 
-export default function ExploreTheGroupPage() {
+const ExploreTheGroupPage = () => {
   return (
     <MainLayout>
       <ExploreTheGroup />
     </MainLayout>
   );
-}
+};
+
+export default ExploreTheGroupPage;

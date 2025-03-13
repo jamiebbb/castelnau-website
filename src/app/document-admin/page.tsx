@@ -1,14 +1,15 @@
-
 'use client';
 
-import React from "react";
-import DocumentAdmin from '@/pages/DocumentAdmin';
-import MainLayout from '@/layouts/MainLayout';
+import React from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import DocumentAdmin from '@/components/document-admin/DocumentAdmin';
 
-export default function DocumentAdminPage() {
+const DocumentAdminPage = () => {
   return (
     <MainLayout>
       <DocumentAdmin />
     </MainLayout>
   );
-}
+};
+
+export default DocumentAdminPage;

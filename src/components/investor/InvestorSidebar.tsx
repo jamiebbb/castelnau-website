@@ -1,20 +1,20 @@
+'use client';
 
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import useScrollToSection from '@/hooks/useScrollToSection';
 
 const InvestorSidebar: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const pathname = usePathname();
   const { scrollToElement, refreshScroll } = useScrollToSection({ offset: 120 });
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     
     // Check if we're already on the investor-relations page
-    if (location.pathname === '/investor-relations') {
+    if (pathname === '/investor-relations') {
       // Check if we're clicking the same hash that's already in the URL
-      if (location.hash === `#${sectionId}`) {
+      if (window.location.hash === `#${sectionId}`) {
         // We need to force a re-scroll
         refreshScroll();
       } else {
@@ -23,7 +23,7 @@ const InvestorSidebar: React.FC = () => {
       }
     } else {
       // Navigate to the page with the hash
-      navigate(`/investor-relations#${sectionId}`);
+      window.location.href = `/investor-relations#${sectionId}`;
     }
   };
 

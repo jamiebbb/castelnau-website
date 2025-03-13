@@ -1,14 +1,15 @@
-
 'use client';
 
-import React from "react";
-import CastelnauLibrary from '@/pages/CastelnauLibrary';
-import MainLayout from '@/layouts/MainLayout';
+import React from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import CastelnauLibrary from '@/components/castelnau-library/CastelnauLibrary';
 
-export default function CastelnauLibraryPage() {
+const CastelnauLibraryPage = () => {
   return (
     <MainLayout>
       <CastelnauLibrary />
     </MainLayout>
   );
-}
+};
+
+export default CastelnauLibraryPage;

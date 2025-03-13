@@ -1,9 +1,8 @@
-
 'use client';
 
 import React from "react";
-import WhatWeDo from '@/pages/WhatWeDo';
 import MainLayout from '@/layouts/MainLayout';
+import WhatWeDo from '@/components/what-we-do/WhatWeDo';
 
 export default function WhatWeDoPage() {
   return (

@@ -1,4 +1,3 @@
-
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -8,7 +7,6 @@ const __dirname = path.dirname(__filename);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -16,10 +14,7 @@ const nextConfig = {
     };
     return config;
   },
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  experimental: {
-    appDir: true,
-  }
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx']
 };
 
 export default nextConfig;
