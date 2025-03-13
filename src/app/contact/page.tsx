@@ -3,12 +3,12 @@
 
 import React from "react";
 import Contact from '@/pages/Contact';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function ContactPage() {
   return (
-    <App>
+    <MainLayout>
       <Contact />
-    </App>
+    </MainLayout>
   );
 }

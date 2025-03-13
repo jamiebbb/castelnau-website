@@ -3,12 +3,12 @@
 
 import React from "react";
 import CastelnauLibrary from '@/pages/CastelnauLibrary';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function CastelnauLibraryPage() {
   return (
-    <App>
+    <MainLayout>
       <CastelnauLibrary />
-    </App>
+    </MainLayout>
   );
 }

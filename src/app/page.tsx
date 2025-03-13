@@ -3,12 +3,12 @@
 
 import React from "react";
 import Index from "@/pages/Index";
-import App from "@/App";
+import MainLayout from "@/layouts/MainLayout";
 
 export default function Home() {
   return (
-    <App>
+    <MainLayout>
       <Index />
-    </App>
+    </MainLayout>
   );
 }

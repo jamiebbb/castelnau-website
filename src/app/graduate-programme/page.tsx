@@ -3,12 +3,12 @@
 
 import React from "react";
 import GraduateProgramme from '@/pages/GraduateProgramme';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function GraduateProgrammePage() {
   return (
-    <App>
+    <MainLayout>
       <GraduateProgramme />
-    </App>
+    </MainLayout>
   );
 }

@@ -3,12 +3,12 @@
 
 import React from "react";
 import InvestorRelations from '@/pages/InvestorRelations';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function InvestorRelationsPage() {
   return (
-    <App>
+    <MainLayout>
       <InvestorRelations />
-    </App>
+    </MainLayout>
   );
 }

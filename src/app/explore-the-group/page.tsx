@@ -3,12 +3,12 @@
 
 import React from "react";
 import ExploreTheGroup from '@/pages/ExploreTheGroup';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function ExploreTheGroupPage() {
   return (
-    <App>
+    <MainLayout>
       <ExploreTheGroup />
-    </App>
+    </MainLayout>
   );
 }

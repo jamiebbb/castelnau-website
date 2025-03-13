@@ -3,12 +3,12 @@
 
 import React from "react";
 import NotFound from '@/pages/NotFound';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function NotFoundPage() {
   return (
-    <App>
+    <MainLayout>
       <NotFound />
-    </App>
+    </MainLayout>
   );
 }

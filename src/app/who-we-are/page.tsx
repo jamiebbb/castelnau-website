@@ -3,12 +3,12 @@
 
 import React from "react";
 import WhoWeAre from '@/pages/WhoWeAre';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function WhoWeArePage() {
   return (
-    <App>
+    <MainLayout>
       <WhoWeAre />
-    </App>
+    </MainLayout>
   );
 }

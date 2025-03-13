@@ -3,12 +3,12 @@
 
 import React from "react";
 import WhatWeDo from '@/pages/WhatWeDo';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function WhatWeDoPage() {
   return (
-    <App>
+    <MainLayout>
       <WhatWeDo />
-    </App>
+    </MainLayout>
   );
 }

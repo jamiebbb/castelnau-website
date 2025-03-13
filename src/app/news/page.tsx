@@ -3,12 +3,12 @@
 
 import React from "react";
 import News from '@/pages/News';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function NewsPage() {
   return (
-    <App>
+    <MainLayout>
       <News />
-    </App>
+    </MainLayout>
   );
 }

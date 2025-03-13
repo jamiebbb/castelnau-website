@@ -16,8 +16,10 @@ const nextConfig = {
     };
     return config;
   },
-  // Add these to help with page transitions
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  experimental: {
+    appDir: true,
+  }
 };
 
 export default nextConfig;

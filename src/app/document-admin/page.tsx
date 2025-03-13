@@ -3,12 +3,12 @@
 
 import React from "react";
 import DocumentAdmin from '@/pages/DocumentAdmin';
-import App from '@/App';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function DocumentAdminPage() {
   return (
-    <App>
+    <MainLayout>
       <DocumentAdmin />
-    </App>
+    </MainLayout>
   );
 }
