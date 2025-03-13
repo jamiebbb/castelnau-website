@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
-import React from "react";
 import MainLayout from "@/layouts/MainLayout";
 
 interface AppProps {

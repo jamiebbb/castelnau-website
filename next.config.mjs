@@ -16,6 +16,8 @@ const nextConfig = {
     };
     return config;
   },
+  // Add these to help with page transitions
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
 };
 
 export default nextConfig;
