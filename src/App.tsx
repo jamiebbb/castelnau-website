@@ -12,7 +12,6 @@ interface AppProps {
 }
 
 function App({ children }: AppProps) {
-  // Create a client instance that persists across renders
   const [queryClient] = useState(() => new QueryClient());
 
   return (
