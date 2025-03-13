@@ -1,47 +1,27 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import MainLayout from '@/layouts/MainLayout';
-import Hero from '@/components/who-we-are/Hero';
-import Story from '@/components/who-we-are/Story';
-import Values from '@/components/who-we-are/Values';
+import React from 'react';
+import PageHero from '@/components/common/PageHero';
 import Team from '@/components/who-we-are/Team';
-import useScrollToSection from '@/hooks/useScrollToSection';
+import Values from '@/components/who-we-are/Values';
+import Story from '@/components/who-we-are/Story';
 
-export default function WhoWeArePage() {
-  // Use our custom hook with a larger offset for better positioning
-  useScrollToSection({ offset: 150, delay: 500 });
-
-  // Add an additional manual scroll handler for direct access
-  useEffect(() => {
-    if (window.location.hash) {
-      // Small delay to ensure everything is loaded
-      const timer = setTimeout(() => {
-        const targetId = window.location.hash.substring(1);
-        const element = document.getElementById(targetId);
-        if (element) {
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: elementPosition - 150,
-            behavior: 'smooth'
-          });
-        }
-      }, 700);
-      
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
+const WhoWeArePage = () => {
   return (
-    <MainLayout>
-      <Hero />
-      <section className="page-content">
+    <>
+      <PageHero 
+        title="Who We Are"
+        description="Meet our team and discover the values that drive our investment approach"
+      />
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <Story />
           <Values />
           <Team />
         </div>
       </section>
-    </MainLayout>
+    </>
   );
-}
+};
+
+export default WhoWeArePage;

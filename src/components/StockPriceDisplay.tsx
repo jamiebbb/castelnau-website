@@ -1,3 +1,4 @@
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { fetchLatestStockPrice, formatStockChange, formatStockDate, StockPrice } from '@/utils/stockPriceUtils';
@@ -29,40 +30,53 @@ const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className }) => {
 
   if (loading) {
     return (
-      <div className={`text-white ${className}`}>
-        <div className="space-y-2">
-          <Skeleton className="h-5 w-24 bg-white/20" />
-          <Skeleton className="h-6 w-16 bg-white/20" />
-          <Skeleton className="h-3 w-32 bg-white/20" />
+      <div className={`flex items-center space-x-8 ${className}`}>
+        <div className="stock-price">
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-24 bg-white/20" />
+            <Skeleton className="h-6 w-16 bg-white/20" />
+            <Skeleton className="h-3 w-32 bg-white/20" />
+          </div>
+        </div>
+        <div className="stock-price">
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-24 bg-white/20" />
+            <Skeleton className="h-6 w-16 bg-white/20" />
+            <Skeleton className="h-3 w-32 bg-white/20" />
+          </div>
         </div>
       </div>
     );
   }
 
-  if (!stockData) {
-    return (
-      <div className={`text-white ${className}`}>
-        <p className="flex items-center text-lg font-serif">
-          <span className="mr-2 text-castelnau-cream/90">Share price:</span> 
-          <strong className="font-serif">0.92</strong>
-        </p>
-        <p className="text-xs italic text-white/80">Updated: 10/03/2025</p>
-      </div>
-    );
-  }
-
-  const change = formatStockChange(stockData.change, stockData.change_percent);
-
   return (
-    <div className={`text-white ${className}`}>
-      <p className="flex items-center text-lg font-serif">
-        <span className="mr-2 text-castelnau-cream/90">Share price:</span> 
-        <strong className="font-serif">{stockData.price}</strong>
-      </p>
-      <p className={`text-sm ${change.colorClass}`}>{change.value}</p>
-      <p className="text-xs italic text-white/80">
-        Updated: {formatStockDate(stockData.latest_trading_day)}
-      </p>
+    <div className={`flex items-center space-x-8 ${className}`}>
+      <div className="stock-price">
+        <div className="flex flex-col">
+          <p className="flex items-center">
+            <span className="stock-price-label mr-2">Share price:</span> 
+            <span className="stock-price-value">{stockData?.price || '0.92'}</span>
+          </p>
+          {stockData && (
+            <p className={`text-sm ${formatStockChange(stockData.change, stockData.change_percent).colorClass}`}>
+              {formatStockChange(stockData.change, stockData.change_percent).value}
+            </p>
+          )}
+          <p className="stock-price-update">
+            Updated: {stockData ? formatStockDate(stockData.latest_trading_day) : '10/03/2025'}
+          </p>
+        </div>
+      </div>
+      
+      <div className="stock-price">
+        <div className="flex flex-col">
+          <p className="flex items-center">
+            <span className="stock-price-label mr-2">NAV price:</span> 
+            <span className="stock-price-value">1.01</span>
+          </p>
+          <p className="stock-price-update">Updated: 28/02/2025</p>
+        </div>
+      </div>
     </div>
   );
 };

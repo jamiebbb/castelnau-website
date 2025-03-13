@@ -1,3 +1,4 @@
+"use client";
 
 import React from 'react';
 import Link from 'next/link';
@@ -21,16 +22,12 @@ const Navbar = () => {
     e.preventDefault();
     
     if (pathname === '/who-we-are') {
-      // Check if we're clicking the same hash that's already in the URL
       if (window.location.hash === `#${sectionId}`) {
-        // We need to force a re-scroll
         refreshScroll();
       } else {
-        // Different section, just scroll to it
         scrollToElement(sectionId);
       }
     } else {
-      // Navigate to the page with the hash
       window.location.href = `/who-we-are#${sectionId}`;
     }
   };
@@ -39,25 +36,21 @@ const Navbar = () => {
     e.preventDefault();
     
     if (pathname === '/investor-relations') {
-      // Check if we're clicking the same hash that's already in the URL
       if (window.location.hash === `#${sectionId}`) {
-        // We need to force a re-scroll
         refreshScroll();
       } else {
-        // Different section, just scroll to it
         scrollToElement(sectionId);
       }
     } else {
-      // Navigate to the page with the hash
       window.location.href = `/investor-relations#${sectionId}`;
     }
   };
 
   return (
-    <header className="bg-gradient-to-r from-castelnau-darkgreen via-castelnau-green to-castelnau-lightgreen shadow-lg">
+    <header className="bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green shadow-lg">
       <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
+          <div className="flex items-center space-x-8">
             <Link href="/" className="mr-10">
               <img 
                 alt="Castelnau Group" 
@@ -67,32 +60,27 @@ const Navbar = () => {
               />
             </Link>
             
-            <div className="flex items-center space-x-8">
-              <StockPriceDisplay />
-              
-              <div className="text-white">
-                <p className="flex items-center text-lg font-serif">
-                  <span className="mr-2 text-castelnau-cream/90">NAV price:</span> 
-                  <strong className="font-serif">1.01</strong>
-                </p>
-                <p className="text-xs italic text-white/80">Updated: 28/02/2025</p>
-              </div>
-            </div>
+            <StockPriceDisplay />
           </div>
           
-          <div className="flex items-center space-x-6">
-            <Link href="/news" className={`transition-colors ${pathname === '/news' ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}>
-              <Button variant="transparent" className="font-medium">
+          <div className="flex items-center space-x-4">
+            <Link href="/news">
+              <Button variant="transparent" className="text-white hover:text-white">
                 News
               </Button>
             </Link>
-            <Link href="/castelnau-library" className={`transition-colors ${pathname === '/castelnau-library' ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}>
-              <Button variant="transparent" className="font-medium">
+            <Link href="/castelnau-library">
+              <Button variant="transparent" className="text-white hover:text-white">
                 Castelnau Library
               </Button>
             </Link>
+            <Link href="/graduate-programme">
+              <Button variant="transparent" className="text-white hover:text-white">
+                Graduate Programme
+              </Button>
+            </Link>
             <Link href="/contact">
-              <Button variant="primary" size="lg" className="font-medium tracking-wide">
+              <Button variant="gold" className="text-castelnau-dark-green">
                 Contact us
               </Button>
             </Link>
@@ -105,8 +93,8 @@ const Navbar = () => {
           <nav className="flex py-5 space-x-10">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="transparent" className="font-medium">
-                  Who We Are <ChevronDown className="h-4 w-4" />
+                <Button variant="transparent" className="text-white hover:text-white">
+                  Who We Are <ChevronDown className="h-4 w-4 ml-1" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
@@ -135,20 +123,20 @@ const Navbar = () => {
             </DropdownMenu>
             
             <Link href="/what-we-do">
-              <Button variant="transparent" className="font-medium">
+              <Button variant="transparent" className="text-white hover:text-white">
                 What We Do
               </Button>
             </Link>
             <Link href="/explore-the-group">
-              <Button variant="transparent" className="font-medium">
+              <Button variant="transparent" className="text-white hover:text-white">
                 Explore the Group
               </Button>
             </Link>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="transparent" className="font-medium">
-                  Investor Relations <ChevronDown className="h-4 w-4" />
+                <Button variant="transparent" className="text-white hover:text-white">
+                  Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
@@ -174,12 +162,6 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuContent>
             </DropdownMenu>
-            
-            <Link href="/graduate-programme">
-              <Button variant="transparent" className="font-medium">
-                Graduate Programme
-              </Button>
-            </Link>
           </nav>
         </div>
       </div>

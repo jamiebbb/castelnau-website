@@ -1,110 +1,92 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import PageHero from '@/components/common/PageHero';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-interface LibraryItem {
+interface Book {
   id: string;
   title: string;
+  author: string;
   description: string;
+  coverImage: string;
   category: string;
-  date: string;
-  link: string;
+  publishDate: string;
+  shortDescription: string;
 }
 
 const CastelnauLibrary = () => {
-  const libraryItems: LibraryItem[] = [
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+
+  const books: Book[] = [
     {
       id: '1',
-      title: 'Investment Philosophy',
-      description: 'Learn about our approach to investment management and value creation.',
-      category: 'Investment Strategy',
-      date: '2024-03-15',
-      link: '/library/investment-philosophy'
+      title: 'The Psychology of Money',
+      author: 'Morgan Housel',
+      description: 'Timeless lessons on wealth, greed, and happiness. The Psychology of Money explores the complex relationship between money and human behavior, offering insights into how we think about and handle financial decisions.',
+      coverImage: '/books/psychology-of-money.jpg',
+      category: 'Personal Finance',
+      publishDate: '2020',
+      shortDescription: 'Timeless lessons on wealth, greed, and happiness'
     },
     {
       id: '2',
-      title: 'Market Research Reports',
-      description: 'Access our latest market research and analysis reports.',
-      category: 'Research',
-      date: '2024-03-10',
-      link: '/library/market-research'
+      title: 'Thinking in Bets',
+      author: 'Annie Duke',
+      description: 'Making Smarter Decisions When You Don\'t Have All the Facts. A former World Series of Poker champion turns decision-making into a science, showing how to embrace uncertainty and make better choices.',
+      coverImage: '/books/thinking-in-bets.jpg',
+      category: 'Decision Making',
+      publishDate: '2018',
+      shortDescription: 'Making Smarter Decisions When You Don\'t Have All the Facts'
     },
-    {
-      id: '3',
-      title: 'Case Studies',
-      description: 'Explore detailed case studies of our investment successes.',
-      category: 'Case Studies',
-      date: '2024-03-05',
-      link: '/library/case-studies'
-    },
-    {
-      id: '4',
-      title: 'Thought Leadership',
-      description: 'Read our insights and perspectives on key market trends.',
-      category: 'Insights',
-      date: '2024-03-01',
-      link: '/library/thought-leadership'
-    }
+    // Add more books here
   ];
 
   return (
     <>
       <PageHero 
         title="Castelnau Library"
-        description="Access our comprehensive collection of resources and insights"
+        description="Explore our curated collection of books and resources that have shaped our investment philosophy"
       />
       
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Library Categories */}
+          <div className="max-w-6xl mx-auto">
             <div className="mb-12">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-castelnau-green mb-8">
-                Library Categories
+                Our Library Collection
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {libraryItems.map((item) => (
-                  <div key={item.id} className="bg-gray-50 p-6 rounded-lg">
-                    <h3 className="text-xl font-serif font-bold text-castelnau-green mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-700 mb-4">
-                      {item.description}
-                    </p>
-                    <div className="flex justify-between items-center text-sm text-gray-500">
-                      <span>{item.category}</span>
-                      <span>{item.date}</span>
+              <p className="text-gray-700 mb-8">
+                Discover our carefully curated collection of books that have influenced our investment philosophy and approach.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {books.map((book) => (
+                  <div 
+                    key={book.id}
+                    className="group relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                    onClick={() => setSelectedBook(book)}
+                  >
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img 
+                        src={book.coverImage} 
+                        alt={book.title}
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
-                    <a
-                      href={item.link}
-                      className="mt-4 inline-block text-castelnau-green hover:text-opacity-80 transition-colors"
-                    >
-                      Explore →
-                    </a>
+                    <div className="p-4">
+                      <h3 className="text-xl font-serif font-bold text-castelnau-green mb-2">
+                        {book.title}
+                      </h3>
+                      <p className="text-gray-600 mb-2">{book.author}</p>
+                      <p className="text-sm text-gray-500 mb-2">{book.category}</p>
+                      <p className="text-sm text-gray-700 line-clamp-2">
+                        {book.shortDescription}
+                      </p>
+                    </div>
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300" />
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Featured Content */}
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-castelnau-green mb-8">
-                Featured Content
-              </h2>
-              <div className="bg-gray-50 p-8 rounded-lg">
-                <h3 className="text-2xl font-serif font-bold text-castelnau-green mb-4">
-                  Latest Market Insights
-                </h3>
-                <p className="text-gray-700 mb-6">
-                  Stay informed with our latest market analysis and investment perspectives. Our team of experts provides regular updates on market trends, opportunities, and risks.
-                </p>
-                <a
-                  href="/library/market-insights"
-                  className="inline-block bg-castelnau-green text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition-colors"
-                >
-                  View Latest Insights
-                </a>
               </div>
             </div>
 
@@ -138,6 +120,32 @@ const CastelnauLibrary = () => {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedBook} onOpenChange={() => setSelectedBook(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-serif font-bold text-castelnau-green">
+              {selectedBook?.title}
+            </DialogTitle>
+          </DialogHeader>
+          {selectedBook && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="aspect-[3/4] relative">
+                <img 
+                  src={selectedBook.coverImage} 
+                  alt={selectedBook.title}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+              <div>
+                <p className="text-xl text-gray-600 mb-4">{selectedBook.author}</p>
+                <p className="text-sm text-gray-500 mb-4">{selectedBook.category} • {selectedBook.publishDate}</p>
+                <p className="text-gray-700">{selectedBook.description}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

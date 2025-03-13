@@ -1,8 +1,6 @@
-
-'use client';
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -15,8 +13,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <main className="flex-grow">
         {children}
       </main>
+      <Footer />
     </div>
   );
 };
 
-export default MainLayout;
+export default MainLayout; 

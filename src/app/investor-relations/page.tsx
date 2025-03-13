@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import MainLayout from '@/layouts/MainLayout';
 import { useQuery } from '@tanstack/react-query';
 import { Document, fetchDocuments } from '@/utils/documentUtils';
 import PageHero from '@/components/investor/PageHero';
@@ -31,7 +30,7 @@ export default function InvestorRelationsPage() {
   };
 
   return (
-    <MainLayout>
+    <>
       <PageHero />
       
       <section className="page-content">
@@ -71,6 +70,6 @@ export default function InvestorRelationsPage() {
           </div>
         </div>
       </section>
-    </MainLayout>
+    </>
   );
 }

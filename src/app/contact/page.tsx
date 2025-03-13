@@ -1,14 +1,18 @@
 'use client';
 
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
+import PageHero from '@/components/common/PageHero';
 import Contact from '@/components/contact/Contact';
 
 const ContactPage = () => {
   return (
-    <MainLayout>
+    <>
+      <PageHero 
+        title="Contact Us"
+        description="Get in touch with our team for any inquiries or opportunities"
+      />
       <Contact />
-    </MainLayout>
+    </>
   );
 };
 

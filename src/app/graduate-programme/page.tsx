@@ -1,14 +1,18 @@
 'use client';
 
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
+import PageHero from '@/components/common/PageHero';
 import GraduateProgramme from '@/components/graduate-programme/GraduateProgramme';
 
 const GraduateProgrammePage = () => {
   return (
-    <MainLayout>
+    <>
+      <PageHero 
+        title="Graduate Programme"
+        description="Join our team and start your career in investment management"
+      />
       <GraduateProgramme />
-    </MainLayout>
+    </>
   );
 };
 

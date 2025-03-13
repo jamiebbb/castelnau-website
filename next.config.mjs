@@ -14,7 +14,15 @@ const nextConfig = {
     };
     return config;
   },
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx']
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'localhost:3001'],
+    },
+  }
 };
 
 export default nextConfig;

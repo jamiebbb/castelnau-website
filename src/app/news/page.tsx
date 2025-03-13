@@ -1,13 +1,19 @@
 'use client';
 
-import React from "react";
-import MainLayout from '@/layouts/MainLayout';
+import React from 'react';
+import PageHero from '@/components/common/PageHero';
 import News from '@/components/news/News';
 
-export default function NewsPage() {
+const NewsPage = () => {
   return (
-    <MainLayout>
+    <>
+      <PageHero 
+        title="Latest News"
+        description="Stay updated with the latest news and developments from Castelnau Group"
+      />
       <News />
-    </MainLayout>
+    </>
   );
-}
+};
+
+export default NewsPage;
