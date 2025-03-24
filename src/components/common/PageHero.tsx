@@ -9,7 +9,7 @@ interface PageHeroProps {
 
 const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
   return (
-    <section className="relative bg-castelnau-green py-20">
+    <section className="relative bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green py-20">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
           {title}
@@ -22,12 +22,16 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
         )}
       </div>
       
-      <div className="absolute bottom-0 w-full">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" className="w-full">
+      <div className="absolute bottom-0 left-0 right-0 w-full">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 1440 150" 
+          className="w-full h-auto"
+        >
           <path 
             fill="#FFFFFF" 
             fillOpacity="1" 
-            d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,37.3C960,32,1056,32,1152,37.3C1248,43,1344,53,1392,58.7L1440,64L1440,150L1392,150C1344,150,1248,150,1152,150C1056,150,960,150,864,150C768,150,672,150,576,150C480,150,384,150,288,150C192,150,96,150,48,150L0,150Z"
           ></path>
         </svg>
       </div>

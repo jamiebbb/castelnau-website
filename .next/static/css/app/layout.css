@@ -914,6 +914,9 @@ video {
 .top-full {
   top: 100%;
 }
+.-bottom-1 {
+  bottom: -0.25rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -1947,6 +1950,10 @@ video {
 .fill-current {
   fill: currentColor;
 }
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -2055,6 +2062,10 @@ video {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
 .pb-3 {
   padding-bottom: 0.75rem;
 }
@@ -2105,6 +2116,12 @@ video {
 }
 .pt-8 {
   padding-top: 2rem;
+}
+.pb-16 {
+  padding-bottom: 4rem;
+}
+.pb-20 {
+  padding-bottom: 5rem;
 }
 .text-left {
   text-align: left;
@@ -2687,6 +2704,11 @@ video {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-castelnau-dark-green:hover {
+  --tw-text-opacity: 1;
+  color: rgb(8 28 21 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-opacity-80:hover {
