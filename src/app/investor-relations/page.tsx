@@ -3,10 +3,9 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Document, fetchDocuments } from '@/utils/documentUtils';
-import PageHero from '@/components/investor/PageHero';
+import PageHero from '@/components/common/PageHero';
 import FinancialMetrics from '@/components/investor/FinancialMetrics';
 import DocumentList from '@/components/investor/DocumentList';
-import InvestorSidebar from '@/components/investor/InvestorSidebar';
 import useScrollToSection from '@/hooks/useScrollToSection';
 
 export default function InvestorRelationsPage() {
@@ -31,42 +30,29 @@ export default function InvestorRelationsPage() {
 
   return (
     <>
-      <PageHero />
-      
-      <section className="page-content">
+      <PageHero 
+        title="Investor Relations"
+        description="Access financial information, regulatory documents, and stay updated with our latest news"
+      />
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="md:col-span-2">
-              <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-8">Financial Information</h2>
-              
-              <FinancialMetrics />
-              
-              <DocumentList 
-                title="Regulatory Documents" 
-                documents={getDocumentsByCategory('regulatory')} 
-                id="regulatory-documents" 
-              />
-              
-              <DocumentList 
-                title="Factsheets" 
-                documents={getDocumentsByCategory('factsheet')} 
-                id="factsheets" 
-              />
-              
-              <DocumentList 
-                title="Regulatory News Service (RNS)" 
-                documents={getDocumentsByCategory('rns')} 
-                id="rns" 
-              />
-              
-              <DocumentList 
-                title="Reports & Presentations" 
-                documents={getDocumentsByCategory('report')} 
-                id="reports" 
-              />
-            </div>
-            
-            <InvestorSidebar />
+          <div className="max-w-4xl mx-auto">
+            <FinancialMetrics />
+            <DocumentList 
+              documents={getDocumentsByCategory('regulatory')} 
+              title="Regulatory Documents" 
+              id="regulatory-documents"
+            />
+            <DocumentList 
+              documents={getDocumentsByCategory('factsheet')} 
+              title="Factsheets" 
+              id="factsheets"
+            />
+            <DocumentList 
+              documents={getDocumentsByCategory('rns')} 
+              title="RNS Announcements" 
+              id="rns"
+            />
           </div>
         </div>
       </section>

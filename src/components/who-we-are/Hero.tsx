@@ -3,7 +3,7 @@ const Hero = () => {
   return <section className="page-hero">
       <div className="container mx-auto px-4">
         <h1 className="page-title">Who We Are</h1>
-        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-8">
+        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-16">
           We are value investors focused on long-term growth through careful analysis and active engagement with exceptional businesses.
         </p>
         <div className="h-1 bg-gradient-to-r from-white/40 via-white to-white/40 w-36 bg-neutral-50"></div>

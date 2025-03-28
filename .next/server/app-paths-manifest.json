@@ -1,3 +1,7 @@
 {
-  "/page": "app/page.js"
+  "/graduate-programme/page": "app/graduate-programme/page.js",
+  "/castelnau-library/page": "app/castelnau-library/page.js",
+  "/news/page": "app/news/page.js",
+  "/page": "app/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

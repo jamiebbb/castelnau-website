@@ -136,7 +136,7 @@
   }
 
   .page-hero {
-    @apply bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green text-white py-20;
+    @apply bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green text-white py-20 relative;
   }
 
   .page-title {

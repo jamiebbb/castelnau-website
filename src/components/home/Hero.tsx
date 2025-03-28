@@ -2,31 +2,51 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Wave from '@/components/ui/wave';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green text-white">
-      <div className="absolute inset-0 bg-[url('/lovable-uploads/bbc6d732-dfdf-4ade-b448-d507309fcdce.png')] bg-cover bg-center opacity-20"></div>
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in">
-          Welcome to Castelnau
-        </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-slide-up">
-          A leading investment management company focused on delivering exceptional results for our clients.
-        </p>
-        <Link
-          href="/what-we-do"
-          className="inline-block bg-white text-castelnau-green px-8 py-3 rounded-md hover:bg-opacity-90 transition-colors animate-fade-in"
-        >
-          Learn More
-        </Link>
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green text-white overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[url('/lovable-uploads/bbc6d732-dfdf-4ade-b448-d507309fcdce.png')] bg-cover bg-center opacity-10"></div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Logo */}
+          <div className="mb-8">
+            <Image
+              src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
+              alt="Castelnau Group"
+              width={200}
+              height={80}
+              className="mx-auto"
+              priority
+            />
+          </div>
+          
+          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 animate-fade-in">
+            Creating Value with Permanence and Vision
+          </h1>
+          <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto animate-slide-up text-white/90">
+            A leading investment management company focused on delivering exceptional results through disciplined investment.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+            <Link
+              href="/what-we-do"
+              className="inline-block bg-white text-castelnau-green px-8 py-3 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              Learn More
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-block bg-transparent border-2 border-white text-white px-8 py-3 rounded-md hover:bg-white/10 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
       </div>
-      <Wave 
-        fillColor="#FFFFFF" 
-        path="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-        className="animate-wave"
-      />
     </section>
   );
 };
