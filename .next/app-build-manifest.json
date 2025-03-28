@@ -11,10 +11,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/investor-relations/page": [
+    "/castelnau-library/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/investor-relations/page.js"
+      "static/chunks/app/castelnau-library/page.js"
+    ],
+    "/graduate-programme/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/graduate-programme/page.js"
+    ],
+    "/news/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/news/page.js"
     ],
     "/page": [
       "static/chunks/webpack.js",

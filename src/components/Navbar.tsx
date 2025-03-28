@@ -54,9 +54,10 @@ const Navbar = () => {
             <Link href="/" className="mr-10">
               <img 
                 alt="Castelnau Group" 
-                className="h-16" 
-                src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
+                className="h-12 w-auto object-contain" 
+                src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png?v=2"
                 loading="eager"
+                style={{ minHeight: '48px' }}
               />
             </Link>
             

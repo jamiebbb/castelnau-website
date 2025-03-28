@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 
 const Hero = () => {
@@ -35,7 +34,7 @@ const Hero = () => {
           </h1>
           <div 
             ref={lineRef}
-            className="h-1 bg-white mt-8 w-0 opacity-0 transition-all duration-700 ease-in-out"
+            className="h-1 bg-white mt-8 mb-16 w-0 opacity-0 transition-all duration-700 ease-in-out"
           ></div>
         </div>
       </div>
