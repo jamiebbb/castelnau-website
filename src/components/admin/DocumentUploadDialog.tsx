@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -73,7 +72,7 @@ const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({ onUploadSuc
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="primary">Upload New Document</Button>
+        <Button variant="default">Upload New Document</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
