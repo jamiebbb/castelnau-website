@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -54,17 +53,17 @@ const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSumm
             </div>
             <div className="flex justify-between mt-4">
               <div className="flex space-x-2">
-                <Button variant="soft" size="sm" className="gap-1">
+                <Button variant="secondary" size="sm" className="gap-1">
                   <BookOpen className="h-4 w-4" />
                   Add to Reading List
                 </Button>
-                <Button variant="soft" size="sm" className="gap-1">
+                <Button variant="secondary" size="sm" className="gap-1">
                   <Share2 className="h-4 w-4" />
                   Share
                 </Button>
               </div>
               <Button 
-                variant="castelnau"
+                variant="outline"
                 onClick={() => setDialogOpen(false)}
               >
                 Close
