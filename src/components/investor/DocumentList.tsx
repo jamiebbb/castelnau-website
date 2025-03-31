@@ -1,41 +1,73 @@
-
 import React from 'react';
-import { Document, downloadDocument } from '@/utils/documentUtils';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileDown } from 'lucide-react';
+import { FileText, Download } from 'lucide-react';
 
-interface DocumentListProps {
-  title: string;
-  documents: Document[];
+interface Document {
   id: string;
+  title: string;
+  type: string;
+  date: string;
+  size: string;
+  url: string;
 }
 
-const DocumentList: React.FC<DocumentListProps> = ({ title, documents, id }) => {
-  const handleDownload = (document: Document) => {
-    downloadDocument(document.file_path, document.file_name);
-  };
+interface DocumentListProps {
+  className?: string;
+}
+
+const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
+  // Static data for prototype
+  const documents: Document[] = [
+    {
+      id: '1',
+      title: 'Annual Report 2023',
+      type: 'PDF',
+      date: '2024-03-15',
+      size: '2.4 MB',
+      url: '#'
+    },
+    {
+      id: '2',
+      title: 'Interim Results 2023',
+      type: 'PDF',
+      date: '2023-09-20',
+      size: '1.8 MB',
+      url: '#'
+    },
+    {
+      id: '3',
+      title: 'Notice of AGM 2024',
+      type: 'PDF',
+      date: '2024-02-28',
+      size: '0.5 MB',
+      url: '#'
+    }
+  ];
 
   return (
-    <div className="mb-12" id={id}>
-      <h3 className="text-2xl font-bold mb-6">{title}</h3>
+    <Card className={`p-6 ${className}`}>
+      <h2 className="text-xl font-semibold mb-4">Key Documents</h2>
       <div className="space-y-4">
-        {documents.map(doc => (
-          <div key={doc.id} className="flex items-center justify-between border-b border-gray-200 pb-4">
-            <div>
-              <p className="font-medium">{doc.title}</p>
-              <p className="text-sm text-gray-500">Published: {doc.publish_date} {doc.file_size && `• ${doc.file_size}`}</p>
+        {documents.map((doc) => (
+          <div key={doc.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-4">
+              <FileText className="h-6 w-6 text-gray-500" />
+              <div>
+                <h3 className="font-medium">{doc.title}</h3>
+                <p className="text-sm text-gray-500">
+                  {doc.type} • {new Date(doc.date).toLocaleDateString()} • {doc.size}
+                </p>
+              </div>
             </div>
-            <Button 
-              onClick={() => handleDownload(doc)}
-              className="px-4 py-2 bg-castelnau-green text-white rounded hover:bg-castelnau-darkgreen transition-colors text-sm flex items-center"
-            >
-              <FileDown className="mr-2 h-4 w-4" />
-              Download
+            <Button variant="outline" size="sm" className="flex items-center space-x-2">
+              <Download className="h-4 w-4" />
+              <span>Download</span>
             </Button>
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 

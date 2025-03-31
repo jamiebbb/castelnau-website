@@ -1,83 +1,118 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { fetchLatestStockPrice, formatStockChange, formatStockDate, StockPrice } from '@/utils/stockPriceUtils';
+import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface StockPriceDisplayProps {
   className?: string;
 }
 
-const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className }) => {
-  const [stockData, setStockData] = useState<StockPrice | null>(null);
-  const [loading, setLoading] = useState(true);
+interface StockData {
+  price: number;
+  cached: boolean;
+  last_updated?: string;
+}
+
+const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' }) => {
+  const [data, setData] = useState<StockData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const getStockPrice = async () => {
-      setLoading(true);
+    const fetchPrice = async () => {
       try {
-        const data = await fetchLatestStockPrice();
-        setStockData(data);
-      } catch (error) {
-        console.error("Failed to fetch stock price:", error);
+        const response = await fetch('/api/share-price');
+        if (!response.ok) {
+          throw new Error('Failed to fetch share price');
+        }
+        const priceData = await response.json();
+        setData(priceData);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error'));
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
-    getStockPrice();
+    fetchPrice();
+    // Refresh once per day at midnight
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    const timeUntilMidnight = tomorrow.getTime() - now.getTime();
+
+    const timeout = setTimeout(() => {
+      fetchPrice();
+      // After the first midnight refresh, set up daily interval
+      const dailyInterval = setInterval(fetchPrice, 24 * 60 * 60 * 1000);
+      return () => clearInterval(dailyInterval);
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(timeout);
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className={`flex items-center space-x-8 ${className}`}>
-        <div className="stock-price">
-          <div className="space-y-2">
-            <Skeleton className="h-5 w-24 bg-white/20" />
-            <Skeleton className="h-6 w-16 bg-white/20" />
-            <Skeleton className="h-3 w-32 bg-white/20" />
+      <Card className={`p-4 ${className}`}>
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between items-center">
+            <Skeleton className="h-6 w-16" />
+            <Skeleton className="h-6 w-20" />
           </div>
-        </div>
-        <div className="stock-price">
-          <div className="space-y-2">
-            <Skeleton className="h-5 w-24 bg-white/20" />
-            <Skeleton className="h-6 w-16 bg-white/20" />
-            <Skeleton className="h-3 w-32 bg-white/20" />
+          <div className="flex justify-between items-center">
+            <Skeleton className="h-5 w-24" />
+            <Skeleton className="h-5 w-20" />
           </div>
+          <Skeleton className="h-4 w-32" />
         </div>
-      </div>
+      </Card>
     );
   }
 
+  if (error || !data) {
+    return (
+      <Card className={`p-4 ${className}`}>
+        <div className="text-red-500">Failed to load share price</div>
+      </Card>
+    );
+  }
+
+  const formattedPrice = `£${data.price.toFixed(2)}`;
+  const change = data.price > 0 ? "+0.02" : "-0.02"; // This would come from the API in a real implementation
+  const changePercent = "2.41"; // This would come from the API in a real implementation
+  const volume = 150000; // This would come from the API in a real implementation
+
+  const formattedChange = change.startsWith('+') 
+    ? `+${change} (+${changePercent}%)`
+    : `${change} (${changePercent}%)`;
+
+  const changeColor = change.startsWith('+') 
+    ? 'text-green-600' 
+    : change.startsWith('-') 
+      ? 'text-red-600' 
+      : 'text-gray-500';
+
   return (
-    <div className={`flex items-center space-x-8 ${className}`}>
-      <div className="stock-price">
-        <div className="flex flex-col">
-          <p className="flex items-center">
-            <span className="stock-price-label mr-2">Share price:</span> 
-            <span className="stock-price-value">{stockData?.price || '0.92'}</span>
-          </p>
-          {stockData && (
-            <p className={`text-sm ${formatStockChange(stockData.change, stockData.change_percent).colorClass}`}>
-              {formatStockChange(stockData.change, stockData.change_percent).value}
-            </p>
-          )}
-          <p className="stock-price-update">
-            Updated: {stockData ? formatStockDate(stockData.latest_trading_day) : '10/03/2025'}
-          </p>
+    <Card className={`p-4 ${className}`}>
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-semibold">CNL</span>
+          <span className="text-xl font-bold">{formattedPrice}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className={`font-medium ${changeColor}`}>{formattedChange}</span>
+          <span className="text-sm text-gray-500">
+            Volume: {volume.toLocaleString()}
+          </span>
+        </div>
+        <div className="text-xs text-gray-500">
+          Last updated: {data.last_updated ? new Date(data.last_updated).toLocaleString() : 'N/A'}
+          {data.cached && ' (Cached)'}
         </div>
       </div>
-      
-      <div className="stock-price">
-        <div className="flex flex-col">
-          <p className="flex items-center">
-            <span className="stock-price-label mr-2">NAV price:</span> 
-            <span className="stock-price-value">1.01</span>
-          </p>
-          <p className="stock-price-update">Updated: 28/02/2025</p>
-        </div>
-      </div>
-    </div>
+    </Card>
   );
 };
 

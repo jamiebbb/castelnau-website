@@ -1,53 +1,60 @@
+import React from 'react';
+import { Card } from '@/components/ui/card';
 
-import React, { useEffect, useState } from 'react';
-import { fetchLatestStockPrice, formatStockChange, formatStockDate, StockPrice } from '@/utils/stockPriceUtils';
+interface FinancialMetricsProps {
+  className?: string;
+}
 
-const FinancialMetrics: React.FC = () => {
-  const [stockData, setStockData] = useState<StockPrice | null>(null);
-  
-  useEffect(() => {
-    const getStockPrice = async () => {
-      try {
-        const data = await fetchLatestStockPrice();
-        setStockData(data);
-      } catch (error) {
-        console.error("Failed to fetch stock price:", error);
-      }
-    };
+const FinancialMetrics: React.FC<FinancialMetricsProps> = ({ className = '' }) => {
+  // Static data for prototype
+  const metrics = {
+    nav: "£1.01",
+    nav_change: "+0.03",
+    nav_change_percent: "3.07",
+    market_cap: "£85.2M",
+    shares_issued: "100.2M",
+    last_updated: new Date().toISOString()
+  };
 
-    getStockPrice();
-  }, []);
+  const formattedNavChange = metrics.nav_change.startsWith('+') 
+    ? `+${metrics.nav_change} (+${metrics.nav_change_percent}%)`
+    : `${metrics.nav_change} (${metrics.nav_change_percent}%)`;
+
+  const navChangeColor = metrics.nav_change.startsWith('+') 
+    ? 'text-green-600' 
+    : metrics.nav_change.startsWith('-') 
+      ? 'text-red-600' 
+      : 'text-gray-500';
 
   return (
-    <div className="mb-12" id="share-price">
-      <h3 className="text-2xl font-bold mb-6">Key Financial Metrics</h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <p className="text-sm text-gray-500 mb-1">Share Price</p>
-          <p className="text-2xl font-bold text-castelnau-green">
-            {stockData ? `£${stockData.price}` : '£0.92'}
-          </p>
-          {stockData && (
-            <p className={`text-sm ${formatStockChange(stockData.change, stockData.change_percent).colorClass}`}>
-              {formatStockChange(stockData.change, stockData.change_percent).value}
-            </p>
-          )}
-          <p className="text-xs text-gray-500">
-            Updated: {stockData ? formatStockDate(stockData.latest_trading_day) : '10/03/2025'}
-          </p>
+    <Card className={`p-6 ${className}`}>
+      <h2 className="text-xl font-semibold mb-4">Financial Metrics</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600">NAV per Share</span>
+            <span className="font-semibold">{metrics.nav}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600">NAV Change</span>
+            <span className={`font-medium ${navChangeColor}`}>{formattedNavChange}</span>
+          </div>
         </div>
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <p className="text-sm text-gray-500 mb-1">NAV per Share</p>
-          <p className="text-2xl font-bold text-castelnau-green">£1.01</p>
-          <p className="text-xs text-gray-500">Updated: 28/02/2025</p>
-        </div>
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <p className="text-sm text-gray-500 mb-1">Market Cap</p>
-          <p className="text-2xl font-bold text-castelnau-green">£186.2m</p>
-          <p className="text-xs text-gray-500">Updated: 10/03/2025</p>
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600">Market Cap</span>
+            <span className="font-semibold">{metrics.market_cap}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600">Shares Issued</span>
+            <span className="font-semibold">{metrics.shares_issued}</span>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="mt-4 text-xs text-gray-500">
+        Last updated: {new Date(metrics.last_updated).toLocaleString()}
+      </div>
+    </Card>
   );
 };
 
