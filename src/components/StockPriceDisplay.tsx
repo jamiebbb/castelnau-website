@@ -9,9 +9,14 @@ interface StockPriceDisplayProps {
 }
 
 interface StockData {
+  symbol: string;
   price: number;
+  change: number;
+  change_percent: number;
+  volume: number;
+  latest_trading_day: string;
+  last_updated: string;
   cached: boolean;
-  last_updated?: string;
 }
 
 const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' }) => {
@@ -22,7 +27,7 @@ const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' })
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch('/api/share-price');
+        const response = await fetch('/share-price.json');
         if (!response.ok) {
           throw new Error('Failed to fetch share price');
         }
@@ -36,21 +41,6 @@ const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' })
     };
 
     fetchPrice();
-    // Refresh once per day at midnight
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-    const timeUntilMidnight = tomorrow.getTime() - now.getTime();
-
-    const timeout = setTimeout(() => {
-      fetchPrice();
-      // After the first midnight refresh, set up daily interval
-      const dailyInterval = setInterval(fetchPrice, 24 * 60 * 60 * 1000);
-      return () => clearInterval(dailyInterval);
-    }, timeUntilMidnight);
-
-    return () => clearTimeout(timeout);
   }, []);
 
   if (isLoading) {
@@ -80,35 +70,27 @@ const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' })
   }
 
   const formattedPrice = `£${data.price.toFixed(2)}`;
-  const change = data.price > 0 ? "+0.02" : "-0.02"; // This would come from the API in a real implementation
-  const changePercent = "2.41"; // This would come from the API in a real implementation
-  const volume = 150000; // This would come from the API in a real implementation
+  const formattedChange = data.change >= 0
+    ? `+${data.change.toFixed(2)} (+${data.change_percent.toFixed(2)}%)`
+    : `${data.change.toFixed(2)} (${data.change_percent.toFixed(2)}%)`;
 
-  const formattedChange = change.startsWith('+') 
-    ? `+${change} (+${changePercent}%)`
-    : `${change} (${changePercent}%)`;
-
-  const changeColor = change.startsWith('+') 
-    ? 'text-green-600' 
-    : change.startsWith('-') 
-      ? 'text-red-600' 
-      : 'text-gray-500';
+  const changeColor = data.change >= 0 ? 'text-green-600' : 'text-red-600';
 
   return (
     <Card className={`p-4 ${className}`}>
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <span className="text-lg font-semibold">CNL</span>
+          <span className="text-lg font-semibold">{data.symbol}</span>
           <span className="text-xl font-bold">{formattedPrice}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className={`font-medium ${changeColor}`}>{formattedChange}</span>
           <span className="text-sm text-gray-500">
-            Volume: {volume.toLocaleString()}
+            Volume: {data.volume.toLocaleString()}
           </span>
         </div>
         <div className="text-xs text-gray-500">
-          Last updated: {data.last_updated ? new Date(data.last_updated).toLocaleString() : 'N/A'}
+          Last updated: {new Date(data.last_updated).toLocaleString()}
           {data.cached && ' (Cached)'}
         </div>
       </div>

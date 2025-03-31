@@ -8,8 +8,7 @@ from typing import Optional, Dict, Any
 
 ALPHA_VANTAGE_API_KEY = 'LKRB0RE577TSMDK0'
 SYMBOL = 'CTN.L'
-CACHE_FILE = 'public/share-price.json'
-CACHE_DURATION = timedelta(hours=24)
+OUTPUT_FILE = 'public/share-price.json'
 RATE_LIMIT_FILE = 'scripts/.rate_limit'
 
 def get_last_api_call() -> Optional[datetime]:
@@ -44,8 +43,8 @@ def can_make_api_call() -> bool:
     # Alpha Vantage free tier: 5 calls per minute, 500 calls per day
     return minutes_since_last_call >= 1  # Wait at least 1 minute between calls
 
-def fetch_latest_price() -> Optional[float]:
-    """Fetch the latest share price from Alpha Vantage."""
+def fetch_stock_data() -> Optional[Dict[str, Any]]:
+    """Fetch the stock data from Alpha Vantage."""
     if not can_make_api_call():
         print("Rate limit reached. Please wait before making another API call.")
         return None
@@ -65,8 +64,17 @@ def fetch_latest_price() -> Optional[float]:
                 print("Unexpected API response format")
             return None
             
-        price = float(data['Global Quote']['05. price'])
-        return price
+        quote = data['Global Quote']
+        return {
+            'symbol': SYMBOL,
+            'price': float(quote['05. price']),
+            'change': float(quote['09. change']),
+            'change_percent': float(quote['10. change percent'].rstrip('%')),
+            'volume': int(quote['06. volume']),
+            'latest_trading_day': quote['07. latest trading day'],
+            'last_updated': datetime.now(pytz.UTC).isoformat(),
+            'cached': False
+        }
     except requests.RequestException as e:
         print(f"Network error: {e}")
     except (KeyError, ValueError) as e:
@@ -78,66 +86,40 @@ def fetch_latest_price() -> Optional[float]:
 def get_cached_data() -> Optional[Dict[str, Any]]:
     """Get the currently cached price data."""
     try:
-        if os.path.exists(CACHE_FILE):
-            with open(CACHE_FILE, 'r') as f:
+        if os.path.exists(OUTPUT_FILE):
+            with open(OUTPUT_FILE, 'r') as f:
                 return json.load(f)
     except Exception as e:
         print(f"Error reading cache: {e}")
     return None
 
-def should_update_cache() -> bool:
-    """Check if we need to update the cache based on its age."""
-    cached_data = get_cached_data()
-    if cached_data is None:
-        return True
-    
-    try:
-        last_update = datetime.fromisoformat(cached_data['last_updated'])
-        now = datetime.now(pytz.UTC)
-        return (now - last_update) > CACHE_DURATION
-    except (KeyError, ValueError):
-        return True
-
-def update_cache() -> bool:
-    """Update the share price cache."""
-    # First check if we actually need to update
-    if not should_update_cache():
-        print("Cache is still fresh, no update needed")
-        return True
-
-    # Then check rate limits
-    if not can_make_api_call():
-        print("Rate limit reached. Using existing cache if available.")
-        return False
-
-    price = fetch_latest_price()
-    if price is None:
-        print("Failed to fetch new price")
+def update_stock_data() -> bool:
+    """Update the stock data file."""
+    data = fetch_stock_data()
+    if data is None:
+        print("Failed to fetch new stock data")
         return False
     
-    cache_data = {
-        'price': price,
-        'last_updated': datetime.now(pytz.UTC).isoformat(),
-        'cached': True
-    }
-    
     try:
-        os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
-        with open(CACHE_FILE, 'w') as f:
-            json.dump(cache_data, f, indent=2)
-        print(f"Successfully updated share price to £{price:.2f}")
+        os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+        with open(OUTPUT_FILE, 'w') as f:
+            json.dump(data, f, indent=2)
+        print(f"Successfully updated stock data:")
+        print(f"Price: £{data['price']:.2f}")
+        print(f"Change: {data['change']:+.2f} ({data['change_percent']:+.2f}%)")
+        print(f"Volume: {data['volume']:,}")
+        print(f"Last Trading Day: {data['latest_trading_day']}")
         return True
     except Exception as e:
-        print(f"Error updating cache: {e}")
+        print(f"Error updating file: {e}")
         return False
 
 if __name__ == "__main__":
-    # If cache exists but is old and we can't update due to rate limits,
-    # keep using the old cache rather than failing
-    if not update_cache():
+    # If we can't update the data, keep the existing cache
+    if not update_stock_data():
         cached_data = get_cached_data()
         if cached_data:
-            print("Using existing cache due to rate limits")
+            print("Using existing cache due to update failure")
             print(f"Cached price: £{cached_data['price']:.2f}")
             print(f"Last updated: {cached_data['last_updated']}")
         else:

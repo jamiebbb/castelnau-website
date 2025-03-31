@@ -1,0 +1,15 @@
+{
+  "/api/update-share-price/route": "/api/update-share-price",
+  "/api/share-price/route": "/api/share-price",
+  "/_not-found/page": "/_not-found",
+  "/contact/page": "/contact",
+  "/castelnau-library/page": "/castelnau-library",
+  "/explore-the-group/page": "/explore-the-group",
+  "/investor-relations/page": "/investor-relations",
+  "/graduate-programme/page": "/graduate-programme",
+  "/page": "/",
+  "/document-admin/page": "/document-admin",
+  "/what-we-do/page": "/what-we-do",
+  "/who-we-are/page": "/who-we-are",
+  "/news/page": "/news"
+}

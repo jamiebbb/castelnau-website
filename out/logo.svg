@@ -1,0 +1,10 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="#FFFFFF">
+    <path d="M30,20 Q40,10 50,20 L50,50 Q40,60 30,50 Z" />
+    <path d="M50,20 Q60,10 70,20 L70,50 Q60,60 50,50 Z" />
+    <rect x="25" y="55" width="50" height="5" />
+    <text x="85" y="45" font-family="Georgia, serif" font-size="24" font-weight="bold">Castelnau</text>
+    <text x="85" y="65" font-family="Arial, sans-serif" font-size="12" letter-spacing="5">GROUP</text>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface ScrollOptions {
   offset?: number;
@@ -11,7 +11,6 @@ interface ScrollOptions {
 
 const useScrollToSection = (options: ScrollOptions = {}) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { offset = 120, behavior = 'smooth', delay = 300 } = options;
   
@@ -51,7 +50,7 @@ const useScrollToSection = (options: ScrollOptions = {}) => {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, [pathname, searchParams, offset, behavior, delay]);
+  }, [pathname, offset, behavior, delay]);
 
   // Function to manually scroll to an element by ID
   const scrollToElement = (elementId: string) => {

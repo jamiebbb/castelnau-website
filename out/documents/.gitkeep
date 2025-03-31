@@ -1,0 +1,13 @@
+
+# This file ensures the documents directory is created in git
+# You can place PDF files in this directory
+
+# How to add PDF documents to your Lovable project:
+# 1. If using Lovable web editor: 
+#    - PDF documents need to be added to your project after deployment
+#    - Contact the Lovable team if you need assistance with this
+#
+# 2. If running the project locally or on your own server:
+#    - Place your PDF files in this directory
+#    - They will be accessible at /documents/your-file-name.pdf
+
