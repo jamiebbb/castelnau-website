@@ -4,15 +4,19 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  { ignores: ["dist"] },
+export default [
+  {
+    ignores: ["dist", ".next", "node_modules"],
+  },
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
+      sourceType: "module",
       globals: {
         ...globals.browser,
         ...globals.node,
+        React: "readonly",
       },
       parserOptions: {
         project: "./tsconfig.json",
@@ -30,5 +34,5 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unused-vars": "off",
     },
-  }
-);
+  },
+];
