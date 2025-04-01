@@ -10,6 +10,12 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Castelnau Group',
   description: 'Creating exceptional value through disciplined investment.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/castelnau-website/favicon.ico' }
+    ],
+  },
 };
 
 export default function RootLayout({

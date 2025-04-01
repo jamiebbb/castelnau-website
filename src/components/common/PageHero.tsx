@@ -1,33 +1,53 @@
-'use client';
+"use client";
 
 import React from 'react';
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
 
 interface PageHeroProps {
   title: string;
   description?: string;
+  showButtons?: boolean;
 }
 
-const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
+const PageHero: React.FC<PageHeroProps> = ({ 
+  title, 
+  description,
+  showButtons = false 
+}) => {
   return (
     <section className="relative page-hero">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png')] bg-cover bg-center bg-[length:50%_auto] opacity-10"></div>
-      
+      <div className="absolute inset-0 bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green"></div>
+      <div className="absolute inset-0 bg-[url('/castelnau-logo.png')] bg-repeat opacity-5"></div>
       <div className="container mx-auto px-4 relative z-10">
-        <h1 className="page-title text-white">
-          {title}
-        </h1>
-        <div className="h-1 bg-white w-48 md:w-72 mb-16"></div>
-        {description && (
-          <p className="text-white text-lg max-w-2xl mb-32">
-            {description}
-          </p>
-        )}
+        <div className="py-24 md:py-32">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            {title}
+          </h1>
+          {description && (
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-8">
+              {description}
+            </p>
+          )}
+          {showButtons && (
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/contact">
+                <Button className="bg-castelnau-gold text-white hover:bg-castelnau-gold/90">
+                  Contact Us
+                </Button>
+              </Link>
+              <Link href="/explore-the-group">
+                <Button variant="outline" className="text-white border-white hover:bg-white/10">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-      
       <div className="absolute bottom-0 left-0 right-0 w-full">
         <svg 
-          xmlns="http://www.w3.org/2000/svg" 
+          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 150" 
           className="w-full h-auto"
           preserveAspectRatio="none"

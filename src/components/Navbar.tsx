@@ -1,24 +1,19 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useScrollToSection from '@/hooks/useScrollToSection';
 import StockPriceDisplay from './StockPriceDisplay';
-import { getImagePath } from '@/utils/getImagePath';
 
 const Navbar = () => {
   const pathname = usePathname();
   const { scrollToElement, refreshScroll } = useScrollToSection({ offset: 150 });
+  const [whoWeAreOpen, setWhoWeAreOpen] = useState(false);
+  const [investorOpen, setInvestorOpen] = useState(false);
   
   const handleWhoWeAreSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -57,10 +52,11 @@ const Navbar = () => {
               <Image 
                 alt="Castelnau Group" 
                 className="h-12 w-auto object-contain" 
-                src="/brand/logos/castelnau-logo.png"
-                width={48}
+                src={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/castelnau-logo.png`}
+                width={120}
                 height={48}
                 priority
+                quality={100}
                 style={{ minHeight: '48px' }}
               />
             </Link>
@@ -69,11 +65,6 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link href="/news">
-              <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
-                News
-              </Button>
-            </Link>
             <Link href="/castelnau-library">
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 Castelnau Library
@@ -85,7 +76,7 @@ const Navbar = () => {
               </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="gold" className="text-castelnau-dark-green text-base px-6 py-2 font-medium hover:bg-castelnau-gold/90">
+              <Button variant="transparent" className="text-white hover:text-white text-base px-6 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors">
                 Contact us
               </Button>
             </Link>
@@ -96,36 +87,45 @@ const Navbar = () => {
       <div>
         <div className="container mx-auto px-4">
           <nav className="flex py-4 space-x-6">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
-                  Who We Are <ChevronDown className="h-4 w-4 ml-1" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
-                <Link href="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Overview
-                  </DropdownMenuItem>
-                </Link>
-                <Link 
-                  href="/who-we-are#our-values" 
-                  onClick={(e) => handleWhoWeAreSectionClick('our-values', e)}
+            <div className="relative">
+              <Button 
+                variant="transparent" 
+                className="text-white hover:text-white text-base px-4 py-2"
+                onMouseEnter={() => setWhoWeAreOpen(true)}
+                onMouseLeave={() => setWhoWeAreOpen(false)}
+              >
+                Who We Are <ChevronDown className="h-4 w-4 ml-1" />
+              </Button>
+              {whoWeAreOpen && (
+                <div 
+                  className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 min-w-[200px] z-50"
+                  onMouseEnter={() => setWhoWeAreOpen(true)}
+                  onMouseLeave={() => setWhoWeAreOpen(false)}
                 >
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Our Values
-                  </DropdownMenuItem>
-                </Link>
-                <Link 
-                  href="/who-we-are#our-team" 
-                  onClick={(e) => handleWhoWeAreSectionClick('our-team', e)}
-                >
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Our Team
-                  </DropdownMenuItem>
-                </Link>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <Link href="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Overview
+                    </div>
+                  </Link>
+                  <Link 
+                    href="/who-we-are#our-values" 
+                    onClick={(e) => handleWhoWeAreSectionClick('our-values', e)}
+                  >
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Our Values
+                    </div>
+                  </Link>
+                  <Link 
+                    href="/who-we-are#our-team" 
+                    onClick={(e) => handleWhoWeAreSectionClick('our-team', e)}
+                  >
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Our Team
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
             
             <Link href="/what-we-do">
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
@@ -138,35 +138,44 @@ const Navbar = () => {
               </Button>
             </Link>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
-                  Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow-lg rounded-md mt-1">
-                <Link href="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Share Price
-                  </DropdownMenuItem>
-                </Link>
-                <Link href="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Regulatory Documents
-                  </DropdownMenuItem>
-                </Link>
-                <Link href="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    Factsheets
-                  </DropdownMenuItem>
-                </Link>
-                <Link href="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-castelnau-green/10 text-base py-2">
-                    RNS
-                  </DropdownMenuItem>
-                </Link>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="relative">
+              <Button 
+                variant="transparent" 
+                className="text-white hover:text-white text-base px-4 py-2"
+                onMouseEnter={() => setInvestorOpen(true)}
+                onMouseLeave={() => setInvestorOpen(false)}
+              >
+                Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
+              </Button>
+              {investorOpen && (
+                <div 
+                  className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 min-w-[200px] z-50"
+                  onMouseEnter={() => setInvestorOpen(true)}
+                  onMouseLeave={() => setInvestorOpen(false)}
+                >
+                  <Link href="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Share Price
+                    </div>
+                  </Link>
+                  <Link href="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Regulatory Documents
+                    </div>
+                  </Link>
+                  <Link href="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Factsheets
+                    </div>
+                  </Link>
+                  <Link href="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      RNS
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       </div>

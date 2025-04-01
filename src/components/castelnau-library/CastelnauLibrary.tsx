@@ -26,6 +26,7 @@ const CastelnauLibrary = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('Castelnau Favourites');
   const [currentBookIndex, setCurrentBookIndex] = useState<number>(0);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragStartX, setDragStartX] = useState<number>(0);
   const [dragOffset, setDragOffset] = useState<number>(0);
@@ -35,175 +36,215 @@ const CastelnauLibrary = () => {
     {
       name: 'Castelnau Favourites',
       books: [
-    {
-      id: '1',
-      title: 'The Psychology of Money',
-      author: 'Morgan Housel',
-      description: 'Timeless lessons on wealth, greed, and happiness. The Psychology of Money explores the complex relationship between money and human behavior, offering insights into how we think about and handle financial decisions.',
-      coverImage: '/books/psychology-of-money.jpg',
-      category: 'Personal Finance',
-      publishDate: '2020',
-      shortDescription: 'Timeless lessons on wealth, greed, and happiness'
-    },
-    {
-      id: '2',
-      title: 'Thinking in Bets',
-      author: 'Annie Duke',
-      description: 'Making Smarter Decisions When You Don\'t Have All the Facts. A former World Series of Poker champion turns decision-making into a science, showing how to embrace uncertainty and make better choices.',
-      coverImage: '/books/thinking-in-bets.jpg',
-      category: 'Decision Making',
-      publishDate: '2018',
-      shortDescription: 'Making Smarter Decisions When You Don\'t Have All the Facts'
-    },
+        {
+          id: '1',
+          title: 'The Servant as Leader',
+          author: 'Robert Greenleaf',
+          description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
+          coverImage: '/books/servant-leader.jpg',
+          category: 'Leadership',
+          publishDate: '1970',
+          shortDescription: 'The foundation of servant leadership philosophy'
+        },
+        {
+          id: '2',
+          title: 'Competition Demystified',
+          author: 'Bruce C. Greenwald & Judd Kahn',
+          description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
+          coverImage: '/books/competition-demystified.jpg',
+          category: 'Strategy',
+          publishDate: '2005',
+          shortDescription: 'A simplified approach to business strategy'
+        },
         {
           id: '3',
-          title: 'The Intelligent Investor',
-          author: 'Benjamin Graham',
-          description: 'The definitive book on value investing, offering timeless wisdom on how to analyze stocks and make informed investment decisions.',
-          coverImage: '/books/intelligent-investor.jpg',
-          category: 'Investment',
-          publishDate: '1949',
-          shortDescription: 'The definitive book on value investing'
+          title: 'No Rules Rules',
+          author: 'Reed Hastings & Erin Meyer',
+          description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
+          coverImage: '/books/no-rules-rules.jpg',
+          category: 'Culture',
+          publishDate: '2020',
+          shortDescription: 'Netflix and the culture of reinvention'
         }
       ]
     },
     {
-      name: 'Value Investing',
+      name: 'Leadership & Management',
       books: [
         {
           id: '4',
-          title: 'Security Analysis',
-          author: 'Benjamin Graham & David Dodd',
-          description: 'The foundation of value investing, providing detailed methods for analyzing securities and making investment decisions. A comprehensive guide to fundamental analysis and security valuation.',
-          coverImage: '/books/security-analysis.jpg',
-          category: 'Investment',
-          publishDate: '1934',
-          shortDescription: 'The foundation of value investing'
+          title: 'The Servant as Leader',
+          author: 'Robert Greenleaf',
+          description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
+          coverImage: '/books/servant-leader.jpg',
+          category: 'Leadership',
+          publishDate: '1970',
+          shortDescription: 'The foundation of servant leadership philosophy'
         },
         {
           id: '5',
-          title: 'Common Stocks and Uncommon Profits',
-          author: 'Philip Fisher',
-          description: 'A classic guide to stock market investing, focusing on growth stocks and long-term investment strategies. Fisher\'s principles of qualitative analysis remain relevant today.',
-          coverImage: '/books/common-stocks.jpg',
-          category: 'Investment',
-          publishDate: '1958',
-          shortDescription: 'A classic guide to stock market investing'
+          title: 'Managing Oneself',
+          author: 'Peter F. Drucker',
+          description: 'A classic guide to personal effectiveness and self-management, offering insights into how to maximize your strengths and manage your career.',
+          coverImage: '/books/managing-oneself.jpg',
+          category: 'Management',
+          publishDate: '1999',
+          shortDescription: 'Personal effectiveness and self-management'
         },
         {
           id: '6',
-          title: 'The Little Book of Value Investing',
-          author: 'Christopher Browne',
-          description: 'A concise guide to value investing principles, offering practical advice on finding undervalued stocks and building a value-focused portfolio.',
-          coverImage: '/books/little-book-value.jpg',
-          category: 'Investment',
-          publishDate: '2006',
-          shortDescription: 'A concise guide to value investing principles'
-        }
-      ]
-    },
-    {
-      name: 'Market Psychology',
-      books: [
+          title: 'HBR\'s 10 Must Reads on Leadership',
+          author: 'Various Authors',
+          description: 'A collection of essential articles on leadership, covering emotional intelligence, decision-making, and leadership best practices.',
+          coverImage: '/books/hbr-leadership.jpg',
+          category: 'Leadership',
+          publishDate: '2011',
+          shortDescription: 'Essential leadership insights from Harvard Business Review'
+        },
         {
           id: '7',
-          title: 'A Random Walk Down Wall Street',
-          author: 'Burton Malkiel',
-          description: 'The Time-Tested Strategy for Successful Investing. A comprehensive guide to various investment strategies and market behavior, including the efficient market hypothesis.',
-          coverImage: '/books/random-walk.jpg',
-          category: 'Investment',
-          publishDate: '1973',
-          shortDescription: 'The Time-Tested Strategy for Successful Investing'
+          title: 'Think Lead Succeed: The Admiral Way',
+          author: 'Henry Engelhardt',
+          description: 'Insights into building a successful company culture and leadership framework from the founder of Admiral Insurance.',
+          coverImage: '/books/admiral-way.jpg',
+          category: 'Leadership',
+          publishDate: '2014',
+          shortDescription: 'Company culture and leadership frameworks'
         },
         {
           id: '8',
-          title: 'The Art of Thinking Clearly',
-          author: 'Rolf Dobelli',
-          description: 'Better Thinking, Better Decisions. A collection of cognitive biases and how to avoid them in decision-making, essential for understanding market psychology.',
-          coverImage: '/books/thinking-clearly.jpg',
-          category: 'Decision Making',
-          publishDate: '2013',
-          shortDescription: 'Better Thinking, Better Decisions'
+          title: 'The Richer Way',
+          author: 'Julian Richer',
+          description: 'A practical guide to getting the best out of people through effective management and exceptional customer service.',
+          coverImage: '/books/richer-way.jpg',
+          category: 'Management',
+          publishDate: '2014',
+          shortDescription: 'How to get the best out of people'
         },
         {
           id: '9',
-          title: 'Thinking, Fast and Slow',
-          author: 'Daniel Kahneman',
-          description: 'A groundbreaking work on cognitive biases and decision-making, by the Nobel Prize-winning economist. Essential reading for understanding human behavior in markets.',
-          coverImage: '/books/thinking-fast-slow.jpg',
-          category: 'Psychology',
-          publishDate: '2011',
-          shortDescription: 'Understanding cognitive biases and decision-making'
+          title: 'Trillion Dollar Coach',
+          author: 'Eric Schmidt, Jonathan Rosenberg, Alan Eagle',
+          description: 'The leadership handbook of Silicon Valley\'s Bill Campbell, revealing his coaching principles and how they helped build some of the world\'s most successful companies.',
+          coverImage: '/books/trillion-dollar-coach.jpg',
+          category: 'Leadership',
+          publishDate: '2019',
+          shortDescription: 'The leadership handbook of Silicon Valley\'s Bill Campbell'
+        },
+        {
+          id: '10',
+          title: 'Measure What Matters',
+          author: 'John Doerr',
+          description: 'How Google, Bono, and the Gates Foundation rock the world with OKRs. A comprehensive guide to implementing and using Objectives and Key Results.',
+          coverImage: '/books/measure-what-matters.jpg',
+          category: 'Management',
+          publishDate: '2018',
+          shortDescription: 'How Google, Bono, and the Gates Foundation rock the world with OKRs'
         }
       ]
     },
     {
-      name: 'Business & Economics',
+      name: 'Business Strategy & Innovation',
       books: [
         {
-          id: '10',
-          title: 'Capital in the Twenty-First Century',
-          author: 'Thomas Piketty',
-          description: 'A comprehensive analysis of wealth and income inequality, offering insights into economic trends and their implications for investors.',
-          coverImage: '/books/capital-21st.jpg',
-          category: 'Economics',
-          publishDate: '2013',
-          shortDescription: 'Analysis of wealth and income inequality'
-        },
-        {
           id: '11',
-          title: 'The Big Short',
-          author: 'Michael Lewis',
-          description: 'Inside the Doomsday Machine. A fascinating account of the 2008 financial crisis and the few who saw it coming, offering lessons for modern investors.',
-          coverImage: '/books/big-short.jpg',
-          category: 'Finance',
-          publishDate: '2010',
-          shortDescription: 'Inside the Doomsday Machine'
+          title: 'Competition Demystified',
+          author: 'Bruce C. Greenwald & Judd Kahn',
+          description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
+          coverImage: '/books/competition-demystified.jpg',
+          category: 'Strategy',
+          publishDate: '2005',
+          shortDescription: 'A simplified approach to business strategy'
         },
         {
           id: '12',
-          title: 'The Alchemy of Finance',
-          author: 'George Soros',
-          description: 'Reading the Mind of the Market. Soros\'s theory of reflexivity and its application to financial markets, offering insights into market behavior.',
-          coverImage: '/books/alchemy-finance.jpg',
-          category: 'Finance',
-          publishDate: '1987',
-          shortDescription: 'Reading the Mind of the Market'
+          title: 'The Outsiders',
+          author: 'William N. Thorndike',
+          description: 'Eight unconventional CEOs and their radically rational blueprint for success. A study of exceptional capital allocation and business strategy.',
+          coverImage: '/books/outsiders.jpg',
+          category: 'Strategy',
+          publishDate: '2012',
+          shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
+        },
+        {
+          id: '13',
+          title: 'The Geek Way',
+          author: 'Andrew McAfee',
+          description: 'The radical mindset that drives extraordinary results. How technology and innovation are transforming business and creating new opportunities.',
+          coverImage: '/books/geek-way.jpg',
+          category: 'Innovation',
+          publishDate: '2023',
+          shortDescription: 'The radical mindset that drives extraordinary results'
         }
       ]
     },
     {
-      name: 'Risk Management',
+      name: 'Organizational Culture & Workplace Innovation',
       books: [
         {
-          id: '13',
-          title: 'Fooled by Randomness',
-          author: 'Nassim Nicholas Taleb',
-          description: 'The Hidden Role of Chance in Life and in the Markets. An exploration of how randomness and probability affect our decisions and market outcomes.',
-          coverImage: '/books/fooled-randomness.jpg',
-          category: 'Risk',
-          publishDate: '2001',
-          shortDescription: 'The Hidden Role of Chance in Life and Markets'
-        },
-        {
           id: '14',
-          title: 'Against the Gods',
-          author: 'Peter L. Bernstein',
-          description: 'The Remarkable Story of Risk. A comprehensive history of risk management, from ancient times to modern financial theory.',
-          coverImage: '/books/against-gods.jpg',
-          category: 'Risk',
-          publishDate: '1996',
-          shortDescription: 'The Remarkable Story of Risk'
+          title: 'No Rules Rules',
+          author: 'Reed Hastings & Erin Meyer',
+          description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
+          coverImage: '/books/no-rules-rules.jpg',
+          category: 'Culture',
+          publishDate: '2020',
+          shortDescription: 'Netflix and the culture of reinvention'
         },
         {
           id: '15',
-          title: 'The Black Swan',
-          author: 'Nassim Nicholas Taleb',
-          description: 'The Impact of the Highly Improbable. An examination of rare, unpredictable events and their profound impact on markets and society.',
-          coverImage: '/books/black-swan.jpg',
-          category: 'Risk',
-          publishDate: '2007',
-          shortDescription: 'The Impact of the Highly Improbable'
+          title: 'Setting the Table',
+          author: 'Danny Meyer',
+          description: 'The transforming power of hospitality in business. How exceptional service and culture can drive business success.',
+          coverImage: '/books/setting-table.jpg',
+          category: 'Culture',
+          publishDate: '2006',
+          shortDescription: 'The transforming power of hospitality in business'
+        },
+        {
+          id: '16',
+          title: 'Four Seasons',
+          author: 'Isadore Sharp',
+          description: 'The story of a business philosophy. How Four Seasons built a global luxury hospitality brand through service excellence and organizational culture.',
+          coverImage: '/books/four-seasons.jpg',
+          category: 'Culture',
+          publishDate: '2009',
+          shortDescription: 'The story of a business philosophy'
+        }
+      ]
+    },
+    {
+      name: 'Decision-Making & Problem Solving',
+      books: [
+        {
+          id: '17',
+          title: 'Six Thinking Hats',
+          author: 'Edward de Bono',
+          description: 'A powerful technique for looking at decisions from a number of important perspectives. A framework for parallel thinking and creative problem-solving.',
+          coverImage: '/books/six-thinking-hats.jpg',
+          category: 'Decision Making',
+          publishDate: '1985',
+          shortDescription: 'A powerful technique for looking at decisions from multiple perspectives'
+        },
+        {
+          id: '18',
+          title: 'Superforecasting',
+          author: 'Philip Tetlock',
+          description: 'The art and science of prediction. How to improve forecasting accuracy and make better decisions in an uncertain world.',
+          coverImage: '/books/superforecasting.jpg',
+          category: 'Decision Making',
+          publishDate: '2015',
+          shortDescription: 'The art and science of prediction'
+        },
+        {
+          id: '19',
+          title: 'How Big Things Get Done',
+          author: 'Bent Flyvbjerg',
+          description: 'The surprising factors behind project success and failure. A comprehensive analysis of what makes major projects succeed or fail.',
+          coverImage: '/books/how-big-things.jpg',
+          category: 'Project Management',
+          publishDate: '2023',
+          shortDescription: 'The surprising factors behind project success and failure'
         }
       ]
     }
@@ -220,8 +261,15 @@ const CastelnauLibrary = () => {
 
   const currentCategory = categories.find(cat => cat.name === activeCategory);
 
+  // Filter books based on search query
+  const filteredBooks = currentCategory?.books.filter(book => 
+    book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.category.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
+
   // Get current book
-  const currentBook = currentCategory?.books[currentBookIndex];
+  const currentBook = filteredBooks[currentBookIndex];
 
   // Calculate visible books (show 5 at a time)
   const visibleBooks = currentCategory?.books.slice(
@@ -265,6 +313,12 @@ const CastelnauLibrary = () => {
     }
   };
 
+  // Handle category change
+  const handleCategoryChange = (categoryName: string) => {
+    setActiveCategory(categoryName);
+    setCurrentBookIndex(0);
+  };
+
   return (
     <div className="relative -mt-48">
       {/* Background layers */}
@@ -280,9 +334,26 @@ const CastelnauLibrary = () => {
       <div className="relative z-10 py-4">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
+            {/* Search Bar */}
+            <div className="mb-8 px-4 md:px-0">
+              <div className="relative max-w-2xl mx-auto">
+                <input
+                  type="text"
+                  placeholder="Search books by title, author, or category..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentBookIndex(0);
+                  }}
+                  className="w-full px-6 py-3 rounded-full bg-white/10 text-white placeholder-white/50 border border-white/10 focus:border-white/20 focus:ring-2 focus:ring-white/20 transition-all duration-300 backdrop-blur-sm"
+                />
+                <BookOpen className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white/50" />
+              </div>
+            </div>
+
             {/* Category Navigation */}
             <motion.div 
-              className="flex flex-wrap gap-4 justify-center mb-0"
+              className="flex flex-wrap gap-2 md:gap-4 justify-center mb-0 px-4 md:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -290,11 +361,8 @@ const CastelnauLibrary = () => {
               {categories.map((category) => (
                 <motion.button
                   key={category.name}
-                  onClick={() => {
-                    setActiveCategory(category.name);
-                    setCurrentBookIndex(0);
-                  }}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  onClick={() => handleCategoryChange(category.name)}
+                  className={`px-4 md:px-6 py-2 text-sm md:text-base rounded-full transition-all duration-300 ${
                     activeCategory === category.name
                       ? 'bg-white text-castelnau-green shadow-lg scale-105'
                       : 'bg-white/10 text-white hover:bg-white/20 hover:scale-105'
@@ -307,96 +375,98 @@ const CastelnauLibrary = () => {
               ))}
             </motion.div>
 
-            {/* Circular Book Carousel */}
-            <div className="relative h-[700px] perspective-1000 -mt-4">
-              <motion.div 
-                className="relative w-full h-full"
-                style={{
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                <div className="relative h-full flex items-center justify-center">
-                  {currentCategory?.books.map((book, index) => {
-                    const isCurrent = index === currentBookIndex;
-                    const isNext = index === (currentBookIndex + 1) % currentCategory.books.length;
-                    const isPrev = index === (currentBookIndex - 1 + currentCategory.books.length) % currentCategory.books.length;
-                    
-                    if (!isCurrent && !isNext && !isPrev) return null;
+            {/* Book Carousel */}
+            <div className="relative h-[500px] md:h-[700px] -mt-4">
+              <div className="relative h-full flex items-center">
+                {/* Left Navigation Arrow */}
+                <button
+                  onClick={() => handleNavigation('left')}
+                  className="absolute -left-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                >
+                  <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
+                </button>
 
-                    const position = isCurrent ? 0 : isNext ? 1 : -1;
-                    const x = position * 400;
-                    const z = position * 100;
-                    const opacity = isCurrent ? 1 : 0.5;
-                    const scale = isCurrent ? 1 : 0.8;
-                    const rotateY = position * 30;
+                {/* Books Container with Fixed Width */}
+                <div className="w-full md:w-[1500px] mx-auto relative px-4 md:px-0">
+                  <div className="flex items-center justify-center">
+                    {filteredBooks.map((book, index) => {
+                      const isCurrent = index === currentBookIndex;
+                      const isNext = index === (currentBookIndex + 1) % filteredBooks.length;
+                      const isPrev = index === (currentBookIndex - 1 + filteredBooks.length) % filteredBooks.length;
+                      const isNextNext = index === (currentBookIndex + 2) % filteredBooks.length;
+                      const isPrevPrev = index === (currentBookIndex - 2 + filteredBooks.length) % filteredBooks.length;
+                      
+                      if (!isCurrent && !isNext && !isPrev && !isNextNext && !isPrevPrev) return null;
 
-                    return (
-                      <motion.div
-                        key={book.id}
-                        className="absolute cursor-pointer"
-                        style={{
-                          x,
-                          z,
-                          opacity,
-                          scale,
-                          rotateY: `${rotateY}deg`,
-                        }}
-                        animate={{
-                          x,
-                          z,
-                          opacity,
-                          scale,
-                          rotateY: `${rotateY}deg`,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                        }}
-                        onClick={() => setSelectedBook(book)}
-                        whileHover={{
-                          scale: scale * 1.1,
-                          z: z + 50,
-                          rotateY: `${rotateY + 5}deg`,
-                        }}
-                      >
-                        <div className="w-[350px] aspect-[3/4] shadow-2xl">
-                          <BookCover
-                            title={book.title}
-                            author={book.author}
-                            category={book.category}
-                            className="w-full h-full"
-                          />
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                      const position = isCurrent ? 0 : isNext ? 1 : isPrev ? -1 : isNextNext ? 2 : -2;
+                      const x = position * 320;
+                      const opacity = isCurrent ? 1 : isNext || isPrev ? 0.8 : 0.6;
+                      const scale = isCurrent ? 1 : isNext || isPrev ? 0.95 : 0.9;
+
+                      return (
+                        <motion.div
+                          key={book.id}
+                          className="absolute cursor-pointer"
+                          style={{
+                            x,
+                            opacity,
+                            scale,
+                            left: '50%',
+                            transform: `translateX(-50%) translateX(${x}px)`,
+                          }}
+                          animate={{
+                            x,
+                            opacity,
+                            scale,
+                            transform: `translateX(-50%) translateX(${x}px)`,
+                          }}
+                          initial={{
+                            x: position > 0 ? 2000 : -2000,
+                            opacity: 0,
+                            scale: 0.8,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                            mass: 1,
+                          }}
+                          onClick={() => setSelectedBook(book)}
+                          whileHover={{
+                            scale: scale * 1.1,
+                            y: -10,
+                          }}
+                        >
+                          <div className="w-[300px] aspect-[3/4] shadow-2xl">
+                            <BookCover
+                              title={book.title}
+                              author={book.author}
+                              category={book.category}
+                              className="w-full h-full"
+                            />
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                {/* Navigation Controls */}
-                <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between pointer-events-none">
-                  <button
-                    onClick={() => handleNavigation('left')}
-                    className="p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors pointer-events-auto backdrop-blur-sm border border-white/10"
-                  >
-                    <ArrowLeft className="w-8 h-8" />
-                  </button>
-                  <button
-                    onClick={() => handleNavigation('right')}
-                    className="p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors pointer-events-auto backdrop-blur-sm border border-white/10"
-                  >
-                    <ArrowRight className="w-8 h-8" />
-                  </button>
-                </div>
-              </motion.div>
+                {/* Right Navigation Arrow */}
+                <button
+                  onClick={() => handleNavigation('right')}
+                  className="absolute -right-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                >
+                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
+                </button>
+              </div>
             </div>
 
             {/* Book Progress */}
-            <div className="flex justify-center items-center gap-2 mt-8">
-              {currentCategory?.books.map((_, index) => (
+            <div className="flex justify-center items-center gap-2 mt-4 md:mt-8 px-4 md:px-0">
+              {filteredBooks.map((_, index) => (
                 <div
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
                     index === currentBookIndex
                       ? 'bg-white scale-125 shadow-lg'
                       : 'bg-white/30'
