@@ -11,15 +11,15 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
   return (
     <section className="relative page-hero">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png')] bg-cover bg-center opacity-10"></div>
+      <div className="absolute inset-0 bg-[url('/lovable-uploads/3503b171-9516-43a5-b44c-9af899c25e41.png')] bg-cover bg-center bg-[length:50%_auto] opacity-10"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <h1 className="page-title text-white">
           {title}
         </h1>
-        <div className="h-1 bg-white w-48 md:w-72 mb-8"></div>
+        <div className="h-1 bg-white w-48 md:w-72 mb-16"></div>
         {description && (
-          <p className="text-white text-lg max-w-2xl mb-16">
+          <p className="text-white text-lg max-w-2xl mb-32">
             {description}
           </p>
         )}
@@ -35,7 +35,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
           <path 
             fill="#FFFFFF" 
             fillOpacity="1" 
-            d="M0,96L80,85.3C160,75,320,53,480,64C640,75,800,117,960,122.7C1120,128,1280,96,1360,80L1440,64L1440,150L1360,150C1280,150,1120,150,960,150C800,150,640,150,480,150C320,150,160,150,80,150L0,150Z"
+            d="M0,96L80,90C160,84,320,72,480,78C640,84,800,108,960,114C1120,120,1280,96,1360,84L1440,72L1440,150L1360,150C1280,150,1120,150,960,150C800,150,640,150,480,150C320,150,160,150,80,150L0,150Z"
           ></path>
         </svg>
       </div>

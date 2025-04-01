@@ -1,101 +1,43 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { getStockData } from '@/lib/stockData';
 
-interface StockPriceDisplayProps {
-  className?: string;
-}
-
-interface StockData {
-  symbol: string;
-  price: number;
-  change: number;
-  change_percent: number;
-  volume: number;
-  latest_trading_day: string;
-  last_updated: string;
-  cached: boolean;
-}
-
-const StockPriceDisplay: React.FC<StockPriceDisplayProps> = ({ className = '' }) => {
-  const [data, setData] = useState<StockData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+export default function StockPriceDisplay() {
+  const [price, setPrice] = useState<string | null>(null);
+  const [marketCap, setMarketCap] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPrice = async () => {
-      try {
-        const response = await fetch('/share-price.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch share price');
-        }
-        const priceData = await response.json();
-        setData(priceData);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error'));
-      } finally {
-        setIsLoading(false);
-      }
+    const fetchData = async () => {
+      const data = await getStockData();
+      setPrice(data.currentPrice.toFixed(1));
+      setMarketCap((data.marketCap / 1000000).toFixed(1) + 'M'); // Convert to millions
+      setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
-
-    fetchPrice();
+    fetchData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <Card className={`p-4 ${className}`}>
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-center">
-            <Skeleton className="h-6 w-16" />
-            <Skeleton className="h-6 w-20" />
-          </div>
-          <div className="flex justify-between items-center">
-            <Skeleton className="h-5 w-24" />
-            <Skeleton className="h-5 w-20" />
-          </div>
-          <Skeleton className="h-4 w-32" />
-        </div>
-      </Card>
-    );
-  }
-
-  if (error || !data) {
-    return (
-      <Card className={`p-4 ${className}`}>
-        <div className="text-red-500">Failed to load share price</div>
-      </Card>
-    );
-  }
-
-  const formattedPrice = `£${data.price.toFixed(2)}`;
-  const formattedChange = data.change >= 0
-    ? `+${data.change.toFixed(2)} (+${data.change_percent.toFixed(2)}%)`
-    : `${data.change.toFixed(2)} (${data.change_percent.toFixed(2)}%)`;
-
-  const changeColor = data.change >= 0 ? 'text-green-600' : 'text-red-600';
-
   return (
-    <Card className={`p-4 ${className}`}>
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between items-center">
-          <span className="text-lg font-semibold">{data.symbol}</span>
-          <span className="text-xl font-bold">{formattedPrice}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className={`font-medium ${changeColor}`}>{formattedChange}</span>
-          <span className="text-sm text-gray-500">
-            Volume: {data.volume.toLocaleString()}
-          </span>
-        </div>
-        <div className="text-xs text-gray-500">
-          Last updated: {new Date(data.last_updated).toLocaleString()}
-          {data.cached && ' (Cached)'}
-        </div>
+    <div className="flex items-center space-x-4 text-sm">
+      <div>
+        <span className="text-white">Share Price: </span>
+        <span className="text-white font-semibold">{price}p</span>
       </div>
-    </Card>
+      <div className="text-white/70">|</div>
+      <div>
+        <span className="text-white">NAV: </span>
+        <span className="text-white font-semibold">101.00p</span>
+      </div>
+      <div className="text-white/70">|</div>
+      <div>
+        <span className="text-white">Market Cap: </span>
+        <span className="text-white font-semibold">£{marketCap}</span>
+      </div>
+      <div className="text-white/70">|</div>
+      <div className="text-white/70">
+        Updated: {lastUpdated}
+      </div>
+    </div>
   );
-};
-
-export default StockPriceDisplay;
+}

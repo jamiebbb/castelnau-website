@@ -1,20 +1,53 @@
+'use client';
+
 import React from 'react';
+import PageHero from '@/components/common/PageHero';
 import StockPriceDisplay from '@/components/StockPriceDisplay';
 import FinancialMetrics from '@/components/investor/FinancialMetrics';
 import DocumentList from '@/components/investor/DocumentList';
+import { SharePriceGraph } from '@/components/investor/SharePriceGraph';
+import { RegulatoryDocuments } from '@/components/investor/RegulatoryDocuments';
+import { Factsheets } from '@/components/investor/Factsheets';
+import { RNSFeed } from '@/components/investor/RNSFeed';
 
 export default function InvestorRelationsPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Investor Relations</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <StockPriceDisplay />
-        <FinancialMetrics />
-      </div>
+    <div className="min-h-screen">
+      <PageHero
+        title="Investor Relations"
+        description="Access key information, financial reports, and updates for Castelnau Group Limited shareholders."
+      />
 
-      <div className="space-y-8">
-        <DocumentList />
+      <div className="container mx-auto px-4 py-12">
+        {/* Share Price Section */}
+        <div id="share-price" className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <div className="space-y-8">
+            <div className="bg-gray-900 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-white mb-4">Current Share Price</h2>
+              <StockPriceDisplay />
+            </div>
+            <SharePriceGraph />
+          </div>
+          <div className="space-y-8">
+            <FinancialMetrics />
+            <DocumentList />
+          </div>
+        </div>
+
+        {/* Regulatory Documents and Factsheets */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <div id="regulatory-documents">
+            <RegulatoryDocuments />
+          </div>
+          <div id="factsheets">
+            <Factsheets />
+          </div>
+        </div>
+
+        {/* RNS Feed */}
+        <div id="rns" className="mb-12">
+          <RNSFeed />
+        </div>
       </div>
     </div>
   );

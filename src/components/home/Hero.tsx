@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getImagePath } from '@/utils/getImagePath';
 
 const Hero = () => {
   return (
@@ -16,7 +17,7 @@ const Hero = () => {
           {/* Logo */}
           <div className="mb-8">
             <Image
-              src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png"
+              src="/brand/logos/castelnau-logo.png"
               alt="Castelnau Group"
               width={200}
               height={80}

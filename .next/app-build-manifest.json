@@ -1,124 +1,55 @@
 {
   "pages": {
-    "/api/update-share-price/route": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/api/update-share-price/route-a2623639b4099495.js"
-    ],
-    "/api/share-price/route": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/api/share-price/route-0f2b4ad9c3b151cb.js"
-    ],
     "/layout": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/css/ac96290fa485b166.css",
-      "static/chunks/874-63f927a4b8a9954a.js",
-      "static/chunks/277-63997b7a0f11b6af.js",
-      "static/chunks/766-d09dc3251577910e.js",
-      "static/chunks/864-343cf24ea8e263fd.js",
-      "static/chunks/490-079f172e5be81fa2.js",
-      "static/chunks/app/layout-32b4d6e06f25affc.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
     "/not-found": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/874-63f927a4b8a9954a.js",
-      "static/chunks/app/not-found-85daca4382165a6c.js"
-    ],
-    "/castelnau-library/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/277-63997b7a0f11b6af.js",
-      "static/chunks/864-343cf24ea8e263fd.js",
-      "static/chunks/716-bd6b7ea966fa0c40.js",
-      "static/chunks/app/castelnau-library/page-cd3dab70afee1cb7.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/_not-found/page-fb1cfaa0323ddc58.js"
-    ],
-    "/contact/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/contact/page-6ee8a5a9fbb457e4.js"
-    ],
-    "/document-admin/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/874-63f927a4b8a9954a.js",
-      "static/chunks/app/document-admin/page-73a8ed2f37a8a3d9.js"
-    ],
-    "/graduate-programme/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/graduate-programme/page-1b57931dca1faaf2.js"
-    ],
-    "/explore-the-group/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/explore-the-group/page-8699426c828b6f12.js"
-    ],
-    "/investor-relations/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/277-63997b7a0f11b6af.js",
-      "static/chunks/app/investor-relations/page-3b9bd7232e867cf8.js"
-    ],
-    "/news/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/news/page-8f8e79b10601f5a2.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
     ],
     "/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/874-63f927a4b8a9954a.js",
-      "static/chunks/766-d09dc3251577910e.js",
-      "static/chunks/app/page-2dd32899b3491c3d.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
+    "/graduate-programme/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/graduate-programme/page.js"
+    ],
+    "/investor-relations/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/investor-relations/page.js"
+    ],
+    "/castelnau-library/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/castelnau-library/page.js"
+    ],
+    "/news/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/news/page.js"
     ],
     "/what-we-do/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/app/what-we-do/page-1ea53fceb2d4ef9a.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/what-we-do/page.js"
     ],
-    "/who-we-are/page": [
-      "static/chunks/webpack-86ed48322dbdc0b2.js",
-      "static/chunks/4bd1b696-9d5b953393f62ade.js",
-      "static/chunks/684-4b3a43ea2e61208c.js",
-      "static/chunks/main-app-ec7b71761c883182.js",
-      "static/chunks/766-d09dc3251577910e.js",
-      "static/chunks/app/who-we-are/page-960d546b9bb8e8c7.js"
+    "/explore-the-group/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/explore-the-group/page.js"
     ]
   }
 }

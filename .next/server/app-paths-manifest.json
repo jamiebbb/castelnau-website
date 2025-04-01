@@ -1,15 +1,9 @@
 {
-  "/api/update-share-price/route": "app/api/update-share-price/route.js",
-  "/api/share-price/route": "app/api/share-price/route.js",
   "/castelnau-library/page": "app/castelnau-library/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/document-admin/page": "app/document-admin/page.js",
-  "/graduate-programme/page": "app/graduate-programme/page.js",
-  "/explore-the-group/page": "app/explore-the-group/page.js",
-  "/investor-relations/page": "app/investor-relations/page.js",
   "/news/page": "app/news/page.js",
-  "/page": "app/page.js",
+  "/graduate-programme/page": "app/graduate-programme/page.js",
+  "/investor-relations/page": "app/investor-relations/page.js",
   "/what-we-do/page": "app/what-we-do/page.js",
-  "/who-we-are/page": "app/who-we-are/page.js"
+  "/explore-the-group/page": "app/explore-the-group/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

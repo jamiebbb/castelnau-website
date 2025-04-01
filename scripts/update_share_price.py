@@ -6,9 +6,9 @@ from datetime import datetime, timedelta
 import pytz
 from typing import Optional, Dict, Any
 
-ALPHA_VANTAGE_API_KEY = 'LKRB0RE577TSMDK0'
-SYMBOL = 'CTN.L'
-OUTPUT_FILE = 'public/share-price.json'
+ALPHA_VANTAGE_API_KEY = 'W0W2UQ53HXPJO5CL'  # Replace with new API key
+SYMBOL = 'CGL.L'
+OUTPUT_FILE = 'public/stock-data.json'
 RATE_LIMIT_FILE = 'scripts/.rate_limit'
 
 def get_last_api_call() -> Optional[datetime]:
@@ -25,23 +25,20 @@ def get_last_api_call() -> Optional[datetime]:
 def update_last_api_call():
     """Update the timestamp of the last API call."""
     try:
-        os.makedirs(os.path.dirname(RATE_LIMIT_FILE), exist_ok=True)
         with open(RATE_LIMIT_FILE, 'w') as f:
             f.write(str(datetime.now(pytz.UTC).timestamp()))
     except Exception as e:
-        print(f"Warning: Could not update rate limit file: {e}")
+        print(f"Error updating rate limit file: {e}")
 
 def can_make_api_call() -> bool:
     """Check if we can make an API call based on rate limits."""
     last_call = get_last_api_call()
-    if last_call is None:
+    if not last_call:
         return True
     
-    now = datetime.now(pytz.UTC)
-    minutes_since_last_call = (now - last_call).total_seconds() / 60
-    
     # Alpha Vantage free tier: 5 calls per minute, 500 calls per day
-    return minutes_since_last_call >= 1  # Wait at least 1 minute between calls
+    time_since_last_call = datetime.now(pytz.UTC) - last_call
+    return time_since_last_call.total_seconds() >= 12  # Minimum 12 seconds between calls
 
 def fetch_stock_data() -> Optional[Dict[str, Any]]:
     """Fetch the stock data from Alpha Vantage."""
@@ -50,41 +47,69 @@ def fetch_stock_data() -> Optional[Dict[str, Any]]:
         return None
 
     try:
-        url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={SYMBOL}&apikey={ALPHA_VANTAGE_API_KEY}'
-        response = requests.get(url)
-        data = response.json()
+        # Fetch daily time series data
+        daily_url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={ALPHA_VANTAGE_API_KEY}'
+        print(f"Fetching daily data from: {daily_url}")
+        daily_response = requests.get(daily_url)
+        daily_data = daily_response.json()
         
         # Update rate limit tracking
         update_last_api_call()
         
-        if "Global Quote" not in data:
-            if "Note" in data:
-                print(f"API Limit Warning: {data['Note']}")
+        if "Time Series (Daily)" not in daily_data:
+            if "Note" in daily_data:
+                print(f"API Limit Warning: {daily_data['Note']}")
             else:
-                print("Unexpected API response format")
+                print("Unexpected API response format for daily data")
             return None
-            
-        quote = data['Global Quote']
-        return {
-            'symbol': SYMBOL,
-            'price': float(quote['05. price']),
-            'change': float(quote['09. change']),
-            'change_percent': float(quote['10. change percent'].rstrip('%')),
-            'volume': int(quote['06. volume']),
-            'latest_trading_day': quote['07. latest trading day'],
-            'last_updated': datetime.now(pytz.UTC).isoformat(),
-            'cached': False
+
+        # Wait 12 seconds before next API call
+        time.sleep(12)
+
+        # Fetch company overview data
+        overview_url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={SYMBOL}&apikey={ALPHA_VANTAGE_API_KEY}'
+        print(f"Fetching overview data from: {overview_url}")
+        overview_response = requests.get(overview_url)
+        overview_data = overview_response.json()
+        
+        # Update rate limit tracking again
+        update_last_api_call()
+
+        if not overview_data:
+            print("Unexpected API response format for overview data")
+            return None
+
+        # Process daily data
+        time_series_data = daily_data['Time Series (Daily)']
+        dates = list(time_series_data.keys())[:30]  # Last 30 days
+        prices = [float(time_series_data[date]['4. close']) for date in dates]
+
+        # Get market cap from overview data
+        market_cap = float(overview_data.get('MarketCapitalization', 0))
+        
+        # Transform data into our format
+        transformed_data = {
+            'currentPrice': prices[0],
+            'marketCap': market_cap,
+            'lastUpdated': datetime.now(pytz.UTC).isoformat(),
+            'historicalData': {
+                'labels': [datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y') for date in dates],
+                'prices': prices
+            }
         }
+
+        return transformed_data
+
     except requests.RequestException as e:
         print(f"Network error: {e}")
     except (KeyError, ValueError) as e:
-        print(f"Error parsing price data: {e}")
+        print(f"Error parsing data: {e}")
     except Exception as e:
         print(f"Unexpected error: {e}")
     return None
 
 def get_cached_data() -> Optional[Dict[str, Any]]:
-    """Get the currently cached price data."""
+    """Get the currently cached data."""
     try:
         if os.path.exists(OUTPUT_FILE):
             with open(OUTPUT_FILE, 'r') as f:
@@ -105,10 +130,9 @@ def update_stock_data() -> bool:
         with open(OUTPUT_FILE, 'w') as f:
             json.dump(data, f, indent=2)
         print(f"Successfully updated stock data:")
-        print(f"Price: £{data['price']:.2f}")
-        print(f"Change: {data['change']:+.2f} ({data['change_percent']:+.2f}%)")
-        print(f"Volume: {data['volume']:,}")
-        print(f"Last Trading Day: {data['latest_trading_day']}")
+        print(f"Price: £{data['currentPrice']:.2f}")
+        print(f"Market Cap: £{data['marketCap']:,.2f}")
+        print(f"Last Updated: {data['lastUpdated']}")
         return True
     except Exception as e:
         print(f"Error updating file: {e}")
@@ -120,7 +144,7 @@ if __name__ == "__main__":
         cached_data = get_cached_data()
         if cached_data:
             print("Using existing cache due to update failure")
-            print(f"Cached price: £{cached_data['price']:.2f}")
-            print(f"Last updated: {cached_data['last_updated']}")
+            print(f"Cached price: £{cached_data['currentPrice']:.2f}")
+            print(f"Last updated: {cached_data['lastUpdated']}")
         else:
             print("No cache available and couldn't fetch new data") 
