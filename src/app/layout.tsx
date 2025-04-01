@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Castelnau Group',
   description: 'Creating exceptional value through disciplined investment.',
   icons: {
-    icon: '/favicon.ico',
+    icon: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/favicon.ico`,
   },
 };
 

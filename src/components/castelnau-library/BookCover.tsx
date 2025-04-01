@@ -33,6 +33,8 @@ const BookCover: React.FC<BookCoverProps> = ({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
+          unoptimized
+          quality={100}
         />
       ) : (
         <div className="absolute inset-0 p-6 flex flex-col justify-between">
