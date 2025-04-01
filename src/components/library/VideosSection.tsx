@@ -1,4 +1,3 @@
-
 import React from 'react';
 import VideoCard from './VideoCard';
 import { Video } from '@/types/library';
@@ -8,11 +7,16 @@ interface VideosSectionProps {
 }
 
 const VideosSection = ({ filteredVideos }: VideosSectionProps) => {
+  const handlePlay = (video: Video) => {
+    // TODO: Implement video playback functionality
+    console.log('Playing video:', video.title);
+  };
+
   return (
     <div className="mb-20 animate-fade-in">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
         {filteredVideos.map((video) => (
-          <VideoCard key={video.id} video={video} />
+          <VideoCard key={video.id} video={video} onPlay={handlePlay} />
         ))}
       </div>
       

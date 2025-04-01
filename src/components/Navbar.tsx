@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   DropdownMenu,
@@ -52,11 +53,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-8">
             <Link href="/" className="mr-10">
-              <img 
+              <Image 
                 alt="Castelnau Group" 
                 className="h-12 w-auto object-contain" 
                 src="/lovable-uploads/0943dd4e-c9fa-42ff-ac4a-fc4435caa10e.png?v=2"
-                loading="eager"
+                width={48}
+                height={48}
+                priority
                 style={{ minHeight: '48px' }}
               />
             </Link>

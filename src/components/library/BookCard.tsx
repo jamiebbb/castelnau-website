@@ -1,5 +1,5 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { BookOpen } from "lucide-react";
 import { Book } from '@/types/library';
 
@@ -21,11 +21,15 @@ const BookCard = ({ book, flippedBookId, toggleFlip, openBookSummary }: BookCard
       <div className={`relative w-full h-full transition-all duration-500 transform-style-3d hover:shadow-xl ${flippedBookId === book.id ? 'rotate-y-180' : 'group-hover:animate-book-bounce'}`}>
         {/* Front of book (cover) */}
         <div className="absolute w-full h-full backface-hidden shadow-lg rounded-md overflow-hidden">
-          <img 
-            src={book.coverImg} 
-            alt={book.title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <div className="relative h-48">
+            <Image
+              src={book.coverImg}
+              alt={book.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
             <h4 className="text-white font-bold">{book.title}</h4>
             <p className="text-white/80 text-sm">{book.author}</p>

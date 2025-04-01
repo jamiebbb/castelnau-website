@@ -1,5 +1,5 @@
-
 import React from 'react';
+import Image from 'next/image';
 
 interface TeamMemberProps {
   name: string;
@@ -10,11 +10,13 @@ interface TeamMemberProps {
 
 const TeamMember = ({ name, role, description, imageSrc }: TeamMemberProps) => (
   <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
-    <div className="relative">
-      <img 
+    <div className="relative h-64">
+      <Image 
         src={imageSrc} 
         alt={name} 
-        className="w-full h-64 object-cover"
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Book } from '@/types/library';
 import { User, BookOpen, Share2 } from "lucide-react";
+import Image from 'next/image';
 
 interface BookSummaryDialogProps {
   selectedBook: Book | null;
@@ -14,7 +15,7 @@ interface BookSummaryDialogProps {
 const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSummaryDialogProps) => {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-4xl">
         {selectedBook && (
           <>
             <DialogHeader>
@@ -23,20 +24,15 @@ const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSumm
                 <User className="h-4 w-4" /> {selectedBook.author}
               </DialogDescription>
             </DialogHeader>
-            <div className="flex flex-col md:flex-row gap-6 mt-2">
-              <div className="md:w-1/3">
-                <div className="aspect-[2/3] overflow-hidden rounded-md shadow-md">
-                  <img 
-                    src={selectedBook.coverImg} 
-                    alt={selectedBook.title} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="mt-4">
-                  <span className="inline-block px-3 py-1 bg-castelnau-green/10 text-castelnau-green text-xs font-medium rounded-full">
-                    {selectedBook.category}
-                  </span>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="relative h-64 md:h-full">
+                <Image
+                  src={selectedBook.coverImg}
+                  alt={selectedBook.title}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
               <div className="md:w-2/3">
                 <h4 className="text-lg font-medium text-castelnau-darkgreen mb-2">Book Summary</h4>

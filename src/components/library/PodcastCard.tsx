@@ -1,5 +1,5 @@
-
 import React from 'react';
+import Image from 'next/image';
 import { Podcast } from '@/types/library';
 
 interface PodcastCardProps {
@@ -9,11 +9,13 @@ interface PodcastCardProps {
 const PodcastCard = ({ podcast }: PodcastCardProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
-      <div className="relative h-48 overflow-hidden">
-        <img 
-          src={podcast.thumbnail} 
-          alt={podcast.title} 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+      <div className="relative h-48">
+        <Image
+          src={podcast.thumbnail}
+          alt={podcast.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full p-4">
