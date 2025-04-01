@@ -41,7 +41,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/servant-leader.jpg',
+          coverImage: '/books/the-servant-as-leader.jfif',
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -51,7 +51,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-demystified.jpg',
+          coverImage: '/books/competition-dymystified.jfif',
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -61,7 +61,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jpg',
+          coverImage: '/books/no-rules-rules.jfif',
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -76,7 +76,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/servant-leader.jpg',
+          coverImage: '/books/the-servant-as-leader.jfif',
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -96,7 +96,7 @@ const CastelnauLibrary = () => {
           title: 'HBR\'s 10 Must Reads on Leadership',
           author: 'Various Authors',
           description: 'A collection of essential articles on leadership, covering emotional intelligence, decision-making, and leadership best practices.',
-          coverImage: '/books/hbr-leadership.jpg',
+          coverImage: '/books/HBR\'s-10-Must-Reads-on-Leadership.jpg',
           category: 'Leadership',
           publishDate: '2011',
           shortDescription: 'Essential leadership insights from Harvard Business Review'
@@ -106,7 +106,7 @@ const CastelnauLibrary = () => {
           title: 'Think Lead Succeed: The Admiral Way',
           author: 'Henry Engelhardt',
           description: 'Insights into building a successful company culture and leadership framework from the founder of Admiral Insurance.',
-          coverImage: '/books/admiral-way.jpg',
+          coverImage: '/books/think-lead-succeed.jpg',
           category: 'Leadership',
           publishDate: '2014',
           shortDescription: 'Company culture and leadership frameworks'
@@ -116,7 +116,7 @@ const CastelnauLibrary = () => {
           title: 'The Richer Way',
           author: 'Julian Richer',
           description: 'A practical guide to getting the best out of people through effective management and exceptional customer service.',
-          coverImage: '/books/richer-way.jpg',
+          coverImage: '/books/the-richer-way.jpg',
           category: 'Management',
           publishDate: '2014',
           shortDescription: 'How to get the best out of people'
@@ -151,7 +151,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-demystified.jpg',
+          coverImage: '/books/competition-dymystified.jfif',
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -161,7 +161,7 @@ const CastelnauLibrary = () => {
           title: 'The Outsiders',
           author: 'William N. Thorndike',
           description: 'Eight unconventional CEOs and their radically rational blueprint for success. A study of exceptional capital allocation and business strategy.',
-          coverImage: '/books/outsiders.jpg',
+          coverImage: '/books/the-outsiders.jpg',
           category: 'Strategy',
           publishDate: '2012',
           shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
@@ -171,7 +171,7 @@ const CastelnauLibrary = () => {
           title: 'The Geek Way',
           author: 'Andrew McAfee',
           description: 'The radical mindset that drives extraordinary results. How technology and innovation are transforming business and creating new opportunities.',
-          coverImage: '/books/geek-way.jpg',
+          coverImage: '/books/the-geek-way.jpg',
           category: 'Innovation',
           publishDate: '2023',
           shortDescription: 'The radical mindset that drives extraordinary results'
@@ -186,7 +186,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jpg',
+          coverImage: '/books/no-rules-rules.jfif',
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -196,7 +196,7 @@ const CastelnauLibrary = () => {
           title: 'Setting the Table',
           author: 'Danny Meyer',
           description: 'The transforming power of hospitality in business. How exceptional service and culture can drive business success.',
-          coverImage: '/books/setting-table.jpg',
+          coverImage: '/books/setting-the-table.jpg',
           category: 'Culture',
           publishDate: '2006',
           shortDescription: 'The transforming power of hospitality in business'
@@ -231,7 +231,7 @@ const CastelnauLibrary = () => {
           title: 'Superforecasting',
           author: 'Philip Tetlock',
           description: 'The art and science of prediction. How to improve forecasting accuracy and make better decisions in an uncertain world.',
-          coverImage: '/books/superforecasting.jpg',
+          coverImage: '/books/super-forecasting.jpg',
           category: 'Decision Making',
           publishDate: '2015',
           shortDescription: 'The art and science of prediction'
@@ -241,7 +241,7 @@ const CastelnauLibrary = () => {
           title: 'How Big Things Get Done',
           author: 'Bent Flyvbjerg',
           description: 'The surprising factors behind project success and failure. A comprehensive analysis of what makes major projects succeed or fail.',
-          coverImage: '/books/how-big-things.jpg',
+          coverImage: '/books/how-big-things-get-done.jpg',
           category: 'Project Management',
           publishDate: '2023',
           shortDescription: 'The surprising factors behind project success and failure'
@@ -376,7 +376,7 @@ const CastelnauLibrary = () => {
             </motion.div>
 
             {/* Book Carousel */}
-            <div className="relative h-[500px] md:h-[700px] -mt-4">
+            <div className="relative h-[600px] md:h-[800px] -mt-4">
               <div className="relative h-full flex items-center">
                 {/* Left Navigation Arrow */}
                 <button
@@ -399,9 +399,9 @@ const CastelnauLibrary = () => {
                       if (!isCurrent && !isNext && !isPrev && !isNextNext && !isPrevPrev) return null;
 
                       const position = isCurrent ? 0 : isNext ? 1 : isPrev ? -1 : isNextNext ? 2 : -2;
-                      const x = position * 320;
-                      const opacity = isCurrent ? 1 : isNext || isPrev ? 0.8 : 0.6;
-                      const scale = isCurrent ? 1 : isNext || isPrev ? 0.95 : 0.9;
+                      const x = position * 340;
+                      const opacity = isCurrent ? 1 : isNext || isPrev ? 0.7 : 0.5;
+                      const scale = isCurrent ? 1.2 : isNext || isPrev ? 0.9 : 0.8;
 
                       return (
                         <motion.div
@@ -437,11 +437,12 @@ const CastelnauLibrary = () => {
                             y: -10,
                           }}
                         >
-                          <div className="w-[300px] aspect-[3/4] shadow-2xl">
+                          <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
                             <BookCover
                               title={book.title}
                               author={book.author}
                               category={book.category}
+                              coverImage={book.coverImage}
                               className="w-full h-full"
                             />
                           </div>
@@ -649,6 +650,7 @@ const CastelnauLibrary = () => {
                   title={selectedBook.title}
                   author={selectedBook.author}
                   category={selectedBook.category}
+                  coverImage={selectedBook.coverImage}
                   className="w-full h-full"
                 />
               </motion.div>
