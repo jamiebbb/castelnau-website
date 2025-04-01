@@ -70,9 +70,9 @@ const Navbar = () => {
                 Castelnau Library
               </Button>
             </Link>
-            <Link href="/graduate-programme">
+            <Link href="/sell-your-business">
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
-                Graduate Programme
+                Looking to Sell your Business
               </Button>
             </Link>
             <Link href="/contact">
@@ -176,6 +176,12 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+
+            <Link href="/graduate-programme">
+              <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
+                Graduate Programme
+              </Button>
+            </Link>
           </nav>
         </div>
       </div>

@@ -12,85 +12,68 @@ const ExploreTheGroup = () => {
 
   const companies = [
     {
-      name: "Stanley Gibbons Baldwin's",
-      sharesHeld: "64.1%",
-      investmentPortfolio: "0.2%",
-      listed: false,
-      description: "Stanley Gibbons Baldwin's combines two heritage brands: Stanley Gibbons, a philatelic leader since 1856, and Baldwin's, experts in coins and medals since 1872, united as a multi-category auction house.",
-      image: "/companies/stanley-gibbons.png",
-      website: "https://www.stanleygibbons.com"
+      name: "Stanley Gibbons",
+      sharesPercentage: "64.1%",
+      portfolioPercentage: "0.2%",
+      description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
+      website: "https://www.stanleygibbons.com",
+      logo: "/companies/stanley-gibbons.svg"
     },
     {
-      name: "Hornby PLC",
-      sharesHeld: "54.4%",
-      investmentPortfolio: "5.0%",
-      listed: true,
-      description: "Hornby is the name of the largest brand within the company, but actually Hornby is a portfolio of heritage toy and collectible brands that many generations have fond memories of.",
-      image: "/companies/hornby.png",
-      website: "https://www.hornby.com"
+      name: "Hornby",
+      sharesPercentage: "54.4%",
+      portfolioPercentage: "5.0%",
+      description: "Iconic British model railway and hobby products manufacturer.",
+      website: "https://www.hornby.com",
+      logo: "/companies/hornby.svg"
     },
     {
       name: "Dignity",
-      sharesHeld: "66.0%",
-      investmentPortfolio: "83.2%",
-      listed: false,
-      description: "Established in 1812, Dignity is the only nationwide, vertically integrated end-of-life business. It currently has c.800 branches across the country, 500 trading names and 46 crematoria.",
-      image: "/companies/dignity.png",
-      website: "https://www.dignityfunerals.co.uk"
-    },
-    {
-      name: "Rawnet",
-      sharesHeld: "100%",
-      investmentPortfolio: "0.4%",
-      listed: false,
-      description: "Rawnet is a digital marketing and software development agency that works with its partners to create a long-term positive impact. Rawnet like to immerse themselves in their clients' businesses to understand the end objective, thinking strategically & commercially to produce meaningful outcomes.",
-      image: "/companies/rawnet.png",
-      website: "https://www.rawnet.com"
-    },
-    {
-      name: "The Cambium Group",
-      sharesHeld: "90.3%",
-      investmentPortfolio: "3.0%",
-      listed: false,
-      description: "Cambium is the home of three leading UK wedding gift list brands: The Wedding Shop (TWS), The Wedding Present Company (WPC) and Prezola. Each brand helps engaged couples build a list of gifts that they would like to receive for their wedding.",
-      image: "/companies/cambium.png",
-      website: "https://www.cambiumgroup.co.uk"
-    },
-    {
-      name: "Ocula Technologies Ltd",
-      sharesHeld: "41.2%",
-      investmentPortfolio: "1.3%",
-      listed: false,
-      description: "Ocula Technologies Ltd is a start-up that is building a data and analytics tool which will provide insights for companies to grow sales and profitability.",
-      image: "/companies/ocula.png",
-      website: "https://www.ocula.ai"
-    },
-    {
-      name: "Showpiece Technologies Ltd",
-      sharesHeld: "80%",
-      investmentPortfolio: "0%",
-      listed: false,
-      description: "Showpiece Technologies Ltd is a fractional ownership platform, created to make ownership of the world's most famous and valuable items available to everyone. Showpiece was incorporated in August 2021 and, as of November 2021, is 80% owned by Castelnau Group and 20% owned by Stanley Gibbons.",
-      image: "/companies/showpiece.png",
-      website: "https://www.showpiece.com"
-    },
-    {
-      name: "Silverwood Brands",
-      sharesHeld: "29.9%",
-      investmentPortfolio: "1.3%",
-      listed: true,
-      description: "Silverwood Brands is an investment vehicle focused on premium consumer brands which has an existing presence in the beauty sector.",
-      image: "/companies/silverwood.png",
-      website: "https://www.silverwoodbrands.com"
+      sharesPercentage: "66.0%",
+      portfolioPercentage: "83.2%",
+      description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
+      website: "https://www.dignityfunerals.co.uk",
+      logo: "/companies/dignity.svg"
     },
     {
       name: "Iona Star",
-      sharesHeld: "45.0%",
-      investmentPortfolio: "0.1%",
-      listed: false,
-      description: "Iona Star is a venture capital fund focused on investing in early-stage tech companies, leveraging AI and data to drive innovation and growth.",
-      image: "/companies/iona-star.png",
-      website: "https://www.ionastar.com"
+      sharesPercentage: "45.0%",
+      portfolioPercentage: "0.1%",
+      description: "Investment holding company with interests in technology and digital assets.",
+      website: "https://ionastar.com",
+      logo: "/companies/iona-star.svg"
+    },
+    {
+      name: "Rawnet",
+      sharesPercentage: "100%",
+      portfolioPercentage: "0.4%",
+      description: "Digital agency specializing in web development and digital solutions.",
+      website: "https://www.rawnet.com",
+      logo: "/companies/rawnet.svg"
+    },
+    {
+      name: "Ocula",
+      sharesPercentage: "41.2%",
+      portfolioPercentage: "1.3%",
+      description: "AI-powered healthcare technology company focusing on early disease detection.",
+      website: "https://ocula.ai",
+      logo: "/companies/ocula.svg"
+    },
+    {
+      name: "Cambium",
+      sharesPercentage: "90.3%",
+      portfolioPercentage: "3.0%",
+      description: "Sustainable materials technology company developing eco-friendly alternatives.",
+      website: "https://cambium.com",
+      logo: "/companies/cambium.svg"
+    },
+    {
+      name: "Silverwood",
+      sharesPercentage: "29.9%",
+      portfolioPercentage: "1.3%",
+      description: "Premium spirits and beverage company with a focus on craft production.",
+      website: "https://silverwoodspirits.com",
+      logo: "/companies/silverwood.svg"
     }
   ];
 
@@ -114,22 +97,35 @@ const ExploreTheGroup = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {companies.map((company, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="relative h-48">
-                  <Image
-                    src={company.image}
-                    alt={company.name}
-                    fill
-                    className="object-cover"
-                  />
+                <div className="relative h-32 bg-white p-6 flex items-center justify-center">
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={company.logo}
+                      alt={company.name}
+                      fill
+                      className="object-contain p-4"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index < 4}
+                      quality={100}
+                      style={{
+                        maxWidth: company.name === "Iona Star" ? '140px' : 
+                                 company.name === "Ocula" ? '160px' : 
+                                 company.name === "Silverwood" ? '150px' : 
+                                 company.name === "Stanley Gibbons" ? '160px' : '180px',
+                        maxHeight: company.name === "Iona Star" ? '60px' : 
+                                  company.name === "Ocula" ? '70px' : 
+                                  company.name === "Silverwood" ? '65px' : 
+                                  company.name === "Stanley Gibbons" ? '70px' : '80px',
+                        margin: 'auto'
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-castelnau-dark-green mb-2">{company.name}</h3>
                   <div className="flex justify-between text-sm text-gray-600 mb-4">
-                    <span>Shares held: {company.sharesHeld}</span>
-                    <span>Investment Portfolio: {company.investmentPortfolio}</span>
-                    <span className={company.listed ? "text-green-600" : "text-gray-600"}>
-                      {company.listed ? "Listed" : "Not Listed"}
-                    </span>
+                    <span>Company Shares Held: {company.sharesPercentage}</span>
+                    <span>Investment Portfolio: {company.portfolioPercentage}</span>
                   </div>
                   <p className="text-gray-700 mb-4">{company.description}</p>
                   <Button 
