@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
+  output: 'export', // Force static export
   basePath: process.env.NODE_ENV === 'production' ? '/castelnau-website' : '',
   images: {
     unoptimized: true,
@@ -18,7 +18,7 @@ const nextConfig = {
   // Ensure trailing slashes are handled consistently
   trailingSlash: true,
   // Ensure public directory is copied to output
-  distDir: 'dist',
+  distDir: 'out', // Changed from 'dist' to 'out' to match GitHub Actions
   // Copy public directory to output
   webpack: (config, { isServer }) => {
     if (!isServer) {
