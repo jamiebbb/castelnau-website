@@ -102,21 +102,20 @@ const ExploreTheGroup = () => {
                     <Image
                       src={company.logo}
                       alt={company.name}
-                      width={160}
-                      height={70}
+                      fill
                       className="object-contain p-4"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       priority={index < 4}
                       quality={100}
-                      onError={(e) => {
-                        console.error(`Error loading logo for ${company.name}:`, e);
-                        console.error(`Attempted to load from path: ${company.logo}`);
-                      }}
                       style={{
-                        width: 'auto',
-                        height: 'auto',
-                        maxWidth: '160px',
-                        maxHeight: '70px',
+                        maxWidth: company.name === "Iona Star" ? '140px' : 
+                                 company.name === "Ocula" ? '160px' : 
+                                 company.name === "Silverwood" ? '150px' : 
+                                 company.name === "Stanley Gibbons" ? '160px' : '180px',
+                        maxHeight: company.name === "Iona Star" ? '60px' : 
+                                  company.name === "Ocula" ? '70px' : 
+                                  company.name === "Silverwood" ? '65px' : 
+                                  company.name === "Stanley Gibbons" ? '70px' : '80px',
                         margin: 'auto'
                       }}
                     />
@@ -142,6 +141,24 @@ const ExploreTheGroup = () => {
           </div>
         </div>
       </section>
+
+      <section className="py-16 bg-castelnau-light-green">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-castelnau-dark-green mb-6">Investor Relations</h2>
+          <p className="text-xl text-gray-700 mb-8">Discover more in our Shareholder information centre.</p>
+          <Link href="/investor-relations">
+            <Button className="bg-castelnau-dark-green text-white hover:bg-castelnau-green">
+              Click Here
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      <CompanyModal 
+        company={selectedCompany}
+        isOpen={!!selectedCompany}
+        onClose={() => setSelectedCompany(null)}
+      />
     </main>
   );
 };

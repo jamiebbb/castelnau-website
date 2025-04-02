@@ -55,22 +55,14 @@ export async function getStockData(): Promise<StockData> {
     }
 
     const timeSeriesData = data['Time Series (Daily)'];
-    const dates = Object.keys(timeSeriesData); // Get all available dates
+    const dates = Object.keys(timeSeriesData).slice(0, 30); // Last 30 days
     const prices = dates.map(date => 
       parseFloat(timeSeriesData[date]['4. close'])
     );
 
-    // Fetch company overview data for market cap
-    const overviewResponse = await fetch(
-      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=CGL.L&apikey=W0W2UQ53HXPJO5CL`
-    );
-    
-    if (!overviewResponse.ok) {
-      throw new Error('Failed to fetch company overview data');
-    }
-
-    const overviewData = await overviewResponse.json();
-    const marketCap = parseFloat(overviewData['MarketCapitalization'] || '0');
+    // Calculate market cap from shares outstanding and current price
+    const sharesOutstanding = 100000000; // 100 million shares
+    const marketCap = sharesOutstanding * prices[0];
 
     const transformedData: StockData = {
       currentPrice: prices[0],

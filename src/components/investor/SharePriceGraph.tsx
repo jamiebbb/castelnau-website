@@ -78,7 +78,8 @@ const options = {
         font: {
           size: 12,
         },
-      }
+      },
+      reverse: true,
     },
   },
   interaction: {
@@ -97,12 +98,15 @@ export const SharePriceGraph = () => {
       try {
         const stockData = await getStockData();
         
+        const reversedLabels = [...stockData.historicalData.labels].reverse();
+        const reversedPrices = [...stockData.historicalData.prices].reverse();
+        
         setData({
-          labels: stockData.historicalData.labels,
+          labels: reversedLabels,
           datasets: [
             {
               label: 'Share Price',
-              data: stockData.historicalData.prices,
+              data: reversedPrices,
               borderColor: '#00FF00',
               backgroundColor: 'rgba(0, 255, 0, 0.1)',
               borderWidth: 2,
