@@ -41,7 +41,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/the-servant-as-leader.jfif',
+          coverImage: '/books/the-servant-as-leader.jpg',
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -51,7 +51,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-dymystified.jfif',
+          coverImage: '/books/competition-dymystified.jpg',
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -61,7 +61,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jfif',
+          coverImage: '/books/no-rules-rules.jpg',
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -76,7 +76,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/the-servant-as-leader.jfif',
+          coverImage: '/books/the-servant-as-leader.jpg',
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -151,7 +151,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-dymystified.jfif',
+          coverImage: '/books/competition-dymystified.jpg',
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -186,7 +186,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jfif',
+          coverImage: '/books/no-rules-rules.jpg',
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -254,7 +254,12 @@ const CastelnauLibrary = () => {
   const categories: BookCategory[] = [
     {
       name: 'All',
-      books: allCategories.flatMap(cat => cat.books)
+      books: Array.from(
+        new Map(
+          allCategories.flatMap(cat => cat.books)
+            .map(book => [book.title, book])
+        ).values()
+      )
     },
     ...allCategories
   ];

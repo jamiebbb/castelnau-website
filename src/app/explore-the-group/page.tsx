@@ -17,7 +17,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.2%",
       description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
       website: "https://www.stanleygibbons.com",
-      logo: "/companies/stanley-gibbons.svg"
+      logo: "/company-logos/logo_stanley_gibbons.png"
     },
     {
       name: "Hornby",
@@ -25,7 +25,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "5.0%",
       description: "Iconic British model railway and hobby products manufacturer.",
       website: "https://www.hornby.com",
-      logo: "/companies/hornby.svg"
+      logo: "/company-logos/logo_hornby.png"
     },
     {
       name: "Dignity",
@@ -33,7 +33,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "83.2%",
       description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
       website: "https://www.dignityfunerals.co.uk",
-      logo: "/companies/dignity.svg"
+      logo: "/company-logos/logo_dignity.png"
     },
     {
       name: "Iona Star",
@@ -41,7 +41,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.1%",
       description: "Investment holding company with interests in technology and digital assets.",
       website: "https://ionastar.com",
-      logo: "/companies/iona-star.svg"
+      logo: "/company-logos/logo_iona_star.png"
     },
     {
       name: "Rawnet",
@@ -49,7 +49,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.4%",
       description: "Digital agency specializing in web development and digital solutions.",
       website: "https://www.rawnet.com",
-      logo: "/companies/rawnet.svg"
+      logo: "/company-logos/logo_rawnet.png"
     },
     {
       name: "Ocula",
@@ -57,7 +57,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "1.3%",
       description: "AI-powered healthcare technology company focusing on early disease detection.",
       website: "https://ocula.ai",
-      logo: "/companies/ocula.svg"
+      logo: "/company-logos/logo_ocula.png"
     },
     {
       name: "Cambium",
@@ -65,7 +65,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "3.0%",
       description: "Sustainable materials technology company developing eco-friendly alternatives.",
       website: "https://cambium.com",
-      logo: "/companies/cambium.svg"
+      logo: "/company-logos/logo_cambium.png"
     },
     {
       name: "Silverwood",
@@ -73,7 +73,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "1.3%",
       description: "Premium spirits and beverage company with a focus on craft production.",
       website: "https://silverwoodspirits.com",
-      logo: "/companies/silverwood.svg"
+      logo: "/company-logos/logo_silverwood.png"
     }
   ];
 
@@ -102,20 +102,21 @@ const ExploreTheGroup = () => {
                     <Image
                       src={company.logo}
                       alt={company.name}
-                      fill
+                      width={160}
+                      height={70}
                       className="object-contain p-4"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       priority={index < 4}
                       quality={100}
+                      onError={(e) => {
+                        console.error(`Error loading logo for ${company.name}:`, e);
+                        console.error(`Attempted to load from path: ${company.logo}`);
+                      }}
                       style={{
-                        maxWidth: company.name === "Iona Star" ? '140px' : 
-                                 company.name === "Ocula" ? '160px' : 
-                                 company.name === "Silverwood" ? '150px' : 
-                                 company.name === "Stanley Gibbons" ? '160px' : '180px',
-                        maxHeight: company.name === "Iona Star" ? '60px' : 
-                                  company.name === "Ocula" ? '70px' : 
-                                  company.name === "Silverwood" ? '65px' : 
-                                  company.name === "Stanley Gibbons" ? '70px' : '80px',
+                        width: 'auto',
+                        height: 'auto',
+                        maxWidth: '160px',
+                        maxHeight: '70px',
                         margin: 'auto'
                       }}
                     />
@@ -141,24 +142,6 @@ const ExploreTheGroup = () => {
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-castelnau-light-green">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-castelnau-dark-green mb-6">Investor Relations</h2>
-          <p className="text-xl text-gray-700 mb-8">Discover more in our Shareholder information centre.</p>
-          <Link href="/investor-relations">
-            <Button className="bg-castelnau-dark-green text-white hover:bg-castelnau-green">
-              Click Here
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      <CompanyModal 
-        company={selectedCompany}
-        isOpen={!!selectedCompany}
-        onClose={() => setSelectedCompany(null)}
-      />
     </main>
   );
 };
