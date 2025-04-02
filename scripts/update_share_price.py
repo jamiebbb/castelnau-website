@@ -59,6 +59,9 @@ def fetch_stock_data() -> Optional[Dict[str, Any]]:
         if "Weekly Time Series" not in weekly_data:
             if "Note" in weekly_data:
                 print(f"API Limit Warning: {weekly_data['Note']}")
+                print("Waiting 60 seconds before retrying...")
+                time.sleep(60)  # Wait 60 seconds before retrying
+                return fetch_stock_data()  # Retry once
             else:
                 print("Unexpected API response format for weekly data")
             return None
@@ -82,10 +85,16 @@ def fetch_stock_data() -> Optional[Dict[str, Any]]:
         # Process weekly data
         time_series_data = weekly_data['Weekly Time Series']
         dates = list(time_series_data.keys())  # Get all available dates
-        prices = [float(time_series_data[date]['4. close']) for date in dates]
+        # Get all available weekly data points (up to 100 weeks)
+        prices = [float(time_series_data[date]['4. close']) for date in dates[:100]]
+        dates = dates[:100]  # Limit to 100 weeks to match prices
 
-        # Get market cap from overview data
+        # Get market cap from overview data or calculate it
         market_cap = float(overview_data.get('MarketCapitalization', 0))
+        if market_cap == 0:
+            # Calculate market cap using shares outstanding
+            shares_outstanding = 332.45  # 332.45 million shares
+            market_cap = shares_outstanding * 1000000 * prices[0]
         
         # Transform data into our format
         transformed_data = {

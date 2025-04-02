@@ -145,9 +145,10 @@ const Navbar = () => {
                 onMouseEnter={() => setInvestorOpen(true)}
                 onMouseLeave={() => setInvestorOpen(false)}
               >
-                <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations`}>
-                  Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
+                <Link href="https://jamiebbb.github.io/castelnau-website/investor-relations/">
+                  Investor Relations
                 </Link>
+                <ChevronDown className="h-4 w-4 ml-1 inline-block" />
               </Button>
               {investorOpen && (
                 <div 
