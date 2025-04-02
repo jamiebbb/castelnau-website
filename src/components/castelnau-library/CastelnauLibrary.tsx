@@ -72,16 +72,6 @@ const CastelnauLibrary = () => {
       name: 'Leadership & Management',
       books: [
         {
-          id: '4',
-          title: 'The Servant as Leader',
-          author: 'Robert Greenleaf',
-          description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-servant-as-leader.jpg`,
-          category: 'Leadership',
-          publishDate: '1970',
-          shortDescription: 'The foundation of servant leadership philosophy'
-        },
-        {
           id: '5',
           title: 'Managing Oneself',
           author: 'Peter F. Drucker',
@@ -99,152 +89,87 @@ const CastelnauLibrary = () => {
           coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/HBR\'s-10-Must-Reads-on-Leadership.jpg`,
           category: 'Leadership',
           publishDate: '2011',
-          shortDescription: 'Essential leadership insights from Harvard Business Review'
+          shortDescription: 'Essential articles on leadership'
         },
         {
           id: '7',
-          title: 'Think Lead Succeed: The Admiral Way',
-          author: 'Henry Engelhardt',
-          description: 'Insights into building a successful company culture and leadership framework from the founder of Admiral Insurance.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/think-lead-succeed.jpg`,
+          title: 'The Geek Way',
+          author: 'Andrew McAfee',
+          description: 'A groundbreaking exploration of how technology companies are revolutionizing management and leadership practices.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-geek-way.jpg`,
           category: 'Leadership',
-          publishDate: '2014',
-          shortDescription: 'Company culture and leadership frameworks'
-        },
+          publishDate: '2023',
+          shortDescription: 'The new science of management'
+        }
+      ]
+    },
+    {
+      name: 'Strategy & Innovation',
+      books: [
         {
           id: '8',
-          title: 'The Richer Way',
-          author: 'Julian Richer',
-          description: 'A practical guide to getting the best out of people through effective management and exceptional customer service.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-richer-way.jpg`,
-          category: 'Management',
-          publishDate: '2014',
-          shortDescription: 'How to get the best out of people'
+          title: 'How Big Things Get Done',
+          author: 'Bent Flyvbjerg & Dan Gardner',
+          description: 'A comprehensive analysis of why major projects fail and how to make them succeed.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/how-big-things-get-done.jpg`,
+          category: 'Strategy',
+          publishDate: '2023',
+          shortDescription: 'The surprising factors that determine the fate of every project'
         },
         {
           id: '9',
-          title: 'Trillion Dollar Coach',
-          author: 'Eric Schmidt, Jonathan Rosenberg, Alan Eagle',
-          description: 'The leadership handbook of Silicon Valley\'s Bill Campbell, revealing his coaching principles and how they helped build some of the world\'s most successful companies.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/trillion-dollar-coach.jpg`,
-          category: 'Leadership',
-          publishDate: '2019',
-          shortDescription: 'The leadership handbook of Silicon Valley\'s Bill Campbell'
-        },
-        {
-          id: '10',
-          title: 'Measure What Matters',
-          author: 'John Doerr',
-          description: 'How Google, Bono, and the Gates Foundation rock the world with OKRs. A comprehensive guide to implementing and using Objectives and Key Results.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/measure-what-matters.jpg`,
-          category: 'Management',
-          publishDate: '2018',
-          shortDescription: 'How Google, Bono, and the Gates Foundation rock the world with OKRs'
-        }
-      ]
-    },
-    {
-      name: 'Business Strategy & Innovation',
-      books: [
-        {
-          id: '11',
-          title: 'Competition Demystified',
-          author: 'Bruce C. Greenwald & Judd Kahn',
-          description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/competition-dymystified.jpg`,
+          title: 'Super Forecasting',
+          author: 'Philip E. Tetlock & Dan Gardner',
+          description: 'An exploration of how to make better predictions and decisions in an uncertain world.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/super-forecasting.jpg`,
           category: 'Strategy',
-          publishDate: '2005',
-          shortDescription: 'A simplified approach to business strategy'
-        },
-        {
-          id: '12',
-          title: 'The Outsiders',
-          author: 'William N. Thorndike',
-          description: 'Eight unconventional CEOs and their radically rational blueprint for success. A study of exceptional capital allocation and business strategy.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-outsiders.jpg`,
-          category: 'Strategy',
-          publishDate: '2012',
-          shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
-        },
-        {
-          id: '13',
-          title: 'The Geek Way',
-          author: 'Andrew McAfee',
-          description: 'The radical mindset that drives extraordinary results. How technology and innovation are transforming business and creating new opportunities.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-geek-way.jpg`,
-          category: 'Innovation',
-          publishDate: '2023',
-          shortDescription: 'The radical mindset that drives extraordinary results'
-        }
-      ]
-    },
-    {
-      name: 'Organizational Culture & Workplace Innovation',
-      books: [
-        {
-          id: '14',
-          title: 'No Rules Rules',
-          author: 'Reed Hastings & Erin Meyer',
-          description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/no-rules-rules.jpg`,
-          category: 'Culture',
-          publishDate: '2020',
-          shortDescription: 'Netflix and the culture of reinvention'
-        },
-        {
-          id: '15',
-          title: 'Setting the Table',
-          author: 'Danny Meyer',
-          description: 'The transforming power of hospitality in business. How exceptional service and culture can drive business success.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/setting-the-table.jpg`,
-          category: 'Culture',
-          publishDate: '2006',
-          shortDescription: 'The transforming power of hospitality in business'
-        },
-        {
-          id: '16',
-          title: 'Four Seasons',
-          author: 'Isadore Sharp',
-          description: 'The story of a business philosophy. How Four Seasons built a global luxury hospitality brand through service excellence and organizational culture.',
-          coverImage: '/books/four-seasons.jpg',
-          category: 'Culture',
-          publishDate: '2009',
-          shortDescription: 'The story of a business philosophy'
-        }
-      ]
-    },
-    {
-      name: 'Decision-Making & Problem Solving',
-      books: [
-        {
-          id: '17',
-          title: 'Six Thinking Hats',
-          author: 'Edward de Bono',
-          description: 'A powerful technique for looking at decisions from a number of important perspectives. A framework for parallel thinking and creative problem-solving.',
-          coverImage: '/books/six-thinking-hats.jpg',
-          category: 'Decision Making',
-          publishDate: '1985',
-          shortDescription: 'A powerful technique for looking at decisions from multiple perspectives'
-        },
-        {
-          id: '18',
-          title: 'Superforecasting',
-          author: 'Philip Tetlock',
-          description: 'The art and science of prediction. How to improve forecasting accuracy and make better decisions in an uncertain world.',
-          coverImage: '/books/super-forecasting.jpg',
-          category: 'Decision Making',
           publishDate: '2015',
           shortDescription: 'The art and science of prediction'
         },
         {
-          id: '19',
-          title: 'How Big Things Get Done',
-          author: 'Bent Flyvbjerg',
-          description: 'The surprising factors behind project success and failure. A comprehensive analysis of what makes major projects succeed or fail.',
-          coverImage: '/books/how-big-things-get-done.jpg',
-          category: 'Project Management',
-          publishDate: '2023',
-          shortDescription: 'The surprising factors behind project success and failure'
+          id: '10',
+          title: 'The Outsiders',
+          author: 'William N. Thorndike',
+          description: 'A study of eight unconventional CEOs and their radically rational blueprint for success.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-outsiders.jpg`,
+          category: 'Strategy',
+          publishDate: '2012',
+          shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
+        }
+      ]
+    },
+    {
+      name: 'Culture & Operations',
+      books: [
+        {
+          id: '11',
+          title: 'Setting the Table',
+          author: 'Danny Meyer',
+          description: 'The transformative power of hospitality in business and life.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/setting-the-table.jpg`,
+          category: 'Culture',
+          publishDate: '2006',
+          shortDescription: 'The transformative power of hospitality'
+        },
+        {
+          id: '12',
+          title: 'Measure What Matters',
+          author: 'John Doerr',
+          description: 'How Google, Bono, and the Gates Foundation rock the world with OKRs.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/measure-what-matters.jpg`,
+          category: 'Management',
+          publishDate: '2018',
+          shortDescription: 'How Google, Bono, and the Gates Foundation rock the world with OKRs'
+        },
+        {
+          id: '13',
+          title: 'Trillion Dollar Coach',
+          author: 'Eric Schmidt, Jonathan Rosenberg, & Alan Eagle',
+          description: 'The leadership playbook of Silicon Valley\'s Bill Campbell.',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/trillion-dollar-coach.jpg`,
+          category: 'Leadership',
+          publishDate: '2019',
+          shortDescription: 'The leadership playbook of Silicon Valley\'s Bill Campbell'
         }
       ]
     }
