@@ -41,7 +41,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/the-servant-as-leader.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-servant-as-leader.jfif`,
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -51,7 +51,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-dymystified.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/competition-dymystified.jfif`,
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -61,7 +61,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/no-rules-rules.jfif`,
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -76,7 +76,7 @@ const CastelnauLibrary = () => {
           title: 'The Servant as Leader',
           author: 'Robert Greenleaf',
           description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: '/books/the-servant-as-leader.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-servant-as-leader.jfif`,
           category: 'Leadership',
           publishDate: '1970',
           shortDescription: 'The foundation of servant leadership philosophy'
@@ -86,7 +86,7 @@ const CastelnauLibrary = () => {
           title: 'Managing Oneself',
           author: 'Peter F. Drucker',
           description: 'A classic guide to personal effectiveness and self-management, offering insights into how to maximize your strengths and manage your career.',
-          coverImage: '/books/managing-oneself.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/managing-oneself.jpg`,
           category: 'Management',
           publishDate: '1999',
           shortDescription: 'Personal effectiveness and self-management'
@@ -96,7 +96,7 @@ const CastelnauLibrary = () => {
           title: 'HBR\'s 10 Must Reads on Leadership',
           author: 'Various Authors',
           description: 'A collection of essential articles on leadership, covering emotional intelligence, decision-making, and leadership best practices.',
-          coverImage: '/books/HBR\'s-10-Must-Reads-on-Leadership.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/HBR\'s-10-Must-Reads-on-Leadership.jpg`,
           category: 'Leadership',
           publishDate: '2011',
           shortDescription: 'Essential leadership insights from Harvard Business Review'
@@ -106,7 +106,7 @@ const CastelnauLibrary = () => {
           title: 'Think Lead Succeed: The Admiral Way',
           author: 'Henry Engelhardt',
           description: 'Insights into building a successful company culture and leadership framework from the founder of Admiral Insurance.',
-          coverImage: '/books/think-lead-succeed.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/think-lead-succeed.jpg`,
           category: 'Leadership',
           publishDate: '2014',
           shortDescription: 'Company culture and leadership frameworks'
@@ -116,7 +116,7 @@ const CastelnauLibrary = () => {
           title: 'The Richer Way',
           author: 'Julian Richer',
           description: 'A practical guide to getting the best out of people through effective management and exceptional customer service.',
-          coverImage: '/books/the-richer-way.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-richer-way.jpg`,
           category: 'Management',
           publishDate: '2014',
           shortDescription: 'How to get the best out of people'
@@ -126,7 +126,7 @@ const CastelnauLibrary = () => {
           title: 'Trillion Dollar Coach',
           author: 'Eric Schmidt, Jonathan Rosenberg, Alan Eagle',
           description: 'The leadership handbook of Silicon Valley\'s Bill Campbell, revealing his coaching principles and how they helped build some of the world\'s most successful companies.',
-          coverImage: '/books/trillion-dollar-coach.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/trillion-dollar-coach.jpg`,
           category: 'Leadership',
           publishDate: '2019',
           shortDescription: 'The leadership handbook of Silicon Valley\'s Bill Campbell'
@@ -136,7 +136,7 @@ const CastelnauLibrary = () => {
           title: 'Measure What Matters',
           author: 'John Doerr',
           description: 'How Google, Bono, and the Gates Foundation rock the world with OKRs. A comprehensive guide to implementing and using Objectives and Key Results.',
-          coverImage: '/books/measure-what-matters.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/measure-what-matters.jpg`,
           category: 'Management',
           publishDate: '2018',
           shortDescription: 'How Google, Bono, and the Gates Foundation rock the world with OKRs'
@@ -151,7 +151,7 @@ const CastelnauLibrary = () => {
           title: 'Competition Demystified',
           author: 'Bruce C. Greenwald & Judd Kahn',
           description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: '/books/competition-dymystified.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/competition-dymystified.jfif`,
           category: 'Strategy',
           publishDate: '2005',
           shortDescription: 'A simplified approach to business strategy'
@@ -161,7 +161,7 @@ const CastelnauLibrary = () => {
           title: 'The Outsiders',
           author: 'William N. Thorndike',
           description: 'Eight unconventional CEOs and their radically rational blueprint for success. A study of exceptional capital allocation and business strategy.',
-          coverImage: '/books/the-outsiders.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-outsiders.jpg`,
           category: 'Strategy',
           publishDate: '2012',
           shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
@@ -171,7 +171,7 @@ const CastelnauLibrary = () => {
           title: 'The Geek Way',
           author: 'Andrew McAfee',
           description: 'The radical mindset that drives extraordinary results. How technology and innovation are transforming business and creating new opportunities.',
-          coverImage: '/books/the-geek-way.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-geek-way.jpg`,
           category: 'Innovation',
           publishDate: '2023',
           shortDescription: 'The radical mindset that drives extraordinary results'
@@ -186,7 +186,7 @@ const CastelnauLibrary = () => {
           title: 'No Rules Rules',
           author: 'Reed Hastings & Erin Meyer',
           description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: '/books/no-rules-rules.jfif',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/no-rules-rules.jfif`,
           category: 'Culture',
           publishDate: '2020',
           shortDescription: 'Netflix and the culture of reinvention'
@@ -196,7 +196,7 @@ const CastelnauLibrary = () => {
           title: 'Setting the Table',
           author: 'Danny Meyer',
           description: 'The transforming power of hospitality in business. How exceptional service and culture can drive business success.',
-          coverImage: '/books/setting-the-table.jpg',
+          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/setting-the-table.jpg`,
           category: 'Culture',
           publishDate: '2006',
           shortDescription: 'The transforming power of hospitality in business'
