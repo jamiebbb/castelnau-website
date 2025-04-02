@@ -17,7 +17,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.2%",
       description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
       website: "https://www.stanleygibbons.com",
-      logo: "/company-logos/logo_stanley_gibbons.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_stanley_gibbons.png`
     },
     {
       name: "Hornby",
@@ -25,7 +25,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "5.0%",
       description: "Iconic British model railway and hobby products manufacturer.",
       website: "https://www.hornby.com",
-      logo: "/company-logos/logo_hornby.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_hornby.png`
     },
     {
       name: "Dignity",
@@ -33,7 +33,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "83.2%",
       description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
       website: "https://www.dignityfunerals.co.uk",
-      logo: "/company-logos/logo_dignity.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_dignity.png`
     },
     {
       name: "Iona Star",
@@ -41,7 +41,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.1%",
       description: "Investment holding company with interests in technology and digital assets.",
       website: "https://ionastar.com",
-      logo: "/company-logos/logo_iona_star.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_iona_star.png`
     },
     {
       name: "Rawnet",
@@ -49,7 +49,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.4%",
       description: "Digital agency specializing in web development and digital solutions.",
       website: "https://www.rawnet.com",
-      logo: "/company-logos/logo_rawnet.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_rawnet.png`
     },
     {
       name: "Ocula",
@@ -57,7 +57,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "1.3%",
       description: "AI-powered healthcare technology company focusing on early disease detection.",
       website: "https://ocula.ai",
-      logo: "/company-logos/logo_ocula.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_ocula.png`
     },
     {
       name: "Cambium",
@@ -65,7 +65,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "3.0%",
       description: "Sustainable materials technology company developing eco-friendly alternatives.",
       website: "https://cambium.com",
-      logo: "/company-logos/logo_cambium.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_cambium.png`
     },
     {
       name: "Silverwood",
@@ -73,7 +73,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "1.3%",
       description: "Premium spirits and beverage company with a focus on craft production.",
       website: "https://silverwoodspirits.com",
-      logo: "/company-logos/logo_silverwood.png"
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_silverwood.png`
     }
   ];
 
