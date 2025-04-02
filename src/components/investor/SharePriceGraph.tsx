@@ -79,7 +79,6 @@ const options = {
           size: 12,
         },
       },
-      reverse: true,
     },
   },
   interaction: {
