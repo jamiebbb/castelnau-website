@@ -61,8 +61,8 @@ export async function getStockData(): Promise<StockData> {
     );
 
     // Calculate market cap from shares outstanding and current price
-    const sharesOutstanding = 100000000; // 100 million shares
-    const marketCap = sharesOutstanding * prices[0];
+    const sharesOutstanding = 332.45; // 332.45 million shares
+    const marketCap = sharesOutstanding * 1000000 * prices[0]; // Convert millions to actual shares
 
     const transformedData: StockData = {
       currentPrice: prices[0],

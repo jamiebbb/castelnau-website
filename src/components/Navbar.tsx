@@ -39,7 +39,7 @@ const Navbar = () => {
         scrollToElement(sectionId);
       }
     } else {
-      window.location.href = `/investor-relations#${sectionId}`;
+      window.location.href = `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations#${sectionId}`;
     }
   };
 
@@ -145,7 +145,9 @@ const Navbar = () => {
                 onMouseEnter={() => setInvestorOpen(true)}
                 onMouseLeave={() => setInvestorOpen(false)}
               >
-                Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
+                <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations`}>
+                  Investor Relations <ChevronDown className="h-4 w-4 ml-1" />
+                </Link>
               </Button>
               {investorOpen && (
                 <div 
@@ -153,22 +155,22 @@ const Navbar = () => {
                   onMouseEnter={() => setInvestorOpen(true)}
                   onMouseLeave={() => setInvestorOpen(false)}
                 >
-                  <Link href="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
+                  <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations#share-price`} onClick={(e) => handleInvestorSectionClick('share-price', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Share Price
                     </div>
                   </Link>
-                  <Link href="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
+                  <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations#regulatory-documents`} onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Regulatory Documents
                     </div>
                   </Link>
-                  <Link href="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
+                  <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations#factsheets`} onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Factsheets
                     </div>
                   </Link>
-                  <Link href="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
+                  <Link href={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/investor-relations#rns`} onClick={(e) => handleInvestorSectionClick('rns', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       RNS
                     </div>

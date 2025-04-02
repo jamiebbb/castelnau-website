@@ -11,8 +11,8 @@ export default function StockPriceDisplay() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getStockData();
-      setPrice(data.currentPrice.toFixed(1));
-      setMarketCap((data.marketCap / 1000000).toFixed(1) + 'M'); // Convert to millions
+      setPrice('£0.' + data.currentPrice.toFixed(2));
+      setMarketCap((data.marketCap / 1000000).toFixed(2) + 'M'); // Convert to millions with 2 decimal places
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();
@@ -22,7 +22,7 @@ export default function StockPriceDisplay() {
     <div className="flex items-center space-x-4 text-sm">
       <div>
         <span className="text-white">Share Price: </span>
-        <span className="text-white font-semibold">{price}p</span>
+        <span className="text-white font-semibold">{price}</span>
       </div>
       <div className="text-white/70">|</div>
       <div>
