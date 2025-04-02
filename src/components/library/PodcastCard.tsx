@@ -11,7 +11,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
       <div className="relative h-48">
         <Image
-          src={podcast.thumbnail}
+          src={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}${podcast.thumbnail}`}
           alt={podcast.title}
           fill
           className="object-cover"

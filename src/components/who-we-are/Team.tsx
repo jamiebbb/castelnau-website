@@ -12,7 +12,7 @@ const TeamMember = ({ name, role, description, imageSrc }: TeamMemberProps) => (
   <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-102 transition-all duration-300 group">
     <div className="relative h-64">
       <Image 
-        src={imageSrc} 
+        src={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}${imageSrc}`}
         alt={name} 
         fill
         className="object-cover"

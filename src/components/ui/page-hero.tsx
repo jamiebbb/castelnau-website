@@ -9,7 +9,7 @@ export function PageHero({ title, description, image }: PageHeroProps) {
     <div className="relative">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/bbc6d732-dfdf-4ade-b448-d507309fcdce.png')] bg-cover bg-center opacity-10" />
+        <div className={`absolute inset-0 bg-[url('${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/lovable-uploads/bbc6d732-dfdf-4ade-b448-d507309fcdce.png')] bg-cover bg-center opacity-10`} />
         <div className="absolute inset-0 bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green" />
       </div>
 

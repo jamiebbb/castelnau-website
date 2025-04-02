@@ -27,7 +27,7 @@ const BookSummaryDialog = ({ selectedBook, dialogOpen, setDialogOpen }: BookSumm
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="relative h-64 md:h-full">
                 <Image
-                  src={selectedBook.coverImg}
+                  src={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}${selectedBook.coverImg}`}
                   alt={selectedBook.title}
                   fill
                   className="object-cover rounded-lg"

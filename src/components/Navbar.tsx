@@ -8,6 +8,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useScrollToSection from '@/hooks/useScrollToSection';
 import StockPriceDisplay from './StockPriceDisplay';
+import { getPath } from '@/utils/getPath';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -18,28 +19,28 @@ const Navbar = () => {
   const handleWhoWeAreSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (pathname === '/who-we-are') {
+    if (pathname === getPath('/who-we-are')) {
       if (window.location.hash === `#${sectionId}`) {
         refreshScroll();
       } else {
         scrollToElement(sectionId);
       }
     } else {
-      window.location.href = `/who-we-are#${sectionId}`;
+      window.location.href = `${getPath('/who-we-are')}#${sectionId}`;
     }
   };
   
   const handleInvestorSectionClick = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (pathname === '/investor-relations') {
+    if (pathname === getPath('/investor-relations')) {
       if (window.location.hash === `#${sectionId}`) {
         refreshScroll();
       } else {
         scrollToElement(sectionId);
       }
     } else {
-      window.location.href = `/investor-relations#${sectionId}`;
+      window.location.href = `${getPath('/investor-relations')}#${sectionId}`;
     }
   };
 
@@ -48,7 +49,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-8">
-            <Link href="/" className="mr-10">
+            <Link href={getPath('/')} className="mr-10">
               <Image 
                 alt="Castelnau Group" 
                 className="h-12 w-auto object-contain" 
@@ -65,17 +66,17 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link href="/castelnau-library">
+            <Link href={getPath('/castelnau-library')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 Castelnau Library
               </Button>
             </Link>
-            <Link href="/sell-your-business">
+            <Link href={getPath('/sell-your-business')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 Looking to Sell your Business
               </Button>
             </Link>
-            <Link href="/contact">
+            <Link href={getPath('/contact')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-6 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors">
                 Contact us
               </Button>
@@ -102,13 +103,13 @@ const Navbar = () => {
                   onMouseEnter={() => setWhoWeAreOpen(true)}
                   onMouseLeave={() => setWhoWeAreOpen(false)}
                 >
-                  <Link href="/who-we-are" onClick={() => window.scrollTo(0, 0)}>
+                  <Link href={getPath('/who-we-are')} onClick={() => window.scrollTo(0, 0)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Overview
                     </div>
                   </Link>
                   <Link 
-                    href="/who-we-are#our-values" 
+                    href={`${getPath('/who-we-are')}#our-values`}
                     onClick={(e) => handleWhoWeAreSectionClick('our-values', e)}
                   >
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
@@ -116,7 +117,7 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <Link 
-                    href="/who-we-are#our-team" 
+                    href={`${getPath('/who-we-are')}#our-team`}
                     onClick={(e) => handleWhoWeAreSectionClick('our-team', e)}
                   >
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
@@ -127,12 +128,12 @@ const Navbar = () => {
               )}
             </div>
             
-            <Link href="/what-we-do">
+            <Link href={getPath('/what-we-do')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 What We Do
               </Button>
             </Link>
-            <Link href="/explore-the-group">
+            <Link href={getPath('/explore-the-group')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 Explore the Group
               </Button>
@@ -153,22 +154,22 @@ const Navbar = () => {
                   onMouseEnter={() => setInvestorOpen(true)}
                   onMouseLeave={() => setInvestorOpen(false)}
                 >
-                  <Link href="/investor-relations#share-price" onClick={(e) => handleInvestorSectionClick('share-price', e)}>
+                  <Link href={`${getPath('/investor-relations')}#share-price`} onClick={(e) => handleInvestorSectionClick('share-price', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Share Price
                     </div>
                   </Link>
-                  <Link href="/investor-relations#regulatory-documents" onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
+                  <Link href={`${getPath('/investor-relations')}#regulatory-documents`} onClick={(e) => handleInvestorSectionClick('regulatory-documents', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Regulatory Documents
                     </div>
                   </Link>
-                  <Link href="/investor-relations#factsheets" onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
+                  <Link href={`${getPath('/investor-relations')}#factsheets`} onClick={(e) => handleInvestorSectionClick('factsheets', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       Factsheets
                     </div>
                   </Link>
-                  <Link href="/investor-relations#rns" onClick={(e) => handleInvestorSectionClick('rns', e)}>
+                  <Link href={`${getPath('/investor-relations')}#rns`} onClick={(e) => handleInvestorSectionClick('rns', e)}>
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
                       RNS
                     </div>
@@ -177,7 +178,7 @@ const Navbar = () => {
               )}
             </div>
 
-            <Link href="/graduate-programme">
+            <Link href={getPath('/graduate-programme')}>
               <Button variant="transparent" className="text-white hover:text-white text-base px-4 py-2">
                 Graduate Programme
               </Button>

@@ -19,7 +19,7 @@ const nextConfig = {
   trailingSlash: true,
   // Ensure public directory is copied to output
   distDir: 'dist',
-  // Copy public directory to output
+  // Configure webpack to handle static exports
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -30,6 +30,15 @@ const nextConfig = {
     }
     return config;
   },
+  // Configure static export settings
+  experimental: {
+    appDir: true,
+    serverActions: true,
+  },
+  // Ensure proper handling of static files
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 module.exports = nextConfig; 

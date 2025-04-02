@@ -23,7 +23,7 @@ const BookCard = ({ book, flippedBookId, toggleFlip, openBookSummary }: BookCard
         <div className="absolute w-full h-full backface-hidden shadow-lg rounded-md overflow-hidden">
           <div className="relative h-48">
             <Image
-              src={book.coverImg}
+              src={`${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}${book.coverImg}`}
               alt={book.title}
               fill
               className="object-cover"
