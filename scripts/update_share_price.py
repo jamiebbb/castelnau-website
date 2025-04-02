@@ -47,20 +47,20 @@ def fetch_stock_data() -> Optional[Dict[str, Any]]:
         return None
 
     try:
-        # Fetch daily time series data
-        daily_url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={ALPHA_VANTAGE_API_KEY}'
-        print(f"Fetching daily data from: {daily_url}")
-        daily_response = requests.get(daily_url)
-        daily_data = daily_response.json()
+        # Fetch weekly time series data
+        weekly_url = f'https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol={SYMBOL}&apikey={ALPHA_VANTAGE_API_KEY}'
+        print(f"Fetching weekly data from: {weekly_url}")
+        weekly_response = requests.get(weekly_url)
+        weekly_data = weekly_response.json()
         
         # Update rate limit tracking
         update_last_api_call()
         
-        if "Time Series (Daily)" not in daily_data:
-            if "Note" in daily_data:
-                print(f"API Limit Warning: {daily_data['Note']}")
+        if "Weekly Time Series" not in weekly_data:
+            if "Note" in weekly_data:
+                print(f"API Limit Warning: {weekly_data['Note']}")
             else:
-                print("Unexpected API response format for daily data")
+                print("Unexpected API response format for weekly data")
             return None
 
         # Wait 12 seconds before next API call
@@ -79,9 +79,9 @@ def fetch_stock_data() -> Optional[Dict[str, Any]]:
             print("Unexpected API response format for overview data")
             return None
 
-        # Process daily data
-        time_series_data = daily_data['Time Series (Daily)']
-        dates = list(time_series_data.keys())[:30]  # Last 30 days
+        # Process weekly data
+        time_series_data = weekly_data['Weekly Time Series']
+        dates = list(time_series_data.keys())  # Get all available dates
         prices = [float(time_series_data[date]['4. close']) for date in dates]
 
         # Get market cap from overview data
