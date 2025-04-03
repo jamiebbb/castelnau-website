@@ -11,8 +11,8 @@ export default function StockPriceDisplay() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getStockData();
-      setPrice(data.currentPrice.toFixed(1));
-      setMarketCap((data.marketCap / 1000000).toFixed(2) + 'M'); // Convert to millions with 2 decimal places
+      setPrice('£0.' + data.currentPrice.toFixed(0));
+      setMarketCap(data.marketCap.toFixed(2)); // Convert to millions with 2 decimal places
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();
