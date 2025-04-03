@@ -24,24 +24,31 @@ export default function StockPriceDisplay() {
 
   return (
     <div className="flex flex-col space-y-1">
-      <div className="flex items-center space-x-4 text-sm">
-        <div>
-          <span className="text-white">Share Price: </span>
-          <span className="text-white font-semibold">{price}</span>
+      <div className="flex items-start space-x-4 text-sm">
+        <div className="flex flex-col">
+          <div>
+            <span className="text-white">Share Price: </span>
+            <span className="text-white font-semibold">{price}</span>
+          </div>
+          <div className="text-white/70 text-xs italic">
+            Updated: {lastUpdated}
+          </div>
         </div>
         <div className="text-white/70">|</div>
-        <div>
-          <span className="text-white">NAV: </span>
-          <span className="text-white font-semibold">101p</span>
+        <div className="flex flex-col">
+          <div>
+            <span className="text-white">NAV: </span>
+            <span className="text-white font-semibold">£1.01</span>
+          </div>
+          <div className="text-white/70 text-xs italic">
+            NAV last updated: 28/02/25
+          </div>
         </div>
         <div className="text-white/70">|</div>
         <div>
           <span className="text-white">Market Cap: </span>
           <span className="text-white font-semibold">£{marketCap}</span>
         </div>
-      </div>
-      <div className="text-white/70 text-xs italic">
-        Updated: {lastUpdated} | NAV last updated: 28/02/25
       </div>
     </div>
   );
