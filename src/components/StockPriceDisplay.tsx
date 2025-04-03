@@ -12,7 +12,11 @@ export default function StockPriceDisplay() {
     const fetchData = async () => {
       const data = await getStockData();
       setPrice('£0.' + data.currentPrice.toFixed(0));
-      setMarketCap(data.marketCap.toFixed(2)); // Convert to millions with 2 decimal places
+      
+      // Convert market cap to millions and format as £292.55M
+      const marketCapInMillions = data.marketCap / 1000000;
+      setMarketCap(marketCapInMillions.toFixed(2) + 'M');
+      
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();
