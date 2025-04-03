@@ -11,7 +11,7 @@ export default function StockPriceDisplay() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getStockData();
-      setPrice('£0.' + data.currentPrice.toFixed(2));
+      setPrice(data.currentPrice.toFixed(1));
       setMarketCap((data.marketCap / 1000000).toFixed(2) + 'M'); // Convert to millions with 2 decimal places
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
@@ -19,24 +19,25 @@ export default function StockPriceDisplay() {
   }, []);
 
   return (
-    <div className="flex items-center space-x-4 text-sm">
-      <div>
-        <span className="text-white">Share Price: </span>
-        <span className="text-white font-semibold">{price}</span>
+    <div className="flex flex-col space-y-1">
+      <div className="flex items-center space-x-4 text-sm">
+        <div>
+          <span className="text-white">Share Price: </span>
+          <span className="text-white font-semibold">{price}</span>
+        </div>
+        <div className="text-white/70">|</div>
+        <div>
+          <span className="text-white">NAV: </span>
+          <span className="text-white font-semibold">101p</span>
+        </div>
+        <div className="text-white/70">|</div>
+        <div>
+          <span className="text-white">Market Cap: </span>
+          <span className="text-white font-semibold">£{marketCap}</span>
+        </div>
       </div>
-      <div className="text-white/70">|</div>
-      <div>
-        <span className="text-white">NAV: </span>
-        <span className="text-white font-semibold">101.00p</span>
-      </div>
-      <div className="text-white/70">|</div>
-      <div>
-        <span className="text-white">Market Cap: </span>
-        <span className="text-white font-semibold">£{marketCap}</span>
-      </div>
-      <div className="text-white/70">|</div>
-      <div className="text-white/70">
-        Updated: {lastUpdated}
+      <div className="text-white/70 text-xs italic">
+        Updated: {lastUpdated} | NAV last updated: 28/02/25
       </div>
     </div>
   );
