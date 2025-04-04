@@ -1,10 +1,15 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { BookOpen, ArrowLeft, ArrowRight, Play } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import BookCover from './BookCover';
+import { useState, useEffect, useRef } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { BookOpen, ArrowLeft, ArrowRight, Play } from "lucide-react";
+import { motion, useAnimation, PanInfo } from "framer-motion";
+import BookCover from "./BookCover";
 
 interface Book {
   id: string;
@@ -24,262 +29,309 @@ interface BookCategory {
 
 const CastelnauLibrary = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('Castelnau Favourites');
+  const [activeCategory, setActiveCategory] = useState<string>(
+    "Castelnau Favourites"
+  );
   const [currentBookIndex, setCurrentBookIndex] = useState<number>(0);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [dragStartX, setDragStartX] = useState<number>(0);
-  const [dragOffset, setDragOffset] = useState<number>(0);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const controls = useAnimation();
+  const bookRef = useRef<HTMLDivElement>(null);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const isMobileDevice = window.innerWidth < 768;
+      setIsMobile(isMobileDevice);
+      console.log(
+        "Window width:",
+        window.innerWidth,
+        "Is mobile:",
+        isMobileDevice
+      );
+    };
+
+    // Initial check - run immediately
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   // Define all categories
   const allCategories: BookCategory[] = [
     {
-      name: 'Castelnau Favourites',
+      name: "Castelnau Favourites",
       books: [
         {
-          id: '1',
-          title: 'The Servant as Leader',
-          author: 'Robert Greenleaf',
-          description: 'A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-servant-as-leader.jpg`,
-          category: 'Servant Leadership, Ethical Leadership',
-          publishDate: '1970',
-          shortDescription: 'The foundation of servant leadership philosophy'
+          id: "1",
+          title: "The Servant as Leader",
+          author: "Robert Greenleaf",
+          description:
+            "A groundbreaking work on servant leadership, exploring how leaders can serve their organizations and teams while achieving exceptional results.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/the-servant-as-leader.jpg`,
+          category: "Servant Leadership, Ethical Leadership",
+          publishDate: "1970",
+          shortDescription: "The foundation of servant leadership philosophy",
         },
         {
-          id: '2',
-          title: 'Managing Oneself',
-          author: 'Peter F. Drucker',
-          description: 'A classic guide to personal effectiveness and self-management, offering insights into how to maximize your strengths and manage your career.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/managing-oneself.jpg`,
-          category: 'Personal Effectiveness, Self-Management',
-          publishDate: '1999',
-          shortDescription: 'Personal effectiveness and self-management'
+          id: "2",
+          title: "Managing Oneself",
+          author: "Peter F. Drucker",
+          description:
+            "A classic guide to personal effectiveness and self-management, offering insights into how to maximize your strengths and manage your career.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/managing-oneself.jpg`,
+          category: "Personal Effectiveness, Self-Management",
+          publishDate: "1999",
+          shortDescription: "Personal effectiveness and self-management",
         },
         {
-          id: '3',
-          title: 'HBR\'s 10 Must Reads on Leadership',
-          author: 'Various Authors',
-          description: 'A collection of essential articles on leadership, covering emotional intelligence, decision-making, and leadership best practices.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/HBR\'s-10-Must-Reads-on-Leadership.jpg`,
-          category: 'Leadership Best Practices, Emotional Intelligence',
-          publishDate: '2011',
-          shortDescription: 'Essential articles on leadership'
-        }
-      ]
+          id: "3",
+          title: "HBR's 10 Must Reads on Leadership",
+          author: "Various Authors",
+          description:
+            "A collection of essential articles on leadership, covering emotional intelligence, decision-making, and leadership best practices.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/HBR\'s-10-Must-Reads-on-Leadership.jpg`,
+          category: "Leadership Best Practices, Emotional Intelligence",
+          publishDate: "2011",
+          shortDescription: "Essential articles on leadership",
+        },
+      ],
     },
     {
-      name: 'Leadership & Management',
+      name: "Leadership & Management",
       books: [
         {
-          id: '4',
-          title: 'Think Lead Succeed: The Admiral Way',
-          author: 'Henry Engelhardt',
-          description: 'An exploration of Admiral Insurance\'s unique leadership framework and company culture that drove its success.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/think-lead-succeed.jpg`,
-          category: 'Company Culture, Leadership Frameworks',
-          publishDate: '2015',
-          shortDescription: 'The Admiral Insurance leadership framework'
+          id: "4",
+          title: "Think Lead Succeed: The Admiral Way",
+          author: "Henry Engelhardt",
+          description:
+            "An exploration of Admiral Insurance's unique leadership framework and company culture that drove its success.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/think-lead-succeed.jpg`,
+          category: "Company Culture, Leadership Frameworks",
+          publishDate: "2015",
+          shortDescription: "The Admiral Insurance leadership framework",
         },
         {
-          id: '5',
-          title: 'The Richer Way',
-          author: 'Julian Richer',
-          description: 'A practical guide to getting the best out of people through effective management and customer service principles.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-richer-way.jpg`,
-          category: 'Management, People Management, Customer Service',
-          publishDate: '2014',
-          shortDescription: 'How to get the best out of people'
+          id: "5",
+          title: "The Richer Way",
+          author: "Julian Richer",
+          description:
+            "A practical guide to getting the best out of people through effective management and customer service principles.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/the-richer-way.jpg`,
+          category: "Management, People Management, Customer Service",
+          publishDate: "2014",
+          shortDescription: "How to get the best out of people",
         },
         {
-          id: '6',
-          title: 'Trillion Dollar Coach',
-          author: 'Eric Schmidt, Jonathan Rosenberg, Alan Eagle',
-          description: 'The leadership playbook of Silicon Valley\'s Bill Campbell, who coached some of the most successful tech leaders.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/trillion-dollar-coach.jpg`,
-          category: 'Coaching, Leadership Development',
-          publishDate: '2019',
-          shortDescription: 'The leadership handbook of Silicon Valley\'s Bill Campbell'
+          id: "6",
+          title: "Trillion Dollar Coach",
+          author: "Eric Schmidt, Jonathan Rosenberg, Alan Eagle",
+          description:
+            "The leadership playbook of Silicon Valley's Bill Campbell, who coached some of the most successful tech leaders.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/trillion-dollar-coach.jpg`,
+          category: "Coaching, Leadership Development",
+          publishDate: "2019",
+          shortDescription:
+            "The leadership handbook of Silicon Valley's Bill Campbell",
         },
         {
-          id: '7',
-          title: 'Measure What Matters',
-          author: 'John Doerr',
-          description: 'How Google, Bono, and the Gates Foundation rock the world with OKRs.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/measure-what-matters.jpg`,
-          category: 'Objective and Key Results (OKRs), Performance Management',
-          publishDate: '2018',
-          shortDescription: 'How to achieve ambitious goals with OKRs'
-        }
-      ]
+          id: "7",
+          title: "Measure What Matters",
+          author: "John Doerr",
+          description:
+            "How Google, Bono, and the Gates Foundation rock the world with OKRs.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/measure-what-matters.jpg`,
+          category: "Objective and Key Results (OKRs), Performance Management",
+          publishDate: "2018",
+          shortDescription: "How to achieve ambitious goals with OKRs",
+        },
+      ],
     },
     {
-      name: 'Business Strategy & Innovation',
+      name: "Business Strategy & Innovation",
       books: [
         {
-          id: '8',
-          title: 'Competition Demystified',
-          author: 'Bruce C. Greenwald & Judd Kahn',
-          description: 'A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/competition-dymystified.jpg`,
-          category: 'Competitive Strategy, Market Analysis',
-          publishDate: '2005',
-          shortDescription: 'A simplified approach to business strategy'
+          id: "8",
+          title: "Competition Demystified",
+          author: "Bruce C. Greenwald & Judd Kahn",
+          description:
+            "A radically simplified approach to business strategy, offering clear frameworks for analyzing competitive advantages and market dynamics.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/competition-dymystified.jpg`,
+          category: "Competitive Strategy, Market Analysis",
+          publishDate: "2005",
+          shortDescription: "A simplified approach to business strategy",
         },
         {
-          id: '9',
-          title: 'The Outsiders',
-          author: 'William N. Thorndike',
-          description: 'A study of eight unconventional CEOs and their radically rational blueprint for success.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-outsiders.jpg`,
-          category: 'Strategic Management, Business Case Studies',
-          publishDate: '2012',
-          shortDescription: 'Eight unconventional CEOs and their radically rational blueprint for success'
+          id: "9",
+          title: "The Outsiders",
+          author: "William N. Thorndike",
+          description:
+            "A study of eight unconventional CEOs and their radically rational blueprint for success.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/the-outsiders.jpg`,
+          category: "Strategic Management, Business Case Studies",
+          publishDate: "2012",
+          shortDescription:
+            "Eight unconventional CEOs and their radically rational blueprint for success",
         },
         {
-          id: '10',
-          title: 'The Geek Way',
-          author: 'Andrew McAfee',
-          description: 'A groundbreaking exploration of how technology companies are revolutionizing management and leadership practices.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/the-geek-way.jpg`,
-          category: 'Technology & Business Innovation, Culture Building',
-          publishDate: '2023',
-          shortDescription: 'The radical mindset that drives extraordinary results'
-        }
-      ]
+          id: "10",
+          title: "The Geek Way",
+          author: "Andrew McAfee",
+          description:
+            "A groundbreaking exploration of how technology companies are revolutionizing management and leadership practices.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/the-geek-way.jpg`,
+          category: "Technology & Business Innovation, Culture Building",
+          publishDate: "2023",
+          shortDescription:
+            "The radical mindset that drives extraordinary results",
+        },
+      ],
     },
     {
-      name: 'Culture & Operations',
+      name: "Culture & Operations",
       books: [
         {
-          id: '11',
-          title: 'No Rules Rules',
-          author: 'Reed Hastings & Erin Meyer',
-          description: 'An inside look at Netflix\'s unique culture of freedom and responsibility, and how it drives innovation and success.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/no-rules-rules.jpg`,
-          category: 'Corporate Culture, Innovation, Freedom & Responsibility',
-          publishDate: '2020',
-          shortDescription: 'Netflix and the culture of reinvention'
+          id: "11",
+          title: "No Rules Rules",
+          author: "Reed Hastings & Erin Meyer",
+          description:
+            "An inside look at Netflix's unique culture of freedom and responsibility, and how it drives innovation and success.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/no-rules-rules.jpg`,
+          category: "Corporate Culture, Innovation, Freedom & Responsibility",
+          publishDate: "2020",
+          shortDescription: "Netflix and the culture of reinvention",
         },
         {
-          id: '12',
-          title: 'Setting the Table',
-          author: 'Danny Meyer',
-          description: 'The transformative power of hospitality in business and life.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/setting-the-table.jpg`,
-          category: 'Customer Service, Hospitality, Business Philosophy',
-          publishDate: '2006',
-          shortDescription: 'The transforming power of hospitality in business'
+          id: "12",
+          title: "Setting the Table",
+          author: "Danny Meyer",
+          description:
+            "The transformative power of hospitality in business and life.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/setting-the-table.jpg`,
+          category: "Customer Service, Hospitality, Business Philosophy",
+          publishDate: "2006",
+          shortDescription: "The transforming power of hospitality in business",
         },
         {
-          id: '13',
-          title: 'Four Seasons',
-          author: 'Isadore Sharp',
-          description: 'The story of a business philosophy that revolutionized the hospitality industry.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/four-seasons.jpg`,
-          category: 'Service Excellence, Organizational Culture, Hospitality',
-          publishDate: '2009',
-          shortDescription: 'The story of a business philosophy'
-        }
-      ]
+          id: "13",
+          title: "Four Seasons",
+          author: "Isadore Sharp",
+          description:
+            "The story of a business philosophy that revolutionized the hospitality industry.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/four-seasons.jpg`,
+          category: "Service Excellence, Organizational Culture, Hospitality",
+          publishDate: "2009",
+          shortDescription: "The story of a business philosophy",
+        },
+      ],
     },
     {
-      name: 'Decision-Making & Problem Solving',
+      name: "Decision-Making & Problem Solving",
       books: [
         {
-          id: '14',
-          title: 'Six Thinking Hats',
-          author: 'Edward de Bono',
-          description: 'A powerful technique for looking at decisions from a number of important perspectives.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/six-thinking-hats.jpg`,
-          category: 'Decision-Making Framework, Creative Thinking',
-          publishDate: '1985',
-          shortDescription: 'A powerful technique for looking at decisions'
+          id: "14",
+          title: "Six Thinking Hats",
+          author: "Edward de Bono",
+          description:
+            "A powerful technique for looking at decisions from a number of important perspectives.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/six-thinking-hats.jpg`,
+          category: "Decision-Making Framework, Creative Thinking",
+          publishDate: "1985",
+          shortDescription: "A powerful technique for looking at decisions",
         },
         {
-          id: '15',
-          title: 'Superforecasting',
-          author: 'Philip Tetlock',
-          description: 'An exploration of how to make better predictions and decisions in an uncertain world.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/super-forecasting.jpg`,
-          category: 'Forecasting, Decision-Making',
-          publishDate: '2015',
-          shortDescription: 'The art and science of prediction'
+          id: "15",
+          title: "Superforecasting",
+          author: "Philip Tetlock",
+          description:
+            "An exploration of how to make better predictions and decisions in an uncertain world.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/super-forecasting.jpg`,
+          category: "Forecasting, Decision-Making",
+          publishDate: "2015",
+          shortDescription: "The art and science of prediction",
         },
         {
-          id: '16',
-          title: 'How Big Things Get Done',
-          author: 'Bent Flyvbjerg',
-          description: 'A comprehensive analysis of why major projects fail and how to make them succeed.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/books/how-big-things-get-done.jpg`,
-          category: 'Project Management, Decision-Making',
-          publishDate: '2023',
-          shortDescription: 'The surprising factors that determine the fate of every project'
-        }
-      ]
-    }
+          id: "16",
+          title: "How Big Things Get Done",
+          author: "Bent Flyvbjerg",
+          description:
+            "A comprehensive analysis of why major projects fail and how to make them succeed.",
+          coverImage: `${
+            process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+          }/books/how-big-things-get-done.jpg`,
+          category: "Project Management, Decision-Making",
+          publishDate: "2023",
+          shortDescription:
+            "The surprising factors that determine the fate of every project",
+        },
+      ],
+    },
   ];
 
   // Create the final categories array with the "All" category
   const categories: BookCategory[] = [
     {
-      name: 'All',
-      books: allCategories.flatMap(cat => cat.books)
+      name: "All",
+      books: allCategories.flatMap((cat) => cat.books),
     },
-    ...allCategories
+    ...allCategories,
   ];
 
-  const currentCategory = categories.find(cat => cat.name === activeCategory);
+  const currentCategory = categories.find((cat) => cat.name === activeCategory);
 
   // Filter books based on search query
-  const filteredBooks = currentCategory?.books.filter(book => 
-    book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    book.category.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
-
-  // Get current book
-  const currentBook = filteredBooks[currentBookIndex];
-
-  // Calculate visible books (show 5 at a time)
-  const visibleBooks = currentCategory?.books.slice(
-    Math.max(0, currentBookIndex - 2), // Show 2 books before current
-    Math.min((currentCategory?.books.length || 0), currentBookIndex + 3) // Show 2 books after current
-  ) || [];
-
-  // Calculate positions for each visible book
-  const getBookPosition = (index: number) => {
-    const centerIndex = 2; // Center book is at index 2
-    const offset = index - centerIndex;
-    const angle = offset * 45;
-    const radius = 500;
-    const x = Math.sin(angle * Math.PI / 180) * radius;
-    const z = Math.cos(angle * Math.PI / 180) * radius;
-    const opacity = Math.max(0, 1 - Math.abs(offset) * 0.4);
-    const scale = Math.max(0.6, 1 - Math.abs(offset) * 0.15);
-    return { x, z, opacity, scale, angle };
-  };
-
-  // Remove mouse-based rotation values since we don't need them anymore
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useTransform(mouseY, [-300, 300], ["0deg", "0deg"]); // Set to 0 to remove tilt
-  const rotateY = useTransform(mouseX, [-300, 300], ["0deg", "0deg"]); // Set to 0 to remove tilt
-
-  // Spring animations for smooth movement
-  const springConfig = { damping: 20, stiffness: 100 };
-  const springRotateX = useSpring(rotateX, springConfig);
-  const springRotateY = useSpring(rotateY, springConfig);
+  const filteredBooks =
+    currentCategory?.books.filter(
+      (book) =>
+        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.category.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   // Simplified navigation
-  const handleNavigation = (direction: 'left' | 'right') => {
+  const handleNavigation = (direction: "left" | "right") => {
     if (!currentCategory) return;
-    
+
     const totalBooks = currentCategory.books.length;
-    if (direction === 'left') {
-      setCurrentBookIndex(prev => (prev - 1 + totalBooks) % totalBooks);
+    if (direction === "left") {
+      setCurrentBookIndex((prev) => (prev - 1 + totalBooks) % totalBooks);
     } else {
-      setCurrentBookIndex(prev => (prev + 1) % totalBooks);
+      setCurrentBookIndex((prev) => (prev + 1) % totalBooks);
     }
   };
 
@@ -287,6 +339,62 @@ const CastelnauLibrary = () => {
   const handleCategoryChange = (categoryName: string) => {
     setActiveCategory(categoryName);
     setCurrentBookIndex(0);
+    setIsAnimating(false);
+  };
+
+  // Handle swipe gesture for mobile
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    if (!isMobile || isAnimating) return;
+
+    const swipeThreshold = 50; // Minimum distance to trigger a swipe
+    const { offset } = info;
+
+    if (Math.abs(offset.x) > swipeThreshold) {
+      setIsAnimating(true);
+
+      // First, animate the current book out
+      controls.start({
+        x: offset.x > 0 ? 300 : -300,
+        opacity: 0,
+        transition: { duration: 0.2 },
+      });
+
+      // After a short delay, change the book and reset position
+      setTimeout(() => {
+        if (offset.x > 0) {
+          // Swiped right - go to previous book
+          handleNavigation("left");
+        } else {
+          // Swiped left - go to next book
+          handleNavigation("right");
+        }
+
+        // Reset position for the new book
+        controls.set({ x: offset.x > 0 ? -300 : 300, opacity: 0 });
+
+        // Animate the new book in
+        controls.start({
+          x: 0,
+          opacity: 1,
+          transition: { duration: 0.2 },
+        });
+
+        // Reset animation state
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 200);
+      }, 200);
+    } else {
+      // If swipe wasn't strong enough, just reset position
+      controls.start({
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.2 },
+      });
+    }
   };
 
   return (
@@ -295,9 +403,6 @@ const CastelnauLibrary = () => {
       <div className="absolute inset-0 overflow-hidden">
         {/* Main gradient background - matching page hero exactly */}
         <div className="absolute inset-0 bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green" />
-        
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/pattern.png')] opacity-5" />
       </div>
 
       {/* Content */}
@@ -322,7 +427,7 @@ const CastelnauLibrary = () => {
             </div>
 
             {/* Category Navigation */}
-            <motion.div 
+            <motion.div
               className="flex flex-wrap gap-2 md:gap-4 justify-center mb-0 px-4 md:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -334,8 +439,8 @@ const CastelnauLibrary = () => {
                   onClick={() => handleCategoryChange(category.name)}
                   className={`px-4 md:px-6 py-2 text-sm md:text-base rounded-full transition-all duration-300 ${
                     activeCategory === category.name
-                      ? 'bg-white text-castelnau-green shadow-lg scale-105'
-                      : 'bg-white/10 text-white hover:bg-white/20 hover:scale-105'
+                      ? "bg-white text-castelnau-green shadow-lg scale-105"
+                      : "bg-white/10 text-white hover:bg-white/20 hover:scale-105"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -347,88 +452,160 @@ const CastelnauLibrary = () => {
 
             {/* Book Carousel */}
             <div className="relative h-[600px] md:h-[800px] -mt-4">
-              <div className="relative h-full flex items-center">
-                {/* Left Navigation Arrow */}
-                <button
-                  onClick={() => handleNavigation('left')}
-                  className="absolute -left-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
-                </button>
+              <div className="relative h-full flex items-center justify-center">
+                {/* Left Navigation Arrow - Only visible on desktop */}
+                {!isMobile && (
+                  <button
+                    onClick={() => handleNavigation("left")}
+                    className="absolute left-4 md:left-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                    style={{ position: "absolute", zIndex: 50 }}
+                  >
+                    <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
+                  </button>
+                )}
 
                 {/* Books Container with Fixed Width */}
-                <div className="w-full md:w-[1500px] mx-auto relative px-4 md:px-0">
-                  <div className="flex items-center justify-center">
-                    {filteredBooks.map((book, index) => {
-                      const isCurrent = index === currentBookIndex;
-                      const isNext = index === (currentBookIndex + 1) % filteredBooks.length;
-                      const isPrev = index === (currentBookIndex - 1 + filteredBooks.length) % filteredBooks.length;
-                      const isNextNext = index === (currentBookIndex + 2) % filteredBooks.length;
-                      const isPrevPrev = index === (currentBookIndex - 2 + filteredBooks.length) % filteredBooks.length;
-                      
-                      if (!isCurrent && !isNext && !isPrev && !isNextNext && !isPrevPrev) return null;
+                <div className="w-full max-w-full md:w-[1200px] mx-auto relative px-4 md:px-0">
+                  <div className="flex items-center justify-center w-full">
+                    {isMobile
+                      ? // Mobile view - only show current book with swipe support
+                        filteredBooks.length > 0 && (
+                          <motion.div
+                            key={filteredBooks[currentBookIndex].id}
+                            ref={bookRef}
+                            className="absolute cursor-pointer"
+                            drag={isMobile && !isAnimating ? "x" : false}
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.1}
+                            onDragEnd={handleDragEnd}
+                            animate={controls}
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "25%",
+                              transform: "translate(-50%, -50%)",
+                              width: "240px",
+                              height: "auto",
+                              margin: "0 auto",
+                            }}
+                            initial={{
+                              x: 0,
+                              opacity: 1,
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 30,
+                              mass: 1,
+                            }}
+                            onClick={() =>
+                              setSelectedBook(filteredBooks[currentBookIndex])
+                            }
+                            whileHover={{
+                              scale: 1.1,
+                              y: -10,
+                            }}
+                          >
+                            <div className="w-full aspect-[3/4] shadow-2xl mx-auto">
+                              <BookCover
+                                title={filteredBooks[currentBookIndex].title}
+                                author={filteredBooks[currentBookIndex].author}
+                                category={
+                                  filteredBooks[currentBookIndex].category
+                                }
+                                coverImage={
+                                  filteredBooks[currentBookIndex].coverImage
+                                }
+                                className="w-full h-full"
+                              />
+                            </div>
+                          </motion.div>
+                        )
+                      : // Desktop view - show carousel with multiple books
+                        filteredBooks.map((book, index) => {
+                          const isCurrent = index === currentBookIndex;
+                          const isNext =
+                            index ===
+                            (currentBookIndex + 1) % filteredBooks.length;
+                          const isPrev =
+                            index ===
+                            (currentBookIndex - 1 + filteredBooks.length) %
+                              filteredBooks.length;
 
-                      const position = isCurrent ? 0 : isNext ? 1 : isPrev ? -1 : isNextNext ? 2 : -2;
-                      const x = position * 340;
-                      const opacity = isCurrent ? 1 : isNext || isPrev ? 0.7 : 0.5;
-                      const scale = isCurrent ? 1.4 : isNext || isPrev ? 0.9 : 0.8;
+                          if (!isCurrent && !isNext && !isPrev) return null;
 
-                      return (
-                        <motion.div
-                          key={book.id}
-                          className="absolute cursor-pointer"
-                          style={{
-                            x,
-                            opacity,
-                            scale,
-                            left: '50%',
-                            transform: `translateX(-50%) translateX(${x}px)`,
-                          }}
-                          animate={{
-                            x,
-                            opacity,
-                            scale,
-                            transform: `translateX(-50%) translateX(${x}px)`,
-                          }}
-                          initial={{
-                            x: position > 0 ? 2000 : -2000,
-                            opacity: 0,
-                            scale: 0.8,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 30,
-                            mass: 1,
-                          }}
-                          onClick={() => setSelectedBook(book)}
-                          whileHover={{
-                            scale: scale * 1.1,
-                            y: -10,
-                          }}
-                        >
-                          <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
-                            <BookCover
-                              title={book.title}
-                              author={book.author}
-                              category={book.category}
-                              coverImage={book.coverImage}
-                              className="w-full h-full"
-                            />
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+                          const position = isCurrent ? 0 : isNext ? 1 : -1;
+                          const x = position * 340;
+                          const opacity = isCurrent
+                            ? 1
+                            : isNext || isPrev
+                            ? 0.7
+                            : 0.5;
+                          const scale = isCurrent
+                            ? 1.4
+                            : isNext || isPrev
+                            ? 0.9
+                            : 0.8;
+
+                          return (
+                            <motion.div
+                              key={book.id}
+                              className="absolute cursor-pointer"
+                              style={{
+                                x,
+                                opacity,
+                                scale,
+                                left: "50%",
+                                transform: `translateX(-50%) translateX(${x}px)`,
+                              }}
+                              animate={{
+                                x,
+                                opacity,
+                                scale,
+                                transform: `translateX(-50%) translateX(${x}px)`,
+                              }}
+                              initial={{
+                                x: position > 0 ? 2000 : -2000,
+                                opacity: 0,
+                                scale: 0.8,
+                              }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 30,
+                                mass: 1,
+                              }}
+                              onClick={() => setSelectedBook(book)}
+                              whileHover={{
+                                scale: scale * 1.1,
+                                y: -10,
+                              }}
+                            >
+                              <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
+                                <BookCover
+                                  title={book.title}
+                                  author={book.author}
+                                  category={book.category}
+                                  coverImage={book.coverImage}
+                                  className="w-full h-full"
+                                />
+                              </div>
+                            </motion.div>
+                          );
+                        })}
                   </div>
                 </div>
 
-                {/* Right Navigation Arrow */}
-                <button
-                  onClick={() => handleNavigation('right')}
-                  className="absolute -right-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
-                </button>
+                {/* Right Navigation Arrow - Only visible on desktop */}
+                {!isMobile && (
+                  <button
+                    onClick={() => handleNavigation("right")}
+                    className="absolute right-4 md:right-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                    style={{ position: "absolute", zIndex: 50 }}
+                  >
+                    <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
+                  </button>
+                )}
               </div>
             </div>
 
@@ -439,8 +616,8 @@ const CastelnauLibrary = () => {
                   key={index}
                   className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
                     index === currentBookIndex
-                      ? 'bg-white scale-125 shadow-lg'
-                      : 'bg-white/30'
+                      ? "bg-white scale-125 shadow-lg"
+                      : "bg-white/30"
                   }`}
                 />
               ))}
@@ -452,11 +629,12 @@ const CastelnauLibrary = () => {
                 Business Case Studies
               </h2>
               <p className="text-xl text-white/80 mb-12 text-center max-w-2xl mx-auto">
-                Watch our colleagues share their experiences of founding and scaling successful businesses.
+                Watch our colleagues share their experiences of founding and
+                scaling successful businesses.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Video Card 1 */}
-                <motion.div 
+                <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
                 >
@@ -492,7 +670,7 @@ const CastelnauLibrary = () => {
                 </motion.div>
 
                 {/* Video Card 2 */}
-                <motion.div 
+                <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
                 >
@@ -528,7 +706,7 @@ const CastelnauLibrary = () => {
                 </motion.div>
 
                 {/* Video Card 3 */}
-                <motion.div 
+                <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
                 >
@@ -537,7 +715,7 @@ const CastelnauLibrary = () => {
                       <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
                         <h3 className="text-xl font-serif font-bold text-white mb-2">
                           Financial Services Innovation
-                      </h3>
+                        </h3>
                         <p className="text-white/80 text-sm">
                           Building a modern fintech company
                         </p>
@@ -554,7 +732,8 @@ const CastelnauLibrary = () => {
                       Michael Chen
                     </h4>
                     <p className="text-white/80 text-sm mb-4">
-                      Former founder of FinTech Solutions, acquired by Castelnau in 2022
+                      Former founder of FinTech Solutions, acquired by Castelnau
+                      in 2022
                     </p>
                     <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
                       <Play className="w-4 h-4" />
@@ -575,7 +754,8 @@ const CastelnauLibrary = () => {
                   Subscribe to Our Newsletter
                 </h3>
                 <p className="text-white/80 mb-6 text-center">
-                  Receive regular updates on our latest research, insights, and market analysis directly in your inbox.
+                  Receive regular updates on our latest research, insights, and
+                  market analysis directly in your inbox.
                 </p>
                 <form className="flex gap-4">
                   <input
@@ -605,13 +785,13 @@ const CastelnauLibrary = () => {
             </DialogTitle>
           </DialogHeader>
           {selectedBook && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
-              <motion.div 
+              <motion.div
                 className="aspect-[3/4] relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
@@ -625,9 +805,15 @@ const CastelnauLibrary = () => {
                 />
               </motion.div>
               <div>
-                <p className="text-xl text-gray-600 mb-4">{selectedBook.author}</p>
-                <p className="text-sm text-gray-500 mb-4">{selectedBook.category} • {selectedBook.publishDate}</p>
-                <p className="text-gray-700 leading-relaxed">{selectedBook.description}</p>
+                <p className="text-xl text-gray-600 mb-4">
+                  {selectedBook.author}
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  {selectedBook.category} • {selectedBook.publishDate}
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  {selectedBook.description}
+                </p>
               </div>
             </motion.div>
           )}
@@ -637,4 +823,4 @@ const CastelnauLibrary = () => {
   );
 };
 
-export default CastelnauLibrary; 
+export default CastelnauLibrary;
