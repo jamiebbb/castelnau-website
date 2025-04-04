@@ -17,7 +17,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "0.2%",
       description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
       website: "https://www.stanleygibbons.com",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_stanley_gibbons.png`
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/stanley-gibbons.svg`
     },
     {
       name: "Hornby",
@@ -33,7 +33,7 @@ const ExploreTheGroup = () => {
       portfolioPercentage: "83.2%",
       description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
       website: "https://www.dignityfunerals.co.uk",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_dignity.png`
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/dignity.svg`
     },
     {
       name: "Iona Star",
