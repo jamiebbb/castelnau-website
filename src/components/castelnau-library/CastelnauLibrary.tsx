@@ -1,11 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { BookOpen, ArrowLeft, ArrowRight, Play, Headphones } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import BookCover from './BookCover';
-import PodcastCover from './PodcastCover';
+import { useState, useEffect, useRef } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { BookOpen, ArrowLeft, ArrowRight, Play } from "lucide-react";
+import { motion, useAnimation, PanInfo } from "framer-motion";
+import BookCover from "./BookCover";
+import PodcastCover from "./PodcastCover";
 
 interface Book {
   id: string;
@@ -18,38 +23,45 @@ interface Book {
   shortDescription: string;
 }
 
-interface Podcast {
-  id: string;
-  title: string;
-  host: string;
-  description: string;
-  coverImage: string;
-  category: string;
-  publishDate: string;
-  duration: string;
-  url: string;
-}
-
 interface BookCategory {
   name: string;
   books: Book[];
 }
 
-interface PodcastCategory {
-  name: string;
-  podcasts: Podcast[];
-}
-
 const CastelnauLibrary = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const [selectedPodcast, setSelectedPodcast] = useState<Podcast | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('Castelnau Favourites');
+  const [activeCategory, setActiveCategory] = useState<string>(
+    "Castelnau Favourites"
+  );
   const [currentBookIndex, setCurrentBookIndex] = useState<number>(0);
-  const [currentPodcastIndex, setCurrentPodcastIndex] = useState<number>(0);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [dragStartX, setDragStartX] = useState<number>(0);
-  const [dragOffset, setDragOffset] = useState<number>(0);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const controls = useAnimation();
+  const bookRef = useRef<HTMLDivElement>(null);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const isMobileDevice = window.innerWidth < 768;
+      setIsMobile(isMobileDevice);
+      console.log(
+        "Window width:",
+        window.innerWidth,
+        "Is mobile:",
+        isMobileDevice
+      );
+    };
+
+    // Initial check - run immediately
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   // Define all categories
   const allCategories: BookCategory[] = [
@@ -328,156 +340,62 @@ const CastelnauLibrary = () => {
   const handleCategoryChange = (categoryName: string) => {
     setActiveCategory(categoryName);
     setCurrentBookIndex(0);
+    setIsAnimating(false);
   };
 
-  // Define podcast categories
-  const podcastCategories: PodcastCategory[] = [
-    {
-      name: 'Investment Insights',
-      podcasts: [
-        {
-          id: 'p1',
-          title: 'The Future of Value Investing',
-          host: 'John Smith',
-          description: 'An in-depth discussion on the evolution of value investing strategies in today\'s market environment.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/value-investing.jpg`,
-          category: 'Investment Strategy',
-          publishDate: '2023-05-15',
-          duration: '45 min',
-          url: 'https://example.com/podcast1'
-        },
-        {
-          id: 'p2',
-          title: 'Private Equity Deep Dive',
-          host: 'Sarah Johnson',
-          description: 'Exploring the latest trends and opportunities in the private equity landscape.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/private-equity.jpg`,
-          category: 'Private Equity',
-          publishDate: '2023-06-22',
-          duration: '38 min',
-          url: 'https://example.com/podcast2'
-        },
-        {
-          id: 'p3',
-          title: 'Market Outlook 2023',
-          host: 'Michael Brown',
-          description: 'A comprehensive analysis of market trends and investment opportunities for the coming year.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/market-outlook.jpg`,
-          category: 'Market Analysis',
-          publishDate: '2023-01-10',
-          duration: '52 min',
-          url: 'https://example.com/podcast3'
+  // Handle swipe gesture for mobile
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    if (!isMobile || isAnimating) return;
+
+    const swipeThreshold = 50; // Minimum distance to trigger a swipe
+    const { offset } = info;
+
+    if (Math.abs(offset.x) > swipeThreshold) {
+      setIsAnimating(true);
+
+      // First, animate the current book out
+      controls.start({
+        x: offset.x > 0 ? 300 : -300,
+        opacity: 0,
+        transition: { duration: 0.2 },
+      });
+
+      // After a short delay, change the book and reset position
+      setTimeout(() => {
+        if (offset.x > 0) {
+          // Swiped right - go to previous book
+          handleNavigation("left");
+        } else {
+          // Swiped left - go to next book
+          handleNavigation("right");
         }
-      ]
-    },
-    {
-      name: 'Business Strategy',
-      podcasts: [
-        {
-          id: 'p4',
-          title: 'Scaling Successful Businesses',
-          host: 'Emma Wilson',
-          description: 'Lessons learned from scaling successful businesses in various industries.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/scaling-businesses.jpg`,
-          category: 'Business Growth',
-          publishDate: '2023-04-05',
-          duration: '42 min',
-          url: 'https://example.com/podcast4'
-        },
-        {
-          id: 'p5',
-          title: 'Innovation in Established Companies',
-          host: 'David Lee',
-          description: 'How established companies can foster innovation and stay competitive in rapidly changing markets.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/innovation.jpg`,
-          category: 'Innovation',
-          publishDate: '2023-07-18',
-          duration: '39 min',
-          url: 'https://example.com/podcast5'
-        }
-      ]
-    },
-    {
-      name: 'Leadership & Culture',
-      podcasts: [
-        {
-          id: 'p6',
-          title: 'Building High-Performance Teams',
-          host: 'Lisa Chen',
-          description: 'Strategies for building and maintaining high-performance teams in today\'s competitive environment.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/high-performance-teams.jpg`,
-          category: 'Team Building',
-          publishDate: '2023-03-12',
-          duration: '47 min',
-          url: 'https://example.com/podcast6'
-        },
-        {
-          id: 'p7',
-          title: 'Servant Leadership in Practice',
-          host: 'Robert Green',
-          description: 'Practical applications of servant leadership principles in modern organizations.',
-          coverImage: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/podcasts/servant-leadership.jpg`,
-          category: 'Leadership',
-          publishDate: '2023-02-28',
-          duration: '44 min',
-          url: 'https://example.com/podcast7'
-        }
-      ]
-    }
-  ];
 
-  // Create the final podcast categories array with the "All" category
-  const allPodcastCategories: PodcastCategory[] = [
-    {
-      name: 'All',
-      podcasts: podcastCategories.flatMap(cat => cat.podcasts)
-    },
-    ...podcastCategories
-  ];
+        // Reset position for the new book
+        controls.set({ x: offset.x > 0 ? -300 : 300, opacity: 0 });
 
-  const [activePodcastCategory, setActivePodcastCategory] = useState<string>('All');
-  const currentPodcastCategory = allPodcastCategories.find(cat => cat.name === activePodcastCategory);
+        // Animate the new book in
+        controls.start({
+          x: 0,
+          opacity: 1,
+          transition: { duration: 0.2 },
+        });
 
-  // Filter podcasts based on search query
-  const filteredPodcasts = currentPodcastCategory?.podcasts.filter(podcast => 
-    podcast.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    podcast.host.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    podcast.category.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
-
-  // Get current podcast
-  const currentPodcast = filteredPodcasts[currentPodcastIndex];
-
-  // Calculate visible podcasts (show 5 at a time)
-  const visiblePodcasts = currentPodcastCategory?.podcasts.slice(
-    Math.max(0, currentPodcastIndex - 2), // Show 2 podcasts before current
-    Math.min((currentPodcastCategory?.podcasts.length || 0), currentPodcastIndex + 3) // Show 2 podcasts after current
-  ) || [];
-
-  // Handle podcast category change
-  const handlePodcastCategoryChange = (categoryName: string) => {
-    setActivePodcastCategory(categoryName);
-    setCurrentPodcastIndex(0);
-  };
-
-  // Handle podcast navigation
-  const handlePodcastNavigation = (direction: 'left' | 'right') => {
-    if (!currentPodcastCategory) return;
-    
-    const totalPodcasts = currentPodcastCategory.podcasts.length;
-    if (direction === 'left') {
-      setCurrentPodcastIndex(prev => (prev - 1 + totalPodcasts) % totalPodcasts);
+        // Reset animation state
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 200);
+      }, 200);
     } else {
-      setCurrentPodcastIndex(prev => (prev + 1) % totalPodcasts);
+      // If swipe wasn't strong enough, just reset position
+      controls.start({
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.2 },
+      });
     }
-  };
-
-  // Helper function to calculate book position
-  const getBookPosition = (position: number) => {
-    const x = position * 340;
-    const opacity = position === 0 ? 1 : Math.abs(position) === 1 ? 0.7 : 0.5;
-    const scale = position === 0 ? 1.4 : Math.abs(position) === 1 ? 0.9 : 0.8;
-    return { x, opacity, scale };
   };
 
   return (
@@ -486,9 +404,6 @@ const CastelnauLibrary = () => {
       <div className="absolute inset-0 overflow-hidden">
         {/* Main gradient background - matching page hero exactly */}
         <div className="absolute inset-0 bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green" />
-        
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/pattern.png')] opacity-5" />
       </div>
 
       {/* Content */}
@@ -509,80 +424,80 @@ const CastelnauLibrary = () => {
         </motion.div>
 
         {/* Books Section */}
-        <div className="mb-24">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Recommended Books
-          </motion.h2>
+        <motion.h2 
+          className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Recommended Books
+        </motion.h2>
 
-          {/* Category Filter */}
-          <motion.div 
-            className="flex flex-wrap gap-2 md:gap-4 justify-center mb-0 px-4 md:px-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category.name}
-                onClick={() => handleCategoryChange(category.name)}
-                className={`px-4 md:px-6 py-2 text-sm md:text-base rounded-full transition-all duration-300 ${
-                  activeCategory === category.name
-                    ? 'bg-white text-castelnau-green shadow-lg scale-105'
-                    : 'bg-white/10 text-white hover:bg-white/20 hover:scale-105'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+        {/* Category Filter */}
+        <motion.div 
+          className="flex flex-wrap gap-2 md:gap-4 justify-center mb-0 px-4 md:px-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {categories.map((category) => (
+            <motion.button
+              key={category.name}
+              onClick={() => handleCategoryChange(category.name)}
+              className={`px-4 md:px-6 py-2 text-sm md:text-base rounded-full transition-all duration-300 ${
+                activeCategory === category.name
+                  ? "bg-white text-castelnau-green shadow-lg scale-105"
+                  : "bg-white/10 text-white hover:bg-white/20 hover:scale-105"
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {category.name}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Book Carousel */}
+        <div className="relative h-[600px] md:h-[800px] -mt-4">
+          <div className="relative h-full flex items-center justify-center">
+            {/* Left Navigation Arrow - Only visible on desktop */}
+            {!isMobile && (
+              <button
+                onClick={() => handleNavigation("left")}
+                className="absolute left-4 md:left-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                style={{ position: "absolute", zIndex: 50 }}
               >
-                {category.name}
-              </motion.button>
-            ))}
-          </motion.div>
+                <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
+              </button>
+            )}
 
-          {/* Book Carousel */}
-          <div className="relative h-[500px] mb-12">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
-                {/* Left Navigation Arrow */}
-                <button
-                  onClick={() => handleNavigation('left')}
-                  className="absolute -left-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
-                </button>
-
-                {/* Book Covers */}
-                <div className="relative h-full flex items-center justify-center">
-                  {filteredBooks.map((book, index) => {
-                    const isCurrent = index === currentBookIndex;
-                    const position = index - currentBookIndex;
-                    const { x, opacity, scale } = getBookPosition(position);
-
-                    return (
+            {/* Books Container with Fixed Width */}
+            <div className="w-full max-w-full md:w-[1200px] mx-auto relative px-4 md:px-0">
+              <div className="flex items-center justify-center w-full">
+                {isMobile
+                  ? // Mobile view - only show current book with swipe support
+                    filteredBooks.length > 0 && (
                       <motion.div
-                        key={book.id}
+                        key={filteredBooks[currentBookIndex].id}
+                        ref={bookRef}
                         className="absolute cursor-pointer"
+                        drag={isMobile && !isAnimating ? "x" : false}
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.1}
+                        onDragEnd={handleDragEnd}
+                        animate={controls}
                         style={{
-                          x,
-                          opacity,
-                          scale,
-                          left: '50%',
-                          transform: `translateX(-50%) translateX(${x}px)`,
-                        }}
-                        animate={{
-                          x,
-                          opacity,
-                          scale,
-                          transform: `translateX(-50%) translateX(${x}px)`,
+                          position: "absolute",
+                          top: "50%",
+                          left: "25%",
+                          transform: "translate(-50%, -50%)",
+                          width: "240px",
+                          height: "auto",
+                          margin: "0 auto",
                         }}
                         initial={{
-                          x: position > 0 ? 2000 : -2000,
-                          opacity: 0,
-                          scale: 0.8,
+                          x: 0,
+                          opacity: 1,
                         }}
                         transition={{
                           type: "spring",
@@ -590,206 +505,320 @@ const CastelnauLibrary = () => {
                           damping: 30,
                           mass: 1,
                         }}
-                        onClick={() => setSelectedBook(book)}
+                        onClick={() =>
+                          setSelectedBook(filteredBooks[currentBookIndex])
+                        }
                         whileHover={{
-                          scale: scale * 1.1,
+                          scale: 1.1,
                           y: -10,
                         }}
                       >
-                        <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
+                        <div className="w-full aspect-[3/4] shadow-2xl mx-auto">
                           <BookCover
-                            title={book.title}
-                            author={book.author}
-                            category={book.category}
-                            coverImage={book.coverImage}
+                            title={filteredBooks[currentBookIndex].title}
+                            author={filteredBooks[currentBookIndex].author}
+                            category={
+                              filteredBooks[currentBookIndex].category
+                            }
+                            coverImage={
+                              filteredBooks[currentBookIndex].coverImage
+                            }
                             className="w-full h-full"
                           />
                         </div>
                       </motion.div>
-                    );
-                  })}
-                </div>
+                    )
+                  : // Desktop view - show carousel with multiple books
+                    filteredBooks.map((book, index) => {
+                      const isCurrent = index === currentBookIndex;
+                      const isNext =
+                        index ===
+                        (currentBookIndex + 1) % filteredBooks.length;
+                      const isPrev =
+                        index ===
+                        (currentBookIndex - 1 + filteredBooks.length) %
+                          filteredBooks.length;
 
-                {/* Right Navigation Arrow */}
-                <button
-                  onClick={() => handleNavigation('right')}
-                  className="absolute -right-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
-                </button>
+                      if (!isCurrent && !isNext && !isPrev) return null;
+
+                      const position = isCurrent ? 0 : isNext ? 1 : -1;
+                      const x = position * 340;
+                      const opacity = isCurrent
+                        ? 1
+                        : isNext || isPrev
+                        ? 0.7
+                        : 0.5;
+                      const scale = isCurrent
+                        ? 1.4
+                        : isNext || isPrev
+                        ? 0.9
+                        : 0.8;
+
+                      return (
+                        <motion.div
+                          key={book.id}
+                          className="absolute cursor-pointer"
+                          style={{
+                            x,
+                            opacity,
+                            scale,
+                            left: "50%",
+                            transform: `translateX(-50%) translateX(${x}px)`,
+                          }}
+                          animate={{
+                            x,
+                            opacity,
+                            scale,
+                            transform: `translateX(-50%) translateX(${x}px)`,
+                          }}
+                          initial={{
+                            x: position > 0 ? 2000 : -2000,
+                            opacity: 0,
+                            scale: 0.8,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                            mass: 1,
+                          }}
+                          onClick={() => setSelectedBook(book)}
+                          whileHover={{
+                            scale: scale * 1.1,
+                            y: -10,
+                          }}
+                        >
+                          <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
+                            <BookCover
+                              title={book.title}
+                              author={book.author}
+                              category={book.category}
+                              coverImage={book.coverImage}
+                              className="w-full h-full"
+                            />
+                          </div>
+                        </motion.div>
+                      );
+                    })}
               </div>
             </div>
-          </div>
 
-          {/* Book Progress */}
-          <div className="flex justify-center items-center gap-2 mt-4 md:mt-8 px-4 md:px-0">
-            {filteredBooks.map((_, index) => (
-              <div
-                key={index}
-                className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
-                  index === currentBookIndex
-                    ? 'bg-white scale-125 shadow-lg'
-                    : 'bg-white/30'
-                }`}
-              />
-            ))}
+            {/* Right Navigation Arrow - Only visible on desktop */}
+            {!isMobile && (
+              <button
+                onClick={() => handleNavigation("right")}
+                className="absolute right-4 md:right-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                style={{ position: "absolute", zIndex: 50 }}
+              >
+                <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Podcasts Section */}
-        <div className="mb-24">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Castelnau Podcasts
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-white/80 mb-12 text-center max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Listen to our team share insights on investment strategies, business leadership, and market trends.
-          </motion.p>
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          {filteredBooks.map((_, index) => (
+            <button
+              key={index}
+              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
+                index === currentBookIndex
+                  ? "bg-white scale-125 shadow-lg"
+                  : "bg-white/30"
+              }`}
+            />
+          ))}
+        </div>
 
-          {/* Podcast Category Filter */}
-          <motion.div 
-            className="flex flex-wrap gap-2 md:gap-4 justify-center mb-12 px-4 md:px-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+        {/* Podcast Section */}
+        <motion.h2 
+          className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 text-center mt-24"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Castelnau Podcasts
+        </motion.h2>
+        <p className="text-xl text-white/80 mb-12 text-center max-w-2xl mx-auto">
+          Listen to our team discuss investment strategies, market insights, and business philosophy.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Podcast Card 1 */}
+          <motion.div
+            className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
+            whileHover={{ y: -5 }}
           >
-            {allPodcastCategories.map((category) => (
-              <motion.button
-                key={category.name}
-                onClick={() => handlePodcastCategoryChange(category.name)}
-                className={`px-4 md:px-6 py-2 text-sm md:text-base rounded-full transition-all duration-300 ${
-                  activePodcastCategory === category.name
-                    ? 'bg-white text-castelnau-green shadow-lg scale-105'
-                    : 'bg-white/10 text-white hover:bg-white/20 hover:scale-105'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {category.name}
-              </motion.button>
-            ))}
+            <div className="group relative">
+              <div className="aspect-video relative">
+                <PodcastCover
+                  title="Investment Philosophy"
+                  host="James Henderson"
+                  category="Investment Strategy"
+                  coverImage={`${
+                    process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                  }/podcasts/investment-philosophy.jpg`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
+                    <h3 className="text-xl font-serif font-bold text-white mb-2">
+                      Investment Philosophy
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      Understanding our approach to value investing
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h4 className="text-lg font-serif font-bold text-white mb-2">
+                  James Henderson
+                </h4>
+                <p className="text-white/80 text-sm mb-4">
+                  Portfolio Manager at Castelnau
+                </p>
+                <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
+                  <Play className="w-4 h-4" />
+                  Listen Now
+                </button>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Podcast Carousel */}
-          <div className="relative h-[500px] mb-12">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
-                {/* Left Navigation Arrow */}
-                <button
-                  onClick={() => handlePodcastNavigation('left')}
-                  className="absolute -left-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
-                </button>
-
-                {/* Podcast Covers */}
-                <div className="relative h-full flex items-center justify-center">
-                  {filteredPodcasts.map((podcast, index) => {
-                    const isCurrent = index === currentPodcastIndex;
-                    const position = index - currentPodcastIndex;
-                    const { x, opacity, scale } = getBookPosition(position);
-
-                    return (
-                      <motion.div
-                        key={podcast.id}
-                        className="absolute cursor-pointer"
-                        style={{
-                          x,
-                          opacity,
-                          scale,
-                          left: '50%',
-                          transform: `translateX(-50%) translateX(${x}px)`,
-                        }}
-                        animate={{
-                          x,
-                          opacity,
-                          scale,
-                          transform: `translateX(-50%) translateX(${x}px)`,
-                        }}
-                        initial={{
-                          x: position > 0 ? 2000 : -2000,
-                          opacity: 0,
-                          scale: 0.8,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                          mass: 1,
-                        }}
-                        onClick={() => setSelectedPodcast(podcast)}
-                        whileHover={{
-                          scale: scale * 1.1,
-                          y: -10,
-                        }}
-                      >
-                        <div className="w-[280px] md:w-[320px] aspect-[3/4] shadow-2xl">
-                          <PodcastCover
-                            title={podcast.title}
-                            host={podcast.host}
-                            category={podcast.category}
-                            coverImage={podcast.coverImage}
-                            duration={podcast.duration}
-                            className="w-full h-full"
-                          />
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+          {/* Podcast Card 2 */}
+          <motion.div
+            className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="group relative">
+              <div className="aspect-video relative">
+                <PodcastCover
+                  title="Market Analysis"
+                  host="Sarah Chen"
+                  category="Market Analysis"
+                  coverImage={`${
+                    process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                  }/podcasts/market-analysis.jpg`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
+                    <h3 className="text-xl font-serif font-bold text-white mb-2">
+                      Market Analysis
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      Current market trends and opportunities
+                    </p>
+                  </div>
                 </div>
-
-                {/* Right Navigation Arrow */}
-                <button
-                  onClick={() => handlePodcastNavigation('right')}
-                  className="absolute -right-64 z-20 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                >
-                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
+              </div>
+              <div className="p-6">
+                <h4 className="text-lg font-serif font-bold text-white mb-2">
+                  Sarah Chen
+                </h4>
+                <p className="text-white/80 text-sm mb-4">
+                  Investment Analyst at Castelnau
+                </p>
+                <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
+                  <Play className="w-4 h-4" />
+                  Listen Now
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Podcast Progress */}
-          <div className="flex justify-center items-center gap-2 mt-4 md:mt-8 px-4 md:px-0">
-            {filteredPodcasts.map((_, index) => (
-              <div
-                key={index}
-                className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
-                  index === currentPodcastIndex
-                    ? 'bg-white scale-125 shadow-lg'
-                    : 'bg-white/30'
-                }`}
-              />
-            ))}
-          </div>
+          {/* Podcast Card 3 */}
+          <motion.div
+            className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="group relative">
+              <div className="aspect-video relative">
+                <PodcastCover
+                  title="Business Philosophy"
+                  host="Michael Chen"
+                  category="Business Strategy"
+                  coverImage={`${
+                    process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                  }/podcasts/business-philosophy.jpg`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
+                    <h3 className="text-xl font-serif font-bold text-white mb-2">
+                      Business Philosophy
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      Our approach to business transformation
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h4 className="text-lg font-serif font-bold text-white mb-2">
+                  Michael Chen
+                </h4>
+                <p className="text-white/80 text-sm mb-4">
+                  Business Development Director at Castelnau
+                </p>
+                <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
+                  <Play className="w-4 h-4" />
+                  Listen Now
+                </button>
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Newsletter Section */}
+        <motion.div
+          className="mt-24 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">
+            Subscribe to Our Newsletter
+          </h3>
+          <p className="text-white/80 mb-6 text-center">
+            Receive regular updates on our latest research, insights, and
+            market analysis directly in your inbox.
+          </p>
+          <form className="flex gap-4">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 max-w-md px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40"
+            />
+            <button
+              type="submit"
+              className="px-6 py-2 bg-white text-castelnau-green rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              Subscribe
+            </button>
+          </form>
+        </motion.div>
       </div>
 
-      {/* Book Dialog */}
+      {/* Book Details Dialog */}
       <Dialog open={!!selectedBook} onOpenChange={() => setSelectedBook(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-serif font-bold text-castelnau-green">
+            <DialogTitle className="text-2xl font-serif font-bold">
               {selectedBook?.title}
             </DialogTitle>
           </DialogHeader>
           {selectedBook && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
-              <motion.div 
+              <motion.div
                 className="aspect-[3/4] relative"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
@@ -803,60 +832,15 @@ const CastelnauLibrary = () => {
                 />
               </motion.div>
               <div>
-                <p className="text-xl text-gray-600 mb-4">{selectedBook.author}</p>
-                <p className="text-sm text-gray-500 mb-4">{selectedBook.category} • {selectedBook.publishDate}</p>
-                <p className="text-gray-700 leading-relaxed">{selectedBook.description}</p>
-              </div>
-            </motion.div>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Podcast Dialog */}
-      <Dialog open={!!selectedPodcast} onOpenChange={() => setSelectedPodcast(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-serif font-bold text-castelnau-green">
-              {selectedPodcast?.title}
-            </DialogTitle>
-          </DialogHeader>
-          {selectedPodcast && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              <motion.div 
-                className="aspect-[3/4] relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-              >
-                <PodcastCover
-                  title={selectedPodcast.title}
-                  host={selectedPodcast.host}
-                  category={selectedPodcast.category}
-                  coverImage={selectedPodcast.coverImage}
-                  duration={selectedPodcast.duration}
-                  className="w-full h-full"
-                />
-              </motion.div>
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Headphones className="w-5 h-5 text-castelnau-green" />
-                  <p className="text-xl text-gray-600">{selectedPodcast.host}</p>
-                </div>
-                <p className="text-sm text-gray-500 mb-4">{selectedPodcast.category} • {selectedPodcast.publishDate} • {selectedPodcast.duration}</p>
-                <p className="text-gray-700 leading-relaxed mb-6">{selectedPodcast.description}</p>
-                <a 
-                  href={selectedPodcast.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-castelnau-green text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
-                >
-                  <Play className="w-4 h-4" />
-                  Listen to Podcast
-                </a>
+                <p className="text-xl text-gray-600 mb-4">
+                  {selectedBook.author}
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  {selectedBook.category} • {selectedBook.publishDate}
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  {selectedBook.description}
+                </p>
               </div>
             </motion.div>
           )}

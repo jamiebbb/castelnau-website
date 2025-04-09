@@ -11,12 +11,8 @@ export default function StockPriceDisplay() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getStockData();
-      setPrice('£0.' + data.currentPrice.toFixed(0));
-      
-      // Format market cap as £292.55M
-      const marketCapInMillions = data.marketCap;
-      setMarketCap(marketCapInMillions.toFixed(2) + 'M');
-      
+      setPrice('£' + data.currentPrice.toFixed(2) + 'p');
+      setMarketCap((data.marketCap / 1000000).toFixed(2) + 'M'); // Convert to millions with 2 decimal places
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();
