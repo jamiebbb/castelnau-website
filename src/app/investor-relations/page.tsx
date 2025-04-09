@@ -3,7 +3,6 @@
 import React from 'react';
 import PageHero from '@/components/common/PageHero';
 import StockPriceDisplay from '@/components/StockPriceDisplay';
-import FinancialMetrics from '@/components/investor/FinancialMetrics';
 import DocumentList from '@/components/investor/DocumentList';
 import { SharePriceGraph } from '@/components/investor/SharePriceGraph';
 import { RegulatoryDocuments } from '@/components/investor/RegulatoryDocuments';
@@ -29,7 +28,6 @@ export default function InvestorRelationsPage() {
             <SharePriceGraph />
           </div>
           <div className="space-y-8">
-            <FinancialMetrics />
             <DocumentList />
           </div>
         </div>

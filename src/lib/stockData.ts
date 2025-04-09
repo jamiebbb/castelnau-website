@@ -32,7 +32,7 @@ export async function getStockData(): Promise<StockData> {
 
     // If no valid cache, fetch from API
     const response = await fetch(
-      `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=CGL.L&apikey=W0W2UQ53HXPJO5CL`
+      `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=CGL.L&apikey=W0W2UQ53HXPJO5CL`
     );
     
     if (!response.ok) {
@@ -54,8 +54,8 @@ export async function getStockData(): Promise<StockData> {
       throw new Error('API rate limit reached');
     }
 
-    const timeSeriesData = data['Time Series (Daily)'];
-    const dates = Object.keys(timeSeriesData).slice(0, 30); // Last 30 days
+    const timeSeriesData = data['Weekly Time Series'];
+    const dates = Object.keys(timeSeriesData).slice(0, 52); // Last 52 weeks (1 year)
     const prices = dates.map(date => 
       parseFloat(timeSeriesData[date]['4. close'])
     );

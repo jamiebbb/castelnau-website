@@ -13,8 +13,8 @@ export default function StockPriceDisplay() {
       const data = await getStockData();
       setPrice('£0.' + data.currentPrice.toFixed(0));
       
-      // Convert market cap to millions and format as £292.55M
-      const marketCapInMillions = data.marketCap / 1000000;
+      // Format market cap as £292.55M
+      const marketCapInMillions = data.marketCap;
       setMarketCap(marketCapInMillions.toFixed(2) + 'M');
       
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());

@@ -47,7 +47,7 @@ const options = {
       padding: 10,
       callbacks: {
         label: function(context: any) {
-          return `Share Price: ${context.parsed.y.toFixed(1)}p`;
+          return `Share Price: ${context.parsed.y.toFixed(2)}p`;
         }
       }
     },
@@ -65,7 +65,7 @@ const options = {
           size: 12,
         },
         callback: function(value: any) {
-          return value.toFixed(1) + 'p';
+          return value.toFixed(2) + 'p';
         }
       },
     },
@@ -78,6 +78,8 @@ const options = {
         font: {
           size: 12,
         },
+        maxRotation: 45,
+        minRotation: 45,
       },
     },
   },
@@ -99,7 +101,7 @@ export const SharePriceGraph = () => {
         
         const reversedLabels = [...stockData.historicalData.labels].reverse();
         const reversedPrices = [...stockData.historicalData.prices].reverse();
-        
+
         setData({
           labels: reversedLabels,
           datasets: [
@@ -108,52 +110,43 @@ export const SharePriceGraph = () => {
               data: reversedPrices,
               borderColor: '#00FF00',
               backgroundColor: 'rgba(0, 255, 0, 0.1)',
-              borderWidth: 2,
-              pointRadius: 0,
-              pointHoverRadius: 4,
               fill: true,
               tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 4,
             },
           ],
         });
+        setLoading(false);
       } catch (err) {
         setError('Failed to load share price data');
-        console.error(err);
-      } finally {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   if (loading) {
     return (
-      <div className="bg-gray-900 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-white mb-6">Share Price History</h2>
-        <div className="h-[400px] flex items-center justify-center">
-          <div className="text-white">Loading...</div>
-        </div>
+      <div className="bg-gray-900 rounded-lg p-6 h-[400px] flex items-center justify-center">
+        <div className="text-white">Loading share price data...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-gray-900 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-white mb-6">Share Price History</h2>
-        <div className="h-[400px] flex items-center justify-center">
-          <div className="text-red-500">{error}</div>
-        </div>
+      <div className="bg-gray-900 rounded-lg p-6 h-[400px] flex items-center justify-center">
+        <div className="text-red-500">{error}</div>
       </div>
     );
   }
 
   return (
     <div className="bg-gray-900 rounded-lg p-6">
-      <h2 className="text-xl font-semibold text-white mb-6">Share Price History</h2>
+      <h2 className="text-xl font-semibold text-white mb-4">Share Price History</h2>
       <div className="h-[400px]">
-        <Line options={options} data={data} />
+        {data && <Line options={options} data={data} />}
       </div>
     </div>
   );
