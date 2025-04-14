@@ -623,17 +623,16 @@ const CastelnauLibrary = () => {
               ))}
             </div>
 
-            {/* Business Case Studies Section */}
+            {/* Podcast Recommendations Section */}
             <div className="mt-32">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4 text-center">
-                Business Case Studies
+                Podcast Recommendations
               </h2>
               <p className="text-xl text-white/80 mb-12 text-center max-w-2xl mx-auto">
-                Watch our colleagues share their experiences of founding and
-                scaling successful businesses.
+                Listen to our team's favorite podcasts on investment philosophy, market analysis, and business strategy.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Video Card 1 */}
+                {/* Podcast Card 1 */}
                 <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
@@ -642,10 +641,10 @@ const CastelnauLibrary = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
                       <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
                         <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Building a Tech Startup
+                          Investment Philosophy
                         </h3>
                         <p className="text-white/80 text-sm">
-                          From concept to successful exit
+                          Deep dives into value investing principles
                         </p>
                       </div>
                     </div>
@@ -657,19 +656,19 @@ const CastelnauLibrary = () => {
                   </div>
                   <div className="p-6">
                     <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      John Smith
+                      The Compound
                     </h4>
                     <p className="text-white/80 text-sm mb-4">
-                      Former founder of TechStart, acquired by Castelnau in 2020
+                      Hosted by Michael Batnick and Josh Brown
                     </p>
                     <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
                       <Play className="w-4 h-4" />
-                      Watch Case Study
+                      Listen to Podcast
                     </button>
                   </div>
                 </motion.div>
 
-                {/* Video Card 2 */}
+                {/* Podcast Card 2 */}
                 <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
@@ -678,10 +677,10 @@ const CastelnauLibrary = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
                       <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
                         <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Scaling a Retail Business
+                          Market Analysis
                         </h3>
                         <p className="text-white/80 text-sm">
-                          Lessons from rapid growth
+                          Weekly market insights and trends
                         </p>
                       </div>
                     </div>
@@ -693,19 +692,19 @@ const CastelnauLibrary = () => {
                   </div>
                   <div className="p-6">
                     <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      Sarah Johnson
+                      Masters in Business
                     </h4>
                     <p className="text-white/80 text-sm mb-4">
-                      Former founder of RetailPro, acquired by Castelnau in 2021
+                      Hosted by Barry Ritholtz
                     </p>
                     <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
                       <Play className="w-4 h-4" />
-                      Watch Case Study
+                      Listen to Podcast
                     </button>
                   </div>
                 </motion.div>
 
-                {/* Video Card 3 */}
+                {/* Podcast Card 3 */}
                 <motion.div
                   className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
                   whileHover={{ y: -5 }}
@@ -714,10 +713,10 @@ const CastelnauLibrary = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
                       <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
                         <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Financial Services Innovation
+                          Business Philosophy
                         </h3>
                         <p className="text-white/80 text-sm">
-                          Building a modern fintech company
+                          Leadership and management insights
                         </p>
                       </div>
                     </div>
@@ -729,15 +728,14 @@ const CastelnauLibrary = () => {
                   </div>
                   <div className="p-6">
                     <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      Michael Chen
+                      How I Built This
                     </h4>
                     <p className="text-white/80 text-sm mb-4">
-                      Former founder of FinTech Solutions, acquired by Castelnau
-                      in 2022
+                      Hosted by Guy Raz
                     </p>
                     <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
                       <Play className="w-4 h-4" />
-                      Watch Case Study
+                      Listen to Podcast
                     </button>
                   </div>
                 </motion.div>
