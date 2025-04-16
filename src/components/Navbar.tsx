@@ -125,10 +125,10 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-[300px] bg-castelnau-dark-green text-white"
+                className="w-[300px] bg-castelnau-dark-green text-white overflow-y-auto"
               >
-                <div className="flex flex-col space-y-4 mt-8">
-                  <div className="mb-4">
+                <div className="flex flex-col space-y-4 mt-8 px-4">
+                  <div className="mb-6">
                     <StockPriceDisplay />
                   </div>
                   <Link href="/castelnau-library">

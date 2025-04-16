@@ -12,7 +12,7 @@ export default function StockPriceDisplay() {
     const fetchData = async () => {
       const data = await getStockData();
       setPrice('£' + (data.currentPrice / 100).toFixed(2));
-      setMarketCap((data.marketCap / 100000000).toFixed(2) + 'M');
+      setMarketCap((data.marketCap / 1000000000000).toFixed(2) + 'M');
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();

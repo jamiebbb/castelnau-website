@@ -414,7 +414,7 @@ const CastelnauLibrary = () => {
               <div className="relative max-w-2xl mx-auto">
                 <input
                   type="text"
-                  placeholder="Search books by title, author, or category..."
+                  placeholder="Search books by title or author..."
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
@@ -451,14 +451,13 @@ const CastelnauLibrary = () => {
             </motion.div>
 
             {/* Book Carousel */}
-            <div className="relative h-[600px] md:h-[800px] -mt-4">
+            <div className="relative h-[500px] md:h-[700px]">
               <div className="relative h-full flex items-center justify-center">
                 {/* Left Navigation Arrow - Only visible on desktop */}
                 {!isMobile && (
                   <button
                     onClick={() => handleNavigation("left")}
                     className="absolute left-4 md:left-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                    style={{ position: "absolute", zIndex: 50 }}
                   >
                     <ArrowLeft className="w-6 h-6 md:w-8 md:h-8" />
                   </button>
@@ -466,60 +465,58 @@ const CastelnauLibrary = () => {
 
                 {/* Books Container with Fixed Width */}
                 <div className="w-full max-w-full md:w-[1200px] mx-auto relative px-4 md:px-0">
-                  <div className="flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center w-full h-full">
                     {isMobile
                       ? // Mobile view - only show current book with swipe support
                         filteredBooks.length > 0 && (
-                          <motion.div
-                            key={filteredBooks[currentBookIndex].id}
-                            ref={bookRef}
-                            className="absolute cursor-pointer"
-                            drag={isMobile && !isAnimating ? "x" : false}
-                            dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.1}
-                            onDragEnd={handleDragEnd}
-                            animate={controls}
-                            style={{
-                              position: "absolute",
-                              top: "50%",
-                              left: "25%",
-                              transform: "translate(-50%, -50%)",
-                              width: "240px",
-                              height: "auto",
-                              margin: "0 auto",
-                            }}
-                            initial={{
-                              x: 0,
-                              opacity: 1,
-                            }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 300,
-                              damping: 30,
-                              mass: 1,
-                            }}
-                            onClick={() =>
-                              setSelectedBook(filteredBooks[currentBookIndex])
-                            }
-                            whileHover={{
-                              scale: 1.1,
-                              y: -10,
-                            }}
-                          >
-                            <div className="w-full aspect-[3/4] shadow-2xl mx-auto">
-                              <BookCover
-                                title={filteredBooks[currentBookIndex].title}
-                                author={filteredBooks[currentBookIndex].author}
-                                category={
-                                  filteredBooks[currentBookIndex].category
-                                }
-                                coverImage={
-                                  filteredBooks[currentBookIndex].coverImage
-                                }
-                                className="w-full h-full"
-                              />
-                            </div>
-                          </motion.div>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <motion.div
+                              key={filteredBooks[currentBookIndex].id}
+                              ref={bookRef}
+                              className="cursor-pointer"
+                              drag={isMobile && !isAnimating ? "x" : false}
+                              dragConstraints={{ left: 0, right: 0 }}
+                              dragElastic={0.1}
+                              onDragEnd={handleDragEnd}
+                              animate={controls}
+                              style={{
+                                width: "240px",
+                                height: "auto",
+                                zIndex: 10
+                              }}
+                              initial={{
+                                x: 0,
+                                opacity: 1
+                              }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 30,
+                                mass: 1
+                              }}
+                              onClick={() =>
+                                setSelectedBook(filteredBooks[currentBookIndex])
+                              }
+                              whileHover={{
+                                scale: 1.1,
+                                y: -10
+                              }}
+                            >
+                              <div className="w-full aspect-[3/4] shadow-2xl mx-auto">
+                                <BookCover
+                                  title={filteredBooks[currentBookIndex].title}
+                                  author={filteredBooks[currentBookIndex].author}
+                                  category={
+                                    filteredBooks[currentBookIndex].category
+                                  }
+                                  coverImage={
+                                    filteredBooks[currentBookIndex].coverImage
+                                  }
+                                  className="w-full h-full"
+                                />
+                              </div>
+                            </motion.div>
+                          </div>
                         )
                       : // Desktop view - show carousel with multiple books
                         filteredBooks.map((book, index) => {
@@ -601,7 +598,6 @@ const CastelnauLibrary = () => {
                   <button
                     onClick={() => handleNavigation("right")}
                     className="absolute right-4 md:right-8 z-50 p-2 md:p-4 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
-                    style={{ position: "absolute", zIndex: 50 }}
                   >
                     <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
                   </button>
