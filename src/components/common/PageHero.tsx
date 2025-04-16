@@ -20,7 +20,7 @@ const PageHero: React.FC<PageHeroProps> = ({
       <div className="absolute inset-0 bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green"></div>
       <div className="absolute inset-0 bg-[url('/brand/logos/castelnau-logo.png')] bg-repeat opacity-5"></div>
       <div className="container mx-auto px-4 relative z-10">
-        <div className="py-24 md:py-32">
+        <div className="py-16 md:py-24">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
             {title}
           </h1>
@@ -47,7 +47,7 @@ const PageHero: React.FC<PageHeroProps> = ({
           )}
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 w-full">
+      <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 150"
