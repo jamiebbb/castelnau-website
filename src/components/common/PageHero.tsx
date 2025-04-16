@@ -38,8 +38,7 @@ const PageHero: React.FC<PageHeroProps> = ({
               </Link>
               <Link href="/explore-the-group">
                 <Button
-                  variant="outline"
-                  className="text-white border-white hover:bg-white/10"
+                  className="bg-castelnau-light-green text-white hover:bg-castelnau-light-green/90"
                 >
                   Learn More
                 </Button>

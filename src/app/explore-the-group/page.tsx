@@ -142,12 +142,12 @@ const ExploreTheGroup = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-castelnau-light-green">
+      <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-castelnau-dark-green mb-6">Investor Relations</h2>
           <p className="text-xl text-gray-700 mb-8">Discover more in our Shareholder information centre.</p>
           <Link href="/investor-relations">
-            <Button className="bg-castelnau-dark-green text-white hover:bg-castelnau-green">
+            <Button className="bg-castelnau-gold text-white hover:bg-castelnau-gold/90">
               Click Here
             </Button>
           </Link>
