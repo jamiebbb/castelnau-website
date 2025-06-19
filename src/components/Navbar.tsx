@@ -18,7 +18,6 @@ const Navbar = () => {
   const [whoWeAreOpen, setWhoWeAreOpen] = useState(false);
   const [investorOpen, setInvestorOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleWhoWeAreSectionClick = (
     sectionId: string,
@@ -56,43 +55,39 @@ const Navbar = () => {
     }
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
     <header className="bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green shadow-lg">
-      <div className="container mx-auto px-4 py-2">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4 md:space-x-8">
-            <Link href="/" className="mr-4 md:mr-10">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex justify-between items-center min-h-[60px]">
+          <div className="flex items-center space-x-6 md:space-x-10">
+            <Link href="/" className="mr-4 md:mr-8">
               <Image
                 alt="Castelnau Group"
-                className="h-8 md:h-12 w-auto object-contain"
+                className="h-10 md:h-14 w-auto object-contain"
                 src={`${
                   process.env.NODE_ENV === "production"
                     ? "/castelnau-website"
                     : ""
                 }/brand/logos/castelnau-logo.png`}
-                width={120}
-                height={48}
+                width={140}
+                height={56}
                 priority
                 quality={100}
-                style={{ minHeight: "32px" }}
+                style={{ minHeight: "40px" }}
               />
             </Link>
 
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <StockPriceDisplay />
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
             <Link href="/castelnau-library">
               <Button
                 variant="transparent"
-                className="text-white hover:text-white text-base px-4 py-2"
+                className="text-white hover:text-white text-sm lg:text-base px-3 lg:px-4 py-2"
               >
                 Castelnau Library
               </Button>
@@ -100,7 +95,7 @@ const Navbar = () => {
             <Link href="/sell-your-business">
               <Button
                 variant="transparent"
-                className="text-white hover:text-white text-base px-4 py-2"
+                className="text-white hover:text-white text-sm lg:text-base px-3 lg:px-4 py-2"
               >
                 Looking to Sell your Business
               </Button>
@@ -108,7 +103,7 @@ const Navbar = () => {
             <Link href="/contact">
               <Button
                 variant="transparent"
-                className="text-white hover:text-white text-base px-6 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors"
+                className="text-white hover:text-white text-sm lg:text-base px-4 lg:px-6 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors"
               >
                 Contact us
               </Button>
@@ -194,6 +189,14 @@ const Navbar = () => {
                         className="w-full text-white hover:text-white text-left justify-start"
                       >
                         Graduate Programme
+                      </Button>
+                    </Link>
+                    <Link href="/media-library">
+                      <Button
+                        variant="ghost"
+                        className="w-full text-white hover:text-white text-left justify-start"
+                      >
+                        Media Library
                       </Button>
                     </Link>
                   </div>
@@ -346,43 +349,16 @@ const Navbar = () => {
                 Graduate Programme
               </Button>
             </Link>
+            
+            <Link href="/media-library">
+              <Button
+                variant="transparent"
+                className="text-white hover:text-white text-base px-4 py-2"
+              >
+                Media Library
+              </Button>
+            </Link>
           </nav>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden pb-4`}>
-        <div className="flex flex-col space-y-2">
-          <Link
-            href="/"
-            className="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explore-the-group"
-            className="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            Explore The Group
-          </Link>
-          <Link
-            href="/investors"
-            className="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            Investors
-          </Link>
-          <Link
-            href="/about"
-            className="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            About
-          </Link>
-          <Link
-            href="/contact"
-            className="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-          >
-            Contact
-          </Link>
         </div>
       </div>
     </header>

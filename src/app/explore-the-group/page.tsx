@@ -157,6 +157,7 @@ const ExploreTheGroup = () => {
                   <div className="bg-white/20 p-4 rounded-full">
                     <stat.icon className="h-8 w-8 text-white" />
                   </div>
+
                 </div>
                 <div className="text-3xl font-bold mb-2">{stat.value}</div>
                 <div className="text-lg font-semibold mb-1">{stat.label}</div>
@@ -357,3 +358,4 @@ const ExploreTheGroup = () => {
 };
 
 export default ExploreTheGroup;
+

@@ -59,12 +59,9 @@ crontab -e
 0 9 * * 1-5 cd /path/to/project && node scripts/update_csv_daily.js
 ```
 
-### Method 4: API Endpoint (for web-based updates)
+### ~~Method 4: API Endpoint~~ (Not available with static export)
 
-```bash
-# POST request to update CSV
-curl -X POST http://localhost:3000/api/update-csv
-```
+**Note**: The API endpoint method is not available when using `output: 'export'` for static site generation (GitHub Pages). Use the script methods above instead.
 
 ## Output Examples
 
@@ -108,7 +105,7 @@ curl -X POST http://localhost:3000/api/update-csv
 - `public/liveprice_nav.csv` - Your main data file (gets updated)
 - `scripts/update_csv_daily.js` - Node.js update script
 - `scripts/update_csv_daily.bat` - Windows batch file
-- `src/app/api/update-csv/route.ts` - Web API endpoint
+- ~~`src/app/api/update-csv/route.ts`~~ - Removed (incompatible with static export)
 - `src/lib/stockData.ts` - Enhanced to merge CSV + API data
 
 ## Troubleshooting

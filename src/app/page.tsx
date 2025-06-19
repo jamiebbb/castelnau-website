@@ -3,6 +3,7 @@
 import React from "react";
 import PageHero from '@/components/common/PageHero';
 import About from '@/components/home/About';
+import HomeVideo from '@/components/home/HomeVideo';
 import News from '@/components/home/News';
 import Contact from '@/components/home/Contact';
 
@@ -15,6 +16,7 @@ const Index = () => {
         showButtons={true}
       />
       <About />
+      <HomeVideo />
       <News />
       <Contact />
     </>

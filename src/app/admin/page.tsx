@@ -1,0 +1,368 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import DocumentAdminPanel from '@/components/admin/DocumentAdminPanel';
+import { Shield, Lock, Upload, FileText, Settings, Users, Database } from 'lucide-react';
+
+interface AuthState {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export default function AdminPage() {
+  const [auth, setAuth] = useState<AuthState>({
+    isAuthenticated: false,
+    isLoading: false,
+    error: null
+  });
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
+
+  useEffect(() => {
+    // Check if already authenticated (session storage)
+    const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
+    if (isAuth) {
+      setAuth(prev => ({ ...prev, isAuthenticated: true }));
+    }
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuth(prev => ({ ...prev, isLoading: true, error: null }));
+
+    try {
+      // In production, this would be a proper API call
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        setAuth(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
+        sessionStorage.setItem('admin_authenticated', 'true');
+      } else {
+        // For demo purposes, use basic auth
+        if (credentials.username === 'admin' && credentials.password === 'castelnau2024') {
+          setAuth(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
+          sessionStorage.setItem('admin_authenticated', 'true');
+        } else {
+          setAuth(prev => ({ 
+            ...prev, 
+            isLoading: false, 
+            error: 'Invalid credentials' 
+          }));
+        }
+      }
+    } catch (error) {
+      // Fallback authentication for demo
+      if (credentials.username === 'admin' && credentials.password === 'castelnau2024') {
+        setAuth(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
+        sessionStorage.setItem('admin_authenticated', 'true');
+      } else {
+        setAuth(prev => ({ 
+          ...prev, 
+          isLoading: false, 
+          error: 'Authentication failed' 
+        }));
+      }
+    }
+  };
+
+  const handleLogout = () => {
+    setAuth({ isAuthenticated: false, isLoading: false, error: null });
+    sessionStorage.removeItem('admin_authenticated');
+    setCredentials({ username: '', password: '' });
+  };
+
+  if (!auth.isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md p-8">
+          <div className="text-center mb-8">
+            <Shield className="h-12 w-12 text-castelnau-green mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-gray-900">Admin Access</h1>
+            <p className="text-gray-600 mt-2">Castelnau Group Document Management</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                Username
+              </label>
+              <Input
+                id="username"
+                type="text"
+                value={credentials.username}
+                onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
+                required
+                disabled={auth.isLoading}
+                className="w-full"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <Input
+                id="password"
+                type="password"
+                value={credentials.password}
+                onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+                required
+                disabled={auth.isLoading}
+                className="w-full"
+              />
+            </div>
+
+            {auth.error && (
+              <Alert variant="destructive">
+                <AlertDescription>{auth.error}</AlertDescription>
+              </Alert>
+            )}
+
+            <Button 
+              type="submit" 
+              className="w-full bg-castelnau-green text-black hover:bg-castelnau-green/80"
+              disabled={auth.isLoading}
+            >
+              {auth.isLoading ? 'Authenticating...' : 'Sign In'}
+            </Button>
+          </form>
+
+          <div className="mt-8 p-4 bg-gray-100 rounded-lg">
+            <p className="text-xs text-gray-600 text-center">
+              Demo credentials:<br />
+              Username: admin<br />
+              Password: castelnau2024
+            </p>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center">
+              <Lock className="h-6 w-6 text-castelnau-green mr-3" />
+              <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
+            </div>
+            <Button 
+              variant="outline" 
+              onClick={handleLogout}
+              className="text-gray-600 border-gray-300 hover:bg-gray-50"
+            >
+              Sign Out
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Tabs defaultValue="documents" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-none lg:inline-grid">
+            <TabsTrigger value="documents" className="flex items-center space-x-2">
+              <FileText className="h-4 w-4" />
+              <span>Documents</span>
+            </TabsTrigger>
+            <TabsTrigger value="rns" className="flex items-center space-x-2">
+              <Database className="h-4 w-4" />
+              <span>RNS Feed</span>
+            </TabsTrigger>
+            <TabsTrigger value="media" className="flex items-center space-x-2">
+              <Upload className="h-4 w-4" />
+              <span>Media Library</span>
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center space-x-2">
+              <Settings className="h-4 w-4" />
+              <span>Settings</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="documents" className="space-y-6">
+            <div className="grid gap-6">
+              <Card className="p-6">
+                <h2 className="text-lg font-semibold mb-4">Document Categories</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {[
+                    { name: 'Annual Reports', count: 5, category: 'annual-reports' },
+                    { name: 'Interim Reports', count: 3, category: 'interim-reports' },
+                    { name: 'RNS Announcements', count: 12, category: 'rns' },
+                    { name: 'Factsheets', count: 8, category: 'factsheets' },
+                    { name: 'Presentations', count: 6, category: 'presentations' },
+                    { name: 'Other Documents', count: 4, category: 'other' },
+                  ].map((category) => (
+                    <div key={category.category} className="p-4 bg-gray-50 rounded-lg">
+                      <h3 className="font-medium text-gray-900">{category.name}</h3>
+                      <p className="text-sm text-gray-600">{category.count} documents</p>
+                      <Button size="sm" className="mt-2" variant="outline">
+                        Manage
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              
+              <DocumentAdminPanel />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="rns" className="space-y-6">
+            <Card className="p-6">
+              <h2 className="text-lg font-semibold mb-4">RNS Feed Management</h2>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <h3 className="font-medium">Investegate Integration</h3>
+                    <p className="text-sm text-gray-600">Automatic RNS feed from Investegate</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                      Active
+                    </span>
+                    <Button size="sm" variant="outline">Configure</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <h3 className="font-medium">Manual Announcements</h3>
+                    <p className="text-sm text-gray-600">Add custom RNS announcements</p>
+                  </div>
+                  <Button size="sm">Add Announcement</Button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <h3 className="font-medium">Feed Cache Settings</h3>
+                    <p className="text-sm text-gray-600">Control refresh intervals and caching</p>
+                  </div>
+                  <Button size="sm" variant="outline">Settings</Button>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="media" className="space-y-6">
+            <Card className="p-6">
+              <h2 className="text-lg font-semibold mb-4">Media Library</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="font-medium">Upload Areas</h3>
+                  {[
+                    { name: 'Team Photos', path: '/team_images/', count: 14 },
+                    { name: 'Company Logos', path: '/company-logos/', count: 9 },
+                    { name: 'Documents', path: '/documents/', count: 28 },
+                    { name: 'Brand Assets', path: '/brand/', count: 3 },
+                  ].map((area) => (
+                    <div key={area.path} className="p-4 bg-gray-50 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h4 className="font-medium">{area.name}</h4>
+                          <p className="text-sm text-gray-600">{area.count} files</p>
+                        </div>
+                        <Button size="sm">Upload</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="font-medium">Quick Actions</h3>
+                  <div className="space-y-2">
+                    <Button className="w-full justify-start" variant="outline">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Bulk Upload Documents
+                    </Button>
+                    <Button className="w-full justify-start" variant="outline">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Generate File Report
+                    </Button>
+                    <Button className="w-full justify-start" variant="outline">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Manage File Permissions
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-6">
+            <Card className="p-6">
+              <h2 className="text-lg font-semibold mb-4">System Settings</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium mb-3">API Configurations</h3>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Alpha Vantage API Key
+                        </label>
+                        <Input type="password" placeholder="API Key" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Investegate Configuration
+                        </label>
+                        <Input placeholder="Company Code (CGL)" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-medium mb-3">Cache Settings</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Stock Data Cache (hours)
+                      </label>
+                      <Input type="number" defaultValue="4" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        RNS Feed Cache (minutes)
+                      </label>
+                      <Input type="number" defaultValue="5" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Daily Data Cache (hours)
+                      </label>
+                      <Input type="number" defaultValue="24" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end">
+                  <Button className="bg-castelnau-green text-black hover:bg-castelnau-green/80">
+                    Save Settings
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+} 
