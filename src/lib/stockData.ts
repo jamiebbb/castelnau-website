@@ -156,8 +156,8 @@ async function getCSVStockData(): Promise<StockData | null> {
         const month = monthMap[monthAbbr];
         const date = new Date(year, month, day);
         
-        // Parse price (multiply by 100 to convert to pence)
-        const price = parseFloat(priceStr.trim()) * 100;
+        // Parse price - CSV values are in pounds, display as pence (0.8200 → 82p)  
+        const price = parseFloat(priceStr.trim()) * 100; // Convert pounds to pence
         const nav = parseFloat(navStr.replace(/"/g, '').trim()) * 100; // Remove quotes and convert to pence
         
         return {
@@ -524,7 +524,7 @@ async function getLatestAPIData(): Promise<any[]> {
         month: 'short', 
         year: '2-digit' 
       }).replace(/ /g, '-'),
-      price: fixPriceScaling(parseFloat(data['4. close'])) * 100, // Convert to pence
+      price: fixPriceScaling(parseFloat(data['4. close'])), // Already converted to pence by fixPriceScaling
       nav: 0, // We don't get NAV from API, will need manual update
       volume: parseInt(data['5. volume']) || 0
     }));
