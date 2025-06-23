@@ -14,15 +14,15 @@ const ExploreTheGroup = () => {
 
   const companies = [
     {
-      name: "Stanley Gibbons",
-      sharesPercentage: "64.1%",
-      portfolioPercentage: "0.2%",
-      description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
-      website: "https://www.stanleygibbons.com",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/stanley-gibbons.svg`,
-      sector: "Collectibles & Auctions",
-      founded: "1856",
-      headquarters: "London, UK"
+      name: "Dignity",
+      sharesPercentage: "66.0%",
+      portfolioPercentage: "83.2%",
+      description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
+      website: "https://www.dignityfunerals.co.uk",
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/dignity.svg`,
+      sector: "Essential Services",
+      founded: "1994",
+      headquarters: "Sutton Coldfield, UK"
     },
     {
       name: "Hornby",
@@ -36,37 +36,15 @@ const ExploreTheGroup = () => {
       headquarters: "Kent, UK"
     },
     {
-      name: "Dignity",
-      sharesPercentage: "66.0%",
-      portfolioPercentage: "83.2%",
-      description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
-      website: "https://www.dignityfunerals.co.uk",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/dignity.svg`,
-      sector: "Essential Services",
-      founded: "1994",
-      headquarters: "Sutton Coldfield, UK"
-    },
-    {
-      name: "Iona Star",
-      sharesPercentage: "45.0%",
-      portfolioPercentage: "0.1%",
-      description: "Investment holding company with interests in technology and digital assets.",
-      website: "https://ionastar.com",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_iona_star.png`,
-      sector: "Investment Holdings",
-      founded: "2020",
-      headquarters: "London, UK"
-    },
-    {
-      name: "Rawnet",
-      sharesPercentage: "100%",
-      portfolioPercentage: "0.4%",
-      description: "Digital agency specializing in web development and digital solutions.",
-      website: "https://www.rawnet.com",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_rawnet.png`,
-      sector: "Digital Services",
-      founded: "2001",
-      headquarters: "Sutton Coldfield, UK"
+      name: "Cambium",
+      sharesPercentage: "90.3%",
+      portfolioPercentage: "3.0%",
+      description: "Sustainable materials technology company developing eco-friendly alternatives.",
+      website: "https://cambium.com",
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_cambium.png`,
+      sector: "Sustainable Technology",
+      founded: "2019",
+      headquarters: "Birmingham, UK"
     },
     {
       name: "Ocula",
@@ -80,17 +58,6 @@ const ExploreTheGroup = () => {
       headquarters: "London, UK"
     },
     {
-      name: "Cambium",
-      sharesPercentage: "90.3%",
-      portfolioPercentage: "3.0%",
-      description: "Sustainable materials technology company developing eco-friendly alternatives.",
-      website: "https://cambium.com",
-      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_cambium.png`,
-      sector: "Sustainable Technology",
-      founded: "2019",
-      headquarters: "Birmingham, UK"
-    },
-    {
       name: "Silverwood",
       sharesPercentage: "29.9%",
       portfolioPercentage: "1.3%",
@@ -100,6 +67,39 @@ const ExploreTheGroup = () => {
       sector: "Premium Beverages",
       founded: "2015",
       headquarters: "Scotland, UK"
+    },
+    {
+      name: "Rawnet",
+      sharesPercentage: "100%",
+      portfolioPercentage: "0.4%",
+      description: "Digital agency specializing in web development and digital solutions.",
+      website: "https://www.rawnet.com",
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_rawnet.png`,
+      sector: "Digital Services",
+      founded: "2001",
+      headquarters: "Sutton Coldfield, UK"
+    },
+    {
+      name: "Stanley Gibbons",
+      sharesPercentage: "64.1%",
+      portfolioPercentage: "0.2%",
+      description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
+      website: "https://www.stanleygibbons.com",
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/stanley-gibbons.svg`,
+      sector: "Collectibles & Auctions",
+      founded: "1856",
+      headquarters: "London, UK"
+    },
+    {
+      name: "Iona Star",
+      sharesPercentage: "45.0%",
+      portfolioPercentage: "0.1%",
+      description: "Investment holding company with interests in technology and digital assets.",
+      website: "https://ionastar.com",
+      logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_iona_star.png`,
+      sector: "Investment Holdings",
+      founded: "2020",
+      headquarters: "London, UK"
     }
   ];
 
@@ -141,27 +141,26 @@ const ExploreTheGroup = () => {
       />
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-castelnau-dark-green to-castelnau-green">
+      <section className="py-16 bg-gradient-to-r from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="text-center text-white"
+                className="text-center text-castelnau-dark-green"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
                 <div className="flex justify-center mb-4">
-                  <div className="bg-white/20 p-4 rounded-full">
-                    <stat.icon className="h-8 w-8 text-white" />
+                  <div className="bg-castelnau-green/20 p-4 rounded-full">
+                    <stat.icon className="h-8 w-8 text-castelnau-green" />
                   </div>
-
                 </div>
-                <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                <div className="text-3xl font-bold mb-2 text-castelnau-green">{stat.value}</div>
                 <div className="text-lg font-semibold mb-1">{stat.label}</div>
-                <div className="text-sm text-white/80">{stat.description}</div>
+                <div className="text-sm text-gray-600">{stat.description}</div>
               </motion.div>
             ))}
           </div>
