@@ -5,109 +5,108 @@ import PageHero from '@/components/common/PageHero';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import Image from 'next/image';
-import CompanyModal from '@/components/common/CompanyModal';
+
 import { motion } from 'framer-motion';
 import { TrendingUp, Target, Award, Users, DollarSign, BarChart3, Building2, Sparkles } from 'lucide-react';
 
 const ExploreTheGroup = () => {
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
 
   const companies = [
     {
       name: "Dignity",
       sharesPercentage: "66.0%",
       portfolioPercentage: "83.2%",
-      description: "Leading UK funeral services provider with a network of funeral homes and crematoria.",
+      description: "Leading UK end-of-life service provider with extensive funeral homes and crematoria network, offering personalised funeral planning, bereavement care, and innovative digital solutions through Farewill acquisition.",
       website: "https://www.dignityfunerals.co.uk",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/dignity.svg`,
       sector: "Essential Services",
-      founded: "1994",
-      headquarters: "Sutton Coldfield, UK"
+      investedSince: "2018",
+      slug: "dignity"
     },
     {
       name: "Hornby",
       sharesPercentage: "54.4%",
       portfolioPercentage: "5.0%",
-      description: "Iconic British model railway and hobby products manufacturer.",
+      description: "Portfolio of heritage toy and collectible brands including Hornby model railways, Airfix plastic models, Scalextric slot cars, Corgi die-cast models, and Warlord Games tabletop gaming.",
       website: "https://www.hornby.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_hornby.png`,
       sector: "Consumer Products",
-      founded: "1901",
-      headquarters: "Kent, UK"
+      investedSince: "2017",
+      slug: "hornby"
     },
     {
       name: "Cambium",
       sharesPercentage: "90.3%",
       portfolioPercentage: "3.0%",
-      description: "Sustainable materials technology company developing eco-friendly alternatives.",
+      description: "Leading UK wedding gift list provider with brands including The Wedding Shop, Prezola, Rock My Wedding platform, and expanding into baby registries with LittleList.",
       website: "https://cambium.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_cambium.png`,
-      sector: "Sustainable Technology",
-      founded: "2019",
-      headquarters: "Birmingham, UK"
+      sector: "Wedding & Lifestyle",
+      investedSince: "2002",
+      slug: "cambium"
     },
     {
       name: "Ocula",
       sharesPercentage: "41.2%",
       portfolioPercentage: "1.3%",
-      description: "AI-powered healthcare technology company focusing on early disease detection.",
+      description: "AI-powered SaaS platform providing data analytics and growth insights for e-commerce businesses, serving clients including AO.com, Kansas City Chiefs, and Boots with AI-driven solutions.",
       website: "https://ocula.ai",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_ocula.png`,
-      sector: "Healthcare Technology",
-      founded: "2018",
-      headquarters: "London, UK"
+      sector: "AI & Technology",
+      investedSince: "2021",
+      slug: "ocula-technologies"
     },
     {
       name: "Silverwood",
       sharesPercentage: "29.9%",
       portfolioPercentage: "1.3%",
-      description: "Premium spirits and beverage company with a focus on craft production.",
+      description: "Premium consumer brand portfolio focused on beauty sector, featuring Balmond's natural skincare, Nailberry eco-friendly nail polish, Steamcream hydration products, and Cigarro men's cosmetics.",
       website: "https://silverwoodspirits.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_silverwood.png`,
-      sector: "Premium Beverages",
-      founded: "2015",
-      headquarters: "Scotland, UK"
+      sector: "Premium Beauty",
+      investedSince: "2021",
+      slug: "silverwood"
     },
     {
       name: "Rawnet",
       sharesPercentage: "100%",
       portfolioPercentage: "0.4%",
-      description: "Digital agency specializing in web development and digital solutions.",
+      description: "Digital marketing and software development agency providing strategic consultancy, brand development, product design, and traffic generation for long-term digital growth.",
       website: "https://www.rawnet.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_rawnet.png`,
       sector: "Digital Services",
-      founded: "2001",
-      headquarters: "Sutton Coldfield, UK"
+      investedSince: "2020",
+      slug: "rawnet"
     },
     {
       name: "Stanley Gibbons",
       sharesPercentage: "64.1%",
       portfolioPercentage: "0.2%",
-      description: "Leading philatelic auctioneer and dealer, specializing in rare stamps and collectibles.",
+      description: "Heritage collectibles house encompassing Stanley Gibbons philately (Royal Warrant holder since 1914), Baldwins numismatics, and Baldwin's Bullion, expanding into multi-category auctions.",
       website: "https://www.stanleygibbons.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/stanley-gibbons.svg`,
-      sector: "Collectibles & Auctions",
-      founded: "1856",
-      headquarters: "London, UK"
+      sector: "Collectibles & Heritage",
+      investedSince: "2016",
+      slug: "stanley-gibbons-baldwins"
     },
     {
       name: "Iona Star",
       sharesPercentage: "45.0%",
       portfolioPercentage: "0.1%",
-      description: "Investment holding company with interests in technology and digital assets.",
+      description: "Venture capital fund investing in disruptive early-stage AI and data companies across financial services, cybersecurity, life sciences, IoT, telecom, and energy sectors.",
       website: "https://ionastar.com",
       logo: `${process.env.NODE_ENV === 'production' ? '/castelnau-website' : ''}/company-logos/logo_iona_star.png`,
-      sector: "Investment Holdings",
-      founded: "2020",
-      headquarters: "London, UK"
+      sector: "Venture Capital",
+      investedSince: "2024",
+      slug: "iona-star"
     }
   ];
 
   const stats = [
     { icon: Building2, label: "Portfolio Companies", value: "8", description: "Active investments" },
     { icon: TrendingUp, label: "Total Portfolio Value", value: "£272M", description: "Market capitalization" },
-    { icon: Target, label: "Strategic Focus", value: "100%", description: "Long-term value creation" },
-    { icon: Award, label: "Years Experience", value: "25+", description: "Combined leadership" }
+    { icon: Users, label: "Employees", value: "> 3,500", description: "Across portfolio companies" },
+    { icon: Award, label: "Upside to Intrinsic Value", value: "390%", description: "Based on £4.02 NAV" }
   ];
 
   const investmentPrinciples = [
@@ -288,7 +287,7 @@ const ExploreTheGroup = () => {
                       {company.name}
                     </h3>
                     <div className="text-sm text-gray-500">
-                      Est. {company.founded}
+                      Invested since {company.investedSince}
                     </div>
                   </div>
                   
@@ -306,13 +305,13 @@ const ExploreTheGroup = () => {
                   <p className="text-gray-700 mb-6 leading-relaxed">{company.description}</p>
                   
                   <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
-                    <span>{company.headquarters}</span>
+                    <span>Invested since {company.investedSince}</span>
                   </div>
 
                   <Button 
                     variant="outline" 
                     className="w-full group-hover:bg-castelnau-green group-hover:text-white group-hover:border-castelnau-green transition-all duration-300"
-                    onClick={() => setSelectedCompany(company)}
+                    onClick={() => window.location.href = `/explore-the-group/${company.slug}`}
                   >
                     Learn More
                   </Button>
@@ -347,11 +346,7 @@ const ExploreTheGroup = () => {
         </div>
       </section>
 
-      <CompanyModal 
-        company={selectedCompany}
-        isOpen={!!selectedCompany}
-        onClose={() => setSelectedCompany(null)}
-      />
+
     </main>
   );
 };
