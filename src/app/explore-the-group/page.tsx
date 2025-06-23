@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
-import { TrendingUp, Target, Award, Users, DollarSign, BarChart3, Building2, Sparkles } from 'lucide-react';
+import { TrendingUp, Target, Award, Users, DollarSign, BarChart3, Building2, Sparkles, PoundSterling } from 'lucide-react';
 
 const ExploreTheGroup = () => {
 
@@ -106,7 +106,7 @@ const ExploreTheGroup = () => {
     { icon: Building2, label: "Portfolio Companies", value: "8", description: "Active investments" },
     { icon: TrendingUp, label: "Total Portfolio Value", value: "£272M", description: "Market capitalization" },
     { icon: Users, label: "Employees", value: "> 3,500", description: "Across portfolio companies" },
-    { icon: Award, label: "Upside to Intrinsic Value", value: "390%", description: "Based on £4.02 NAV" }
+    { icon: Award, label: "Upside to Intrinsic Value", value: "4.9x", description: "Based on £4.02 NAV" }
   ];
 
   const investmentPrinciples = [
@@ -121,7 +121,7 @@ const ExploreTheGroup = () => {
       description: "We work collaboratively with management teams, providing strategic guidance and operational support."
     },
     {
-      icon: DollarSign,
+      icon: PoundSterling,
       title: "Value Creation Focus",
       description: "Our patient capital allows us to make rational, long-term decisions that drive sustainable growth."
     },
@@ -286,9 +286,6 @@ const ExploreTheGroup = () => {
                     <h3 className="text-2xl font-bold text-castelnau-dark-green group-hover:text-castelnau-green transition-colors duration-300">
                       {company.name}
                     </h3>
-                    <div className="text-sm text-gray-500">
-                      Invested since {company.investedSince}
-                    </div>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 mb-6">
