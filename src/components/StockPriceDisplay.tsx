@@ -51,10 +51,13 @@ export default function StockPriceDisplay() {
       
       <div className="h-8 w-px bg-white/30 mt-2"></div>
       
-      <div className="flex items-center group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
+      <div className="flex flex-col group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
         <div className="flex items-center space-x-1">
           <span className="text-white text-sm group-hover:text-white/90 transition-colors">Market Cap:</span>
           <span className="text-white font-bold text-base group-hover:scale-105 transition-transform">£{marketCap}</span>
+        </div>
+        <div className="text-white/60 text-xs mt-1">
+          Updated: {lastUpdated}
         </div>
       </div>
     </div>

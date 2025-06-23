@@ -23,7 +23,7 @@ const MAX_API_CALLS_PER_DAY = 5; // Alpha Vantage free tier limit
 // Accurate fallback data for Castelnau Group Limited (CGL.L)
 const FALLBACK_DATA: StockData = {
   currentPrice: 82, // 82p current price
-  marketCap: 272600000000, // £272.6B market cap (corrected)
+  marketCap: 272600000, // £272.6M market cap (332.45M shares * 82p)
   lastUpdated: new Date().toISOString(),
   historicalData: {
     labels: [
@@ -182,8 +182,8 @@ async function getCSVStockData(): Promise<StockData | null> {
     // Get current price (last entry)
     const currentPrice = parsedData[parsedData.length - 1].price;
     
-    // Calculate market cap (assuming ~1.2B shares outstanding)
-    const marketCap = (currentPrice / 100) * 1200000000; // Convert pence to pounds
+    // Calculate market cap using correct share count (332.45M shares outstanding)
+    const marketCap = (currentPrice / 100) * 332450000; // Convert pence to pounds
     
     const transformedData: StockData = {
       currentPrice,
@@ -606,7 +606,7 @@ async function getMergedStockData(): Promise<StockData | null> {
     
     return {
       currentPrice,
-      marketCap: (currentPrice / 100) * 1200000000,
+      marketCap: (currentPrice / 100) * 332450000,
       lastUpdated: new Date().toISOString(),
       historicalData: {
         labels: mergedLabels,
