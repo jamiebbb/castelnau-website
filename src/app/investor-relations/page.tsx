@@ -50,8 +50,8 @@ export default function InvestorRelationsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">NAV per Share</p>
-                <p className="text-2xl font-bold text-gray-900">£1.01</p>
-                <p className="text-sm text-blue-600 mt-1">Intrinsic: £4.02</p>
+                <p className="text-2xl font-bold text-gray-900">£1.00</p>
+                <p className="text-sm text-blue-600 mt-1">As of 31/05/2025</p>
               </div>
               <FileText className="h-8 w-8 text-blue-600" />
             </div>

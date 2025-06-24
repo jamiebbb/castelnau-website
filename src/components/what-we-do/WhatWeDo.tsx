@@ -3,35 +3,10 @@
 import React from 'react';
 import { Target, TrendingUp, Users, Handshake, Globe, Award, Shield, Heart } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 const WhatWeDo = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-castelnau-green to-green-600 text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              What We Do
-            </h1>
-            <p className="text-xl md:text-2xl text-green-100 mb-8">
-              Building a decentralised conglomerate of permanent holdings to compound shareholders' capital at high rates of return
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Badge variant="outline" className="text-white border-white bg-white/10 backdrop-blur-sm">
-                Long-term Focus
-              </Badge>
-              <Badge variant="outline" className="text-white border-white bg-white/10 backdrop-blur-sm">
-                15%+ Returns
-              </Badge>
-              <Badge variant="outline" className="text-white border-white bg-white/10 backdrop-blur-sm">
-                Economic Moats
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Mission Section */}
       <section id="mission" className="py-16 bg-white">

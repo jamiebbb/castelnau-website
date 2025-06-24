@@ -54,7 +54,7 @@ export default function AdminPage() {
         sessionStorage.setItem('admin_authenticated', 'true');
       } else {
         // For demo purposes, use basic auth
-        if (credentials.username === 'admin' && credentials.password === 'castelnau2024') {
+        if (credentials.username === 'admin' && credentials.password === 'castelnau2025') {
           setAuth(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
           sessionStorage.setItem('admin_authenticated', 'true');
         } else {
@@ -67,7 +67,7 @@ export default function AdminPage() {
       }
     } catch (error) {
       // Fallback authentication for demo
-      if (credentials.username === 'admin' && credentials.password === 'castelnau2024') {
+      if (credentials.username === 'admin' && credentials.password === 'castelnau2025') {
         setAuth(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
         sessionStorage.setItem('admin_authenticated', 'true');
       } else {
@@ -146,7 +146,7 @@ export default function AdminPage() {
             <p className="text-xs text-gray-600 text-center">
               Demo credentials:<br />
               Username: admin<br />
-              Password: castelnau2024
+              Password: castelnau2025
             </p>
           </div>
         </Card>
@@ -177,27 +177,29 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="documents" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-none lg:inline-grid">
-            <TabsTrigger value="documents" className="flex items-center space-x-2">
-              <FileText className="h-4 w-4" />
-              <span>Documents</span>
-            </TabsTrigger>
-            <TabsTrigger value="rns" className="flex items-center space-x-2">
-              <Database className="h-4 w-4" />
-              <span>RNS Feed</span>
-            </TabsTrigger>
-            <TabsTrigger value="media" className="flex items-center space-x-2">
-              <Video className="h-4 w-4" />
-              <span>Media Library</span>
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center space-x-2">
-              <Settings className="h-4 w-4" />
-              <span>Settings</span>
-            </TabsTrigger>
-          </TabsList>
+        <Tabs defaultValue="documents" className="space-y-8">
+          <div className="bg-white p-6 rounded-lg shadow-sm border">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-none lg:inline-grid">
+              <TabsTrigger value="documents" className="flex items-center space-x-2">
+                <FileText className="h-4 w-4" />
+                <span>Documents</span>
+              </TabsTrigger>
+              <TabsTrigger value="rns" className="flex items-center space-x-2">
+                <Database className="h-4 w-4" />
+                <span>RNS Feed</span>
+              </TabsTrigger>
+              <TabsTrigger value="media" className="flex items-center space-x-2">
+                <Video className="h-4 w-4" />
+                <span>Media Library</span>
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="flex items-center space-x-2">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="documents" className="space-y-6">
+          <TabsContent value="documents" className="space-y-6 mt-8">
             <div className="grid gap-6">
               <Card className="p-6">
                 <h2 className="text-lg font-semibold mb-4">Document Categories</h2>
@@ -225,47 +227,56 @@ export default function AdminPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="rns" className="space-y-6">
+          <TabsContent value="rns" className="space-y-6 mt-8">
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">RNS Feed Management</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div>
-                    <h3 className="font-medium">Investegate Integration</h3>
-                    <p className="text-sm text-gray-600">Automatic RNS feed from Investegate</p>
+                    <h3 className="font-medium text-blue-900">Manual RNS Document Upload</h3>
+                    <p className="text-sm text-blue-700">Upload RNS announcements as PDF documents to the RNS feed folder</p>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                      Active
-                    </span>
-                    <Button size="sm" variant="outline">Configure</Button>
-                  </div>
+                  <Button 
+                    size="sm"
+                    onClick={() => setIsUploadDialogOpen(true)}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload RNS
+                  </Button>
                 </div>
                 
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <div>
-                    <h3 className="font-medium">Manual Announcements</h3>
-                    <p className="text-sm text-gray-600">Add custom RNS announcements</p>
+                    <h3 className="font-medium text-yellow-900">Investegate Integration</h3>
+                    <p className="text-sm text-yellow-700">Automatic RNS feed from Investegate (Currently disabled - manual uploads only)</p>
                   </div>
-                  <Button size="sm">Add Announcement</Button>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                      Disabled
+                    </span>
+                    <Button size="sm" variant="outline" disabled>Configure</Button>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <h3 className="font-medium">Feed Cache Settings</h3>
-                    <p className="text-sm text-gray-600">Control refresh intervals and caching</p>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h3 className="font-medium mb-2">Current RNS Documents</h3>
+                  <p className="text-sm text-gray-600 mb-3">Documents uploaded to the RNS feed will appear on the investor relations page automatically.</p>
+                  <div className="text-xs text-gray-500">
+                    <p>✓ Upload PDF files for RNS announcements</p>
+                    <p>✓ Files are automatically organized by date</p>
+                    <p>✓ Documents appear immediately on the investor relations page</p>
                   </div>
-                  <Button size="sm" variant="outline">Settings</Button>
                 </div>
               </div>
             </Card>
           </TabsContent>
 
-          <TabsContent value="media" className="space-y-6">
+          <TabsContent value="media" className="space-y-6 mt-8">
             <MediaAdminPanel />
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-6">
+          <TabsContent value="settings" className="space-y-6 mt-8">
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">System Settings</h2>
               <div className="space-y-6">

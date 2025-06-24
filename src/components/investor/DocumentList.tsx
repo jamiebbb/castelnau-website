@@ -186,12 +186,12 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
         ) : (
           documents.map((doc) => (
             <div key={doc.id} className="group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200">
-              <div className="flex items-start justify-between h-[120px]">
+              <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3 flex-1">
                   <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
                     <FileText className="h-4 w-4 text-blue-600" />
                   </div>
-                  <div className="flex-1 min-w-0 flex flex-col h-full">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-1">
                       <h4 className="font-medium text-gray-900 truncate">{doc.title}</h4>
                       <Badge 
@@ -210,11 +210,11 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
                       <span className="uppercase">{doc.type}</span>
                     </div>
                     {doc.description && (
-                      <p className="text-sm text-gray-600 line-clamp-2 flex-1">{doc.description}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">{doc.description}</p>
                     )}
                   </div>
                 </div>
-                <div className="ml-2 flex items-end h-full">
+                <div className="ml-4 flex-shrink-0">
                   <Button 
                     variant="ghost" 
                     size="sm" 

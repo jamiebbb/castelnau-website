@@ -69,9 +69,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold">Contact</h3>
             <div className="space-y-2">
               <p className="text-sm text-green-100">
-                PO Box 255, Trafalgar Court<br />
-                Les Banques, St Peter Port<br />
-                Guernsey GY1 3QL
+                80-82 Glentham Road<br />
+                London, SW13 9JJ
               </p>
             </div>
             <div className="flex space-x-4">
