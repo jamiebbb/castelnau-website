@@ -106,7 +106,7 @@ const ExploreTheGroup = () => {
     { icon: Building2, label: "Portfolio Companies", value: "8", description: "Active investments" },
     { icon: TrendingUp, label: "Total Portfolio Value", value: "£272M", description: "Market capitalization" },
     { icon: Users, label: "Employees", value: "> 3,500", description: "Across portfolio companies" },
-    { icon: Award, label: "Upside to Intrinsic Value", value: "4.9x", description: "Based on £4.02 NAV" }
+    { icon: Award, label: "Upside to Intrinsic Value", value: "4.0x", description: "Based on £1.00 NAV" }
   ];
 
   const investmentPrinciples = [

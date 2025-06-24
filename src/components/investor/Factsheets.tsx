@@ -209,14 +209,16 @@ export const Factsheets = () => {
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => handleDownload(report)}
-                  className="ml-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                >
-                  <Download className="h-4 w-4" />
-                </Button>
+                <div className="ml-4 flex-shrink-0">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => handleDownload(report)}
+                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                  >
+                    <Download className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           ))
