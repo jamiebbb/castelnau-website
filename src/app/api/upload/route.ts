@@ -3,7 +3,7 @@ import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
 // This API route will only work in development mode
-// For production with static export, files should be uploaded manually to the public/documents folder
+// For production with static export, files should be uploaded manually to the appropriate category folders
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { 
           success: false, 
-          message: 'File upload API not available in static export mode. Please upload files manually to the public/documents folder.' 
+          message: 'File upload API not available in static export mode. Please upload files manually to the appropriate category folders in public.' 
         },
         { status: 501 }
       );
@@ -48,26 +48,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create a safe filename
-    const timestamp = new Date().toISOString().split('T')[0];
+    // Map category to the new folder structure
+    const categoryFolderMap: { [key: string]: string } = {
+      'annual-reports': 'reports_factsheets',
+      'interim-reports': 'reports_factsheets', 
+      'quarterly-reports': 'reports_factsheets',
+      'factsheets': 'reports_factsheets',
+      'rns': 'rns_feed',
+      'rns-announcements': 'rns_feed',
+      'regulatory': 'regulatory_documents',
+      'regulatory-documents': 'regulatory_documents',
+      'presentations': 'documents', // Keep presentations in the general documents folder
+      'other': 'documents'
+    };
+
+    const categoryFolder = categoryFolderMap[category] || 'documents';
+
+    // Create a safe filename with date suffix
+    const now = new Date();
+    const timestamp = now.toISOString().split('T')[0]; // YYYY-MM-DD format
     const safeTitle = title.toLowerCase()
       .replace(/[^a-z0-9]/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '');
-    const filename = `${timestamp}-${safeTitle}.pdf`;
+    const filename = `${safeTitle}-${timestamp}.pdf`;
 
-    // Ensure the documents directory exists
-    const documentsDir = path.join(process.cwd(), 'public', 'documents');
+    // Create the category-specific directory structure
+    const targetDir = path.join(process.cwd(), 'public', categoryFolder);
+    
     try {
-      await mkdir(documentsDir, { recursive: true });
+      await mkdir(targetDir, { recursive: true });
     } catch (error) {
       // Directory might already exist
     }
 
-    // Convert file to buffer and save
+    // Convert file to buffer and save to category folder
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const filePath = path.join(documentsDir, filename);
+    const filePath = path.join(targetDir, filename);
     
     await writeFile(filePath, buffer);
 
@@ -77,25 +95,30 @@ export async function POST(request: NextRequest) {
       title,
       type: 'PDF',
       category,
-      date: new Date().toISOString().split('T')[0],
+      date: timestamp,
       size: formatFileSize(file.size),
-      url: `/documents/${filename}`,
+      url: `/${categoryFolder}/${filename}`,
       status,
       description: description || undefined,
-      filename
+      filename,
+      categoryFolder
     };
 
-    // In development, we can also save metadata to a JSON file for persistence
-    const metadataPath = path.join(documentsDir, 'metadata.json');
+    // Save metadata to category-specific JSON file for better organization
+    const metadataPath = path.join(targetDir, 'metadata.json');
     let existingMetadata = [];
     
     try {
-      const metadataFile = await import(metadataPath).catch(() => null);
-      if (metadataFile) {
-        existingMetadata = metadataFile.default || [];
+      const fs = await import('fs');
+      if (fs.existsSync(metadataPath)) {
+        const metadataContent = await import('fs').then(fs => 
+          fs.readFileSync(metadataPath, 'utf8')
+        );
+        existingMetadata = JSON.parse(metadataContent);
       }
     } catch (error) {
-      // File doesn't exist yet
+      // File doesn't exist yet or parsing error
+      existingMetadata = [];
     }
 
     existingMetadata.push(documentData);
@@ -109,10 +132,44 @@ export async function POST(request: NextRequest) {
       console.warn('Could not save metadata file:', error);
     }
 
+    // Also maintain a master index for easier querying across all folders
+    const masterIndexPath = path.join(process.cwd(), 'public', 'documents', 'master-index.json');
+    let masterIndex = [];
+    
+    try {
+      // Ensure documents directory exists for master index
+      await mkdir(path.join(process.cwd(), 'public', 'documents'), { recursive: true });
+      
+      const fs = await import('fs');
+      if (fs.existsSync(masterIndexPath)) {
+        const indexContent = await import('fs').then(fs => 
+          fs.readFileSync(masterIndexPath, 'utf8')
+        );
+        masterIndex = JSON.parse(indexContent);
+      }
+    } catch (error) {
+      masterIndex = [];
+    }
+
+    masterIndex.push(documentData);
+    
+    try {
+      await writeFile(
+        masterIndexPath, 
+        JSON.stringify(masterIndex, null, 2)
+      );
+    } catch (error) {
+      console.warn('Could not save master index file:', error);
+    }
+
     return NextResponse.json({
       success: true,
-      message: 'File uploaded successfully',
-      document: documentData
+      message: `File uploaded successfully to ${categoryFolder} folder`,
+      document: documentData,
+      folderStructure: {
+        category: categoryFolder,
+        path: `/${categoryFolder}/${filename}`
+      }
     });
 
   } catch (error) {

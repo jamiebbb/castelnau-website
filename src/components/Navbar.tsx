@@ -63,17 +63,17 @@ const Navbar = () => {
             <Link href="/" className="mr-4 md:mr-8">
               <Image
                 alt="Castelnau Group"
-                className="h-10 md:h-14 w-auto object-contain"
+                className="h-12 md:h-16 lg:h-18 w-auto object-contain"
                 src={`${
                   process.env.NODE_ENV === "production"
                     ? "/castelnau-website"
                     : ""
                 }/brand/logos/castelnau-logo.png`}
-                width={140}
-                height={56}
+                width={160}
+                height={72}
                 priority
                 quality={100}
-                style={{ minHeight: "40px" }}
+                style={{ minHeight: "48px" }}
               />
             </Link>
 

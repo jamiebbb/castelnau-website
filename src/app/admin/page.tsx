@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DocumentAdminPanel from '@/components/admin/DocumentAdminPanel';
-import { Shield, Lock, Upload, FileText, Settings, Users, Database } from 'lucide-react';
+import MediaAdminPanel from '@/components/admin/MediaAdminPanel';
+import { Shield, Lock, Upload, FileText, Settings, Users, Database, Video } from 'lucide-react';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -187,7 +188,7 @@ export default function AdminPage() {
               <span>RNS Feed</span>
             </TabsTrigger>
             <TabsTrigger value="media" className="flex items-center space-x-2">
-              <Upload className="h-4 w-4" />
+              <Video className="h-4 w-4" />
               <span>Media Library</span>
             </TabsTrigger>
             <TabsTrigger value="settings" className="flex items-center space-x-2">
@@ -261,48 +262,7 @@ export default function AdminPage() {
           </TabsContent>
 
           <TabsContent value="media" className="space-y-6">
-            <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Media Library</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h3 className="font-medium">Upload Areas</h3>
-                  {[
-                    { name: 'Team Photos', path: '/team_images/', count: 14 },
-                    { name: 'Company Logos', path: '/company-logos/', count: 9 },
-                    { name: 'Documents', path: '/documents/', count: 28 },
-                    { name: 'Brand Assets', path: '/brand/', count: 3 },
-                  ].map((area) => (
-                    <div key={area.path} className="p-4 bg-gray-50 rounded-lg">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <h4 className="font-medium">{area.name}</h4>
-                          <p className="text-sm text-gray-600">{area.count} files</p>
-                        </div>
-                        <Button size="sm">Upload</Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="space-y-4">
-                  <h3 className="font-medium">Quick Actions</h3>
-                  <div className="space-y-2">
-                    <Button className="w-full justify-start" variant="outline">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Bulk Upload Documents
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <FileText className="h-4 w-4 mr-2" />
-                      Generate File Report
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Manage File Permissions
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Card>
+            <MediaAdminPanel />
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-6">

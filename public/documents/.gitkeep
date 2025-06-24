@@ -1,4 +1,3 @@
-
 # This file ensures the documents directory is created in git
 # You can place PDF files in this directory
 
@@ -10,4 +9,18 @@
 # 2. If running the project locally or on your own server:
 #    - Place your PDF files in this directory
 #    - They will be accessible at /documents/your-file-name.pdf
+
+# Document Storage Directory
+
+This directory contains investor documents that are uploaded through the admin panel.
+
+## Structure:
+- Annual reports
+- Interim reports
+- RNS announcements
+- Factsheets
+- Presentations
+- Other regulatory documents
+
+Files uploaded through the admin system are automatically placed here and become accessible via the investor relations page.
 

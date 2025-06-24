@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Trash2, Upload, Search, Filter, Calendar, ExternalLink, RefreshCw } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { FileText, Trash2, Upload, Search, Filter, Calendar, ExternalLink, RefreshCw, FolderOpen } from 'lucide-react';
 import DocumentUploadDialog from './DocumentUploadDialog';
 import { forceRefreshStockData, clearStockDataCache } from '@/lib/stockData';
 
@@ -36,7 +37,7 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       category: 'annual-reports',
       date: '2024-03-15',
       size: '2.4 MB',
-      url: '/documents/annual-report-2023.pdf',
+      url: '/reports_factsheets/annual-report-2023-2024-03-15.pdf',
       status: 'published',
       description: 'Comprehensive annual report for the year ended 31 December 2023'
     },
@@ -47,7 +48,7 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       category: 'interim-reports',
       date: '2023-09-20',
       size: '1.8 MB',
-      url: '/documents/interim-results-h1-2023.pdf',
+      url: '/reports_factsheets/interim-results-h1-2023-2023-09-20.pdf',
       status: 'published',
       description: 'Half-year results for the six months ended 30 June 2023'
     },
@@ -58,7 +59,7 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       category: 'rns',
       date: '2024-02-28',
       size: '0.5 MB',
-      url: '/documents/agm-notice-2024.pdf',
+      url: '/rns_feed/notice-of-agm-2024-2024-02-28.pdf',
       status: 'published',
       description: 'Notice of Annual General Meeting to be held on 15 May 2024'
     },
@@ -69,7 +70,7 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       category: 'factsheets',
       date: '2024-01-31',
       size: '1.2 MB',
-      url: '/documents/q4-2023-factsheet.pdf',
+      url: '/reports_factsheets/q4-2023-factsheet-2024-01-31.pdf',
       status: 'draft',
       description: 'Quarterly performance and portfolio overview'
     },
@@ -80,9 +81,42 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       category: 'presentations',
       date: '2024-01-15',
       size: '3.1 MB',
-      url: '/documents/investment-strategy-2024.pdf',
+      url: '/documents/investment-strategy-2024-2024-01-15.pdf',
       status: 'published',
       description: 'Detailed presentation on investment strategy and market outlook'
+    },
+    {
+      id: '6',
+      title: 'Prospectus 2023',
+      type: 'PDF',
+      category: 'regulatory',
+      date: '2023-02-15',
+      size: '5.2 MB',
+      url: '/regulatory_documents/prospectus-2023-2023-02-15.pdf',
+      status: 'published',
+      description: 'Official prospectus document'
+    },
+    {
+      id: '7',
+      title: 'Q3 2024 Trading Update',
+      type: 'PDF',
+      category: 'rns',
+      date: '2024-10-15',
+      size: '0.8 MB',
+      url: '/rns_feed/q3-2024-trading-update-2024-10-15.pdf',
+      status: 'published',
+      description: 'Third quarter trading update announcement'
+    },
+    {
+      id: '8',
+      title: 'October 2024 Factsheet',
+      type: 'PDF',
+      category: 'factsheets',
+      date: '2024-11-01',
+      size: '1.5 MB',
+      url: '/reports_factsheets/october-2024-factsheet-2024-11-01.pdf',
+      status: 'published',
+      description: 'Monthly performance and portfolio overview for October 2024'
     }
   ]);
 
@@ -93,13 +127,15 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
 
   const categories = [
-    { value: 'all', label: 'All Categories' },
-    { value: 'annual-reports', label: 'Annual Reports' },
-    { value: 'interim-reports', label: 'Interim Reports' },
-    { value: 'rns', label: 'RNS Announcements' },
-    { value: 'factsheets', label: 'Factsheets' },
-    { value: 'presentations', label: 'Presentations' },
-    { value: 'other', label: 'Other Documents' }
+    { value: 'all', label: 'All Categories', folder: 'all' },
+    { value: 'annual-reports', label: 'Annual Reports', folder: 'reports_factsheets' },
+    { value: 'interim-reports', label: 'Interim Reports', folder: 'reports_factsheets' },
+    { value: 'quarterly-reports', label: 'Quarterly Reports', folder: 'reports_factsheets' },
+    { value: 'factsheets', label: 'Monthly Factsheets', folder: 'reports_factsheets' },
+    { value: 'rns', label: 'RNS Announcements', folder: 'rns_feed' },
+    { value: 'regulatory', label: 'Regulatory Documents', folder: 'regulatory_documents' },
+    { value: 'presentations', label: 'Presentations', folder: 'documents' },
+    { value: 'other', label: 'Other Documents', folder: 'documents' }
   ];
 
   const statuses = [
@@ -112,7 +148,23 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
   const filteredDocuments = documents.filter(doc => {
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = filterCategory === 'all' || doc.category === filterCategory;
+    
+    // Handle both folder-based and category-based filtering
+    let matchesCategory = false;
+    if (filterCategory === 'all') {
+      matchesCategory = true;
+    } else if (filterCategory === 'reports_factsheets') {
+      matchesCategory = ['annual-reports', 'interim-reports', 'quarterly-reports', 'factsheets'].includes(doc.category);
+    } else if (filterCategory === 'rns_feed') {
+      matchesCategory = doc.category === 'rns';
+    } else if (filterCategory === 'regulatory_documents') {
+      matchesCategory = doc.category === 'regulatory';
+    } else if (filterCategory === 'documents') {
+      matchesCategory = ['presentations', 'other'].includes(doc.category);
+    } else {
+      matchesCategory = doc.category === filterCategory;
+    }
+    
     const matchesStatus = filterStatus === 'all' || doc.status === filterStatus;
     
     return matchesSearch && matchesCategory && matchesStatus;
@@ -152,6 +204,20 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
     return categories.find(cat => cat.value === category)?.label || category;
   };
 
+  const getFolderFromCategory = (category: string) => {
+    const categoryFolderMap: { [key: string]: string } = {
+      'annual-reports': 'reports_factsheets/',
+      'interim-reports': 'reports_factsheets/',
+      'quarterly-reports': 'reports_factsheets/',
+      'factsheets': 'reports_factsheets/',
+      'rns': 'rns_feed/',
+      'regulatory': 'regulatory_documents/',
+      'presentations': 'documents/',
+      'other': 'documents/'
+    };
+    return categoryFolderMap[category] || 'documents/';
+  };
+
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-GB', {
       day: 'numeric',
@@ -168,6 +234,24 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
           <p className="text-sm text-gray-600 mt-1">
             Manage regulatory documents, reports, and announcements
           </p>
+          <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+            <span className="flex items-center space-x-1">
+              <FolderOpen className="h-3 w-3" />
+              <span>reports_factsheets/</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <FolderOpen className="h-3 w-3" />
+              <span>rns_feed/</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <FolderOpen className="h-3 w-3" />
+              <span>regulatory_documents/</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <FolderOpen className="h-3 w-3" />
+              <span>documents/</span>
+            </span>
+          </div>
         </div>
         <Button 
           onClick={() => setIsUploadDialogOpen(true)}
@@ -176,6 +260,22 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
           <Upload className="h-4 w-4 mr-2" />
           Upload Document
         </Button>
+      </div>
+
+      {/* Folder Tabs */}
+      <div className="mb-6">
+        <Tabs value={filterCategory} onValueChange={setFilterCategory} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 gap-1">
+            <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
+            <TabsTrigger value="reports_factsheets" className="text-xs">Reports & Factsheets</TabsTrigger>
+            <TabsTrigger value="rns_feed" className="text-xs">RNS Feed</TabsTrigger>
+            <TabsTrigger value="regulatory_documents" className="text-xs">Regulatory</TabsTrigger>
+            <TabsTrigger value="documents" className="text-xs">Presentations</TabsTrigger>
+            <TabsTrigger value="annual-reports" className="text-xs">Annual</TabsTrigger>
+            <TabsTrigger value="interim-reports" className="text-xs">Interim</TabsTrigger>
+            <TabsTrigger value="factsheets" className="text-xs">Factsheets</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
 
       {/* Filters and Search */}
@@ -249,6 +349,10 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
                     <span>{doc.size}</span>
                     <span className="px-2 py-1 bg-gray-100 rounded-full text-xs">
                       {getCategoryLabel(doc.category)}
+                    </span>
+                    <span className="flex items-center space-x-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-full text-xs">
+                      <FolderOpen className="h-3 w-3" />
+                      <span>{getFolderFromCategory(doc.category)}</span>
                     </span>
                   </div>
                 </div>
@@ -363,10 +467,9 @@ const DocumentAdminPanel: React.FC<DocumentAdminPanelProps> = ({ className = '' 
       </div>
 
       <DocumentUploadDialog
-        isOpen={isUploadDialogOpen}
-        onClose={() => setIsUploadDialogOpen(false)}
+        open={isUploadDialogOpen}
+        onOpenChange={setIsUploadDialogOpen}
         onUploadSuccess={handleUploadSuccess}
-        categories={categories.filter(cat => cat.value !== 'all')}
       />
     </Card>
   );

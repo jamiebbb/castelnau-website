@@ -29,12 +29,10 @@ ChartJS.register(
 );
 
 type TimePeriod = '1M' | '3M' | '6M' | '1Y' | '2Y' | 'ALL';
-type ChartView = 'price' | 'volume' | 'comparison';
 
 interface PriceData {
   date: string;
   price: number;
-  volume?: number;
 }
 
 const options = {
@@ -53,21 +51,12 @@ const options = {
       backgroundColor: 'rgba(0, 0, 0, 0.9)',
       titleColor: '#ffffff',
       bodyColor: '#ffffff',
-      borderColor: '#00FF00',
+      borderColor: '#3B82F6',
       borderWidth: 1,
       padding: 12,
               callbacks: {
           label: function(context: any) {
-            const label = context.dataset.label || '';
             const value = context.parsed.y;
-            
-            if (label.includes('Volume')) {
-              // Get the original volume value from the data array
-              const dataIndex = context.dataIndex;
-              const rawData = context.chart.data.datasets.find((d: any) => d.label === 'Volume')?.rawVolumes;
-              const originalVolume = rawData?.[dataIndex] || value;
-              return `Volume: ${(originalVolume / 1000).toFixed(0)}K`;
-            }
             return `Share Price: ${value.toFixed(2)}p`;
           },
         title: function(context: any) {
@@ -125,7 +114,6 @@ export const SharePriceGraph = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('1Y');
-  const [chartView, setChartView] = useState<ChartView>('price');
   const [priceChange, setPriceChange] = useState<{ value: number; percentage: number } | null>(null);
 
   const timePeriods: { key: TimePeriod; label: string; days?: number }[] = [
@@ -170,7 +158,6 @@ export const SharePriceGraph = () => {
         const formattedData: PriceData[] = stockData.historicalData.labels.map((label: string, index: number) => ({
           date: label,
           price: stockData.historicalData.prices[index],
-          volume: stockData.dailyData?.volumes?.[index] || Math.floor(Math.random() * 50000) + 10000 // Use real volume if available
         }));
 
         setRawData(formattedData);
@@ -180,7 +167,7 @@ export const SharePriceGraph = () => {
         setPriceChange(change);
         
         // Prepare chart data based on view
-        const chartData = prepareChartData(filteredData, chartView);
+        const chartData = prepareChartData(filteredData);
         setData(chartData);
         
         setLoading(false);
@@ -199,63 +186,23 @@ export const SharePriceGraph = () => {
       const change = calculatePriceChange(filteredData);
       setPriceChange(change);
       
-      const chartData = prepareChartData(filteredData, chartView);
+      const chartData = prepareChartData(filteredData);
       setData(chartData);
     }
-  }, [timePeriod, chartView, rawData]);
+  }, [timePeriod, rawData]);
 
-  const prepareChartData = (data: PriceData[], view: ChartView) => {
+  const prepareChartData = (data: PriceData[]) => {
     const labels = data.map(item => item.date);
     const prices = data.map(item => item.price);
     
-    if (view === 'volume') {
-      // Scale volume to be visible alongside price
-      const maxVolume = Math.max(...data.map(item => item.volume || 0));
-      const maxPrice = Math.max(...prices);
-      const volumeScale = maxPrice / maxVolume * 0.3; // Volume bars at 30% of max price height
-      
-      return {
-        labels,
-        datasets: [
-          {
-            label: 'Share Price',
-            data: prices,
-            borderColor: '#00FF00',
-            backgroundColor: 'rgba(0, 255, 0, 0.1)',
-            fill: false,
-            tension: 0.4,
-            pointRadius: 0,
-            pointHoverRadius: 4,
-            yAxisID: 'y',
-            order: 1,
-          },
-          {
-            label: 'Volume',
-            data: data.map(item => (item.volume || 0) * volumeScale),
-            rawVolumes: data.map(item => item.volume || 0), // Store original values for tooltip
-            borderColor: 'rgba(59, 130, 246, 0.8)',
-            backgroundColor: 'rgba(59, 130, 246, 0.2)',
-            fill: true,
-            tension: 0,
-            pointRadius: 0,
-            pointHoverRadius: 4,
-            yAxisID: 'y',
-            order: 2,
-            type: 'bar' as const,
-          },
-        ],
-      };
-    }
-    
-    // Default price view
     return {
       labels,
       datasets: [
         {
           label: 'Share Price',
           data: prices,
-          borderColor: '#00FF00',
-          backgroundColor: 'rgba(0, 255, 0, 0.1)',
+          borderColor: '#3B82F6',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
           fill: true,
           tension: 0.4,
           pointRadius: 0,
@@ -308,46 +255,22 @@ export const SharePriceGraph = () => {
             </div>
           )}
         </div>
-        
-        {/* Chart View Toggle */}
-        <div className="flex items-center space-x-2">
-          <Button
-            variant={chartView === 'price' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => setChartView('price')}
-            className={chartView === 'price' ? 'bg-castelnau-green text-black' : 'text-gray-300 border-gray-600'}
-          >
-            <BarChart3 className="h-3 w-3 mr-1" />
-            Price
-          </Button>
-          <Button
-            variant={chartView === 'volume' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => setChartView('volume')}
-            className={chartView === 'volume' ? 'bg-castelnau-green text-black' : 'text-gray-300 border-gray-600'}
-          >
-            <Calendar className="h-3 w-3 mr-1" />
-            Volume
-          </Button>
-        </div>
       </div>
 
       {/* Time Period Selector */}
       <div className="flex flex-wrap gap-2 mb-6">
         {timePeriods.map((period) => (
-          <Button
+          <button
             key={period.key}
-            variant={timePeriod === period.key ? 'default' : 'outline'}
-            size="sm"
             onClick={() => setTimePeriod(period.key)}
-            className={`text-xs ${
+            className={`px-3 py-1.5 text-xs rounded-lg transition-all duration-200 ${
               timePeriod === period.key 
-                ? 'bg-castelnau-green text-black hover:bg-castelnau-green/80' 
-                : 'text-gray-300 border-gray-600 hover:bg-gray-700'
+                ? 'bg-blue-600 text-white shadow-lg' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
             }`}
           >
             {period.label}
-          </Button>
+          </button>
         ))}
       </div>
 
