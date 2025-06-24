@@ -184,8 +184,8 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="documents" className="space-y-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <Tabs defaultValue="documents" className="space-y-6">
+          <div className="bg-white p-6 rounded-lg shadow-sm border mb-6">
             <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-none lg:inline-grid">
               <TabsTrigger value="documents" className="flex items-center space-x-2">
                 <FileText className="h-4 w-4" />
@@ -206,7 +206,7 @@ export default function AdminPage() {
             </TabsList>
           </div>
 
-          <TabsContent value="documents" className="space-y-6 mt-8">
+          <TabsContent value="documents" className="space-y-6">
             <div className="grid gap-6">
               <Card className="p-6">
                 <h2 className="text-lg font-semibold mb-4">Document Categories</h2>
@@ -234,14 +234,14 @@ export default function AdminPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="rns" className="space-y-6 mt-8">
+          <TabsContent value="rns" className="space-y-6">
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">RNS Feed Management</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div>
                     <h3 className="font-medium text-blue-900">Manual RNS Document Upload</h3>
-                    <p className="text-sm text-blue-700">Upload RNS announcements as PDF documents to the RNS feed folder</p>
+                    <p className="text-sm text-blue-700">For static sites: Upload PDF files directly to the GitHub repository in /public/rns_feed/, then commit and push changes</p>
                   </div>
                   <Button 
                     size="sm"
@@ -249,7 +249,7 @@ export default function AdminPage() {
                     className="bg-blue-600 hover:bg-blue-700"
                   >
                     <Upload className="h-4 w-4 mr-2" />
-                    Upload RNS
+                    Try Upload (Demo)
                   </Button>
                 </div>
                 
@@ -267,23 +267,26 @@ export default function AdminPage() {
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="font-medium mb-2">Current RNS Documents</h3>
-                  <p className="text-sm text-gray-600 mb-3">Documents uploaded to the RNS feed will appear on the investor relations page automatically.</p>
+                  <h3 className="font-medium mb-2">GitHub Pages File Upload Instructions</h3>
+                  <p className="text-sm text-gray-600 mb-3">Since this is a static site, files must be uploaded directly to the GitHub repository.</p>
                   <div className="text-xs text-gray-500">
-                    <p>✓ Upload PDF files for RNS announcements</p>
-                    <p>✓ Files are automatically organized by date</p>
-                    <p>✓ Documents appear immediately on the investor relations page</p>
+                    <p>1. Upload PDF files to the appropriate folder in <code>/public/</code>:</p>
+                    <p>&nbsp;&nbsp;&nbsp;• RNS documents → <code>/public/rns_feed/</code></p>
+                    <p>&nbsp;&nbsp;&nbsp;• Reports/Factsheets → <code>/public/reports_factsheets/</code></p>
+                    <p>&nbsp;&nbsp;&nbsp;• Regulatory docs → <code>/public/regulatory_documents/</code></p>
+                    <p>2. Commit and push changes to GitHub</p>
+                    <p>3. Documents will appear on the site after deployment</p>
                   </div>
                 </div>
               </div>
             </Card>
           </TabsContent>
 
-          <TabsContent value="media" className="space-y-6 mt-8">
+          <TabsContent value="media" className="space-y-6">
             <MediaAdminPanel />
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-6 mt-8">
+          <TabsContent value="settings" className="space-y-6">
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">System Settings</h2>
               <div className="space-y-6">

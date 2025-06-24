@@ -42,10 +42,10 @@ export default function StockPriceDisplay() {
       <div className="flex flex-col group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
         <div className="flex items-center space-x-1">
           <span className="text-white text-sm group-hover:text-white/90 transition-colors">NAV:</span>
-          <span className="text-white font-bold text-base group-hover:scale-105 transition-transform">£1.01</span>
+          <span className="text-white font-bold text-base group-hover:scale-105 transition-transform">£1.00</span>
         </div>
         <div className="text-white/60 text-xs mt-1">
-          Updated: 28/02/25
+          Updated: 24/06/25
         </div>
       </div>
       

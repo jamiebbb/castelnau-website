@@ -8,15 +8,14 @@ import path from 'path';
 export async function POST(request: NextRequest) {
   try {
     // In static export mode, this API won't be available in production
-    if (process.env.NODE_ENV === 'production') {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'File upload API not available in static export mode. Please upload files manually to the appropriate category folders in public.' 
-        },
-        { status: 501 }
-      );
-    }
+    // For GitHub Pages deployment, files must be uploaded directly to the repository
+    return NextResponse.json(
+      { 
+        success: false, 
+        message: 'File uploads for static sites require manual GitHub repository updates. Please upload files directly to the appropriate folders in the public directory of your GitHub repository, then commit and push the changes.' 
+      },
+      { status: 501 }
+    );
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
