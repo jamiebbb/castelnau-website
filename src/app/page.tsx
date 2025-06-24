@@ -11,8 +11,8 @@ const Index = () => {
   return (
     <>
       <PageHero 
-        title="Creating Value with Permanence and Vision"
-        description="A leading investment management company focused on delivering exceptional results through disciplined investment."
+        title="We compound shareholders' capital at high rates of return."
+        description="Creating value with permanence and vision"
         showButtons={true}
       />
       <About />

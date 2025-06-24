@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" fill="none">
+  <!-- Bridge towers and structure -->
+  <g fill="#2D5A3D">
+    <!-- Left tower -->
+    <rect x="60" y="80" width="8" height="60"/>
+    <rect x="56" y="75" width="16" height="8"/>
+    <polygon points="56,75 64,65 72,75"/>
+    
+    <!-- Right tower -->
+    <rect x="120" y="80" width="8" height="60"/>
+    <rect x="116" y="75" width="16" height="8"/>
+    <polygon points="116,75 124,65 132,75"/>
+    
+    <!-- Bridge deck -->
+    <rect x="68" y="95" width="52" height="4"/>
+    
+    <!-- Cables -->
+    <path d="M64 70 L94 95 L124 70" stroke="#2D5A3D" stroke-width="1" fill="none"/>
+    <path d="M64 72 L94 97 L124 72" stroke="#2D5A3D" stroke-width="1" fill="none"/>
+    
+    <!-- Water waves -->
+    <path d="M40 140 Q50 135 60 140 T80 140 T100 140 T120 140 T140 140 T160 140" stroke="#2D5A3D" stroke-width="2" fill="none"/>
+    <path d="M45 145 Q55 140 65 145 T85 145 T105 145 T125 145 T145 145 T165 145" stroke="#2D5A3D" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Company name -->
+  <text x="60" y="170" font-family="serif" font-size="32" font-weight="bold" fill="#2D5A3D">Castelnau</text>
+  <text x="90" y="190" font-family="sans-serif" font-size="12" font-weight="normal" fill="#2D5A3D" letter-spacing="3px">G R O U P</text>
+</svg> 
