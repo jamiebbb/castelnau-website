@@ -137,6 +137,8 @@ async function getCSVStockData(): Promise<StockData | null> {
     const csvText = await response.text();
     const lines = csvText.split('\n').slice(1); // Skip header row
     
+    console.log(`CSV file has ${lines.length} data lines`);
+    
     // Parse CSV data
     const parsedData = lines
       .filter(line => line.trim()) // Remove empty lines
@@ -175,6 +177,9 @@ async function getCSVStockData(): Promise<StockData | null> {
         // Remove duplicates based on date
         return index === 0 || item.date.getTime() !== array[index - 1].date.getTime();
       });
+
+    console.log(`After parsing and filtering: ${parsedData.length} valid data points`);
+    console.log(`Date range: ${parsedData[0]?.dateStr} to ${parsedData[parsedData.length - 1]?.dateStr}`);
     
     if (parsedData.length === 0) {
       throw new Error('No valid data found in CSV');
@@ -207,7 +212,8 @@ async function getCSVStockData(): Promise<StockData | null> {
       }
     };
     
-    console.log(`Loaded ${parsedData.length} data points from CSV file`);
+    console.log(`Created stock data with ${transformedData.historicalData.labels.length} historical data points`);
+    console.log(`Last 5 labels:`, transformedData.historicalData.labels.slice(-5));
     return transformedData;
   } catch (error) {
     console.error('Error loading CSV stock data:', error);
@@ -416,7 +422,33 @@ export function clearStockDataCache(): void {
 
 // Clear cache on load to ensure fresh data
 if (typeof window !== 'undefined') {
-  clearStockDataCache();
+  // Clear all possible cache keys immediately
+  const allPossibleKeys = [
+    CACHE_KEY,
+    DAILY_CACHE_KEY,
+    API_CALL_LIMIT_KEY,
+    'stock_data_cache',
+    'stock_data_daily_cache',
+    'api_call_count',
+    'last_api_call_date',
+    'stockData',
+    'stockDataDaily'
+  ];
+  
+  allPossibleKeys.forEach(key => {
+    localStorage.removeItem(key);
+  });
+  
+  // Also clear any keys that might start with stock
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.toLowerCase().includes('stock')) {
+      localStorage.removeItem(key);
+      i--; // Adjust index since we removed an item
+    }
+  }
+  
+  console.log('🧹 All stock data cache cleared aggressively - fresh data will be fetched');
 }
 
 // Function to validate and fix cached data that might have incorrect scaling

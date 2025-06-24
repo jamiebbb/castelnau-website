@@ -113,7 +113,7 @@ export const SharePriceGraph = () => {
   const [rawData, setRawData] = useState<PriceData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [timePeriod, setTimePeriod] = useState<TimePeriod>('1Y');
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('ALL');
   const [priceChange, setPriceChange] = useState<{ value: number; percentage: number } | null>(null);
 
   const timePeriods: { key: TimePeriod; label: string; days?: number }[] = [
@@ -154,15 +154,35 @@ export const SharePriceGraph = () => {
         setLoading(true);
         const stockData = await getEnhancedStockData();
         
+        console.log('SharePriceGraph received stock data:', {
+          totalLabels: stockData.historicalData.labels.length,
+          firstLabel: stockData.historicalData.labels[0],
+          lastLabel: stockData.historicalData.labels[stockData.historicalData.labels.length - 1],
+          lastFiveLabels: stockData.historicalData.labels.slice(-5)
+        });
+        
         // Data is already in chronological order from the API
         const formattedData: PriceData[] = stockData.historicalData.labels.map((label: string, index: number) => ({
           date: label,
           price: stockData.historicalData.prices[index],
         }));
 
+        console.log('Formatted data:', {
+          totalPoints: formattedData.length,
+          firstDate: formattedData[0]?.date,
+          lastDate: formattedData[formattedData.length - 1]?.date,
+          lastFiveDates: formattedData.slice(-5).map(d => d.date)
+        });
+
         setRawData(formattedData);
         
         const filteredData = filterDataByPeriod(formattedData, timePeriod);
+        console.log(`Filtered data for ${timePeriod}:`, {
+          totalPoints: filteredData.length,
+          firstDate: filteredData[0]?.date,
+          lastDate: filteredData[filteredData.length - 1]?.date
+        });
+        
         const change = calculatePriceChange(filteredData);
         setPriceChange(change);
         
