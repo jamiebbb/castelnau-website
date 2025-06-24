@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DocumentAdminPanel from '@/components/admin/DocumentAdminPanel';
 import MediaAdminPanel from '@/components/admin/MediaAdminPanel';
+import DocumentUploadDialog from '@/components/admin/DocumentUploadDialog';
 import { Shield, Lock, Upload, FileText, Settings, Users, Database, Video } from 'lucide-react';
 
 interface AuthState {
@@ -26,6 +27,7 @@ export default function AdminPage() {
     username: '',
     password: ''
   });
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
   useEffect(() => {
     // Check if already authenticated (session storage)
@@ -84,6 +86,11 @@ export default function AdminPage() {
     setAuth({ isAuthenticated: false, isLoading: false, error: null });
     sessionStorage.removeItem('admin_authenticated');
     setCredentials({ username: '', password: '' });
+  };
+
+  const handleUploadSuccess = () => {
+    setIsUploadDialogOpen(false);
+    // Optionally refresh any document lists or show success message
   };
 
   if (!auth.isAuthenticated) {
@@ -334,6 +341,12 @@ export default function AdminPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <DocumentUploadDialog
+        open={isUploadDialogOpen}
+        onOpenChange={setIsUploadDialogOpen}
+        onUploadSuccess={handleUploadSuccess}
+      />
     </div>
   );
 } 
