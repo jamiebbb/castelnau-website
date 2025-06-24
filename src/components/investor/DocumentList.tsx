@@ -186,9 +186,9 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
         ) : (
           documents.map((doc) => (
             <div key={doc.id} className="group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200">
-              <div className="flex items-start justify-between">
-                <div className="flex items-start space-x-3 flex-1">
-                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors flex-shrink-0">
                     <FileText className="h-4 w-4 text-blue-600" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -196,12 +196,12 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
                       <h4 className="font-medium text-gray-900 truncate">{doc.title}</h4>
                       <Badge 
                         variant="secondary" 
-                        className={`text-xs ${getCategoryColor(doc.category)}`}
+                        className={`text-xs flex-shrink-0 ${getCategoryColor(doc.category)}`}
                       >
                         {getCategoryLabel(doc.category)}
                       </Badge>
                     </div>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 mb-2">
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
                       <span className="flex items-center">
                         <Calendar className="h-3 w-3 mr-1" />
                         {formatDate(doc.date)}
@@ -209,12 +209,9 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
                       <span>{doc.size}</span>
                       <span className="uppercase">{doc.type}</span>
                     </div>
-                    {doc.description && (
-                      <p className="text-sm text-gray-600 line-clamp-2">{doc.description}</p>
-                    )}
                   </div>
                 </div>
-                <div className="ml-4 flex-shrink-0">
+                <div className="ml-4 flex-shrink-0 self-center">
                   <Button 
                     variant="ghost" 
                     size="sm" 
