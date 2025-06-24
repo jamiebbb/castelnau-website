@@ -139,13 +139,21 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
   };
 
   const handleDownload = (doc: Document) => {
-    // In production, this would handle actual file downloads
-    if (doc.url.startsWith('/documents/')) {
-      // For now, we'll simulate a download or open in new tab
-      window.open(doc.url, '_blank');
-    } else {
-      console.log('Download:', doc.title);
-    }
+    // Handle basePath for production
+    const isProduction = process.env.NODE_ENV === 'production';
+    const basePath = isProduction ? '/castelnau-website' : '';
+    const fullUrl = `${basePath}${doc.url}`;
+    
+    // Create a temporary link element to trigger download
+    const link = document.createElement('a');
+    link.href = fullUrl;
+    link.download = doc.title.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf'; // Clean filename
+    link.target = '_blank';
+    
+    // Temporarily add to DOM, click, then remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (loading) {

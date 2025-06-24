@@ -130,11 +130,21 @@ export const Factsheets = () => {
   };
 
   const handleDownload = (report: Report) => {
-    if (report.url.startsWith('/documents/')) {
-      window.open(report.url, '_blank');
-    } else {
-      console.log('Download:', report.title);
-    }
+    // Handle basePath for production
+    const isProduction = process.env.NODE_ENV === 'production';
+    const basePath = isProduction ? '/castelnau-website' : '';
+    const fullUrl = `${basePath}${report.url}`;
+    
+    // Create a temporary link element to trigger download
+    const link = document.createElement('a');
+    link.href = fullUrl;
+    link.download = report.title.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf'; // Clean filename
+    link.target = '_blank';
+    
+    // Temporarily add to DOM, click, then remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (

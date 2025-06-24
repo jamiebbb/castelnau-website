@@ -138,7 +138,21 @@ export const RegulatoryDocuments = () => {
     : documents.filter(doc => doc.type === selectedType);
 
   const handleDownload = (doc: RegulatoryDocument) => {
-    window.open(doc.url, '_blank');
+    // Handle basePath for production
+    const isProduction = process.env.NODE_ENV === 'production';
+    const basePath = isProduction ? '/castelnau-website' : '';
+    const fullUrl = `${basePath}${doc.url}`;
+    
+    // Create a temporary link element to trigger download
+    const link = document.createElement('a');
+    link.href = fullUrl;
+    link.download = doc.filename; // This triggers download instead of opening
+    link.target = '_blank';
+    
+    // Temporarily add to DOM, click, then remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
