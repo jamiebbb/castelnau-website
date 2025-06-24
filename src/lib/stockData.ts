@@ -128,9 +128,13 @@ function fixPriceScaling(price: number): number {
 async function getCSVStockData(): Promise<StockData | null> {
   try {
     // Try multiple possible paths for the CSV file
+    const isProduction = process.env.NODE_ENV === 'production';
+    const basePath = isProduction ? '/castelnau-website' : '';
+    
     const possiblePaths = [
+      `${basePath}/liveprice_nav.csv?_t=${Date.now()}`,
       `/liveprice_nav.csv?_t=${Date.now()}`,
-      `/api/csv?_t=${Date.now()}`,
+      ...(isProduction ? [] : [`/api/csv?_t=${Date.now()}`]), // API route only works in development
       `/public/liveprice_nav.csv?_t=${Date.now()}`,
       `./liveprice_nav.csv?_t=${Date.now()}`,
       `./public/liveprice_nav.csv?_t=${Date.now()}`
