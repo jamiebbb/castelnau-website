@@ -134,7 +134,6 @@ async function getCSVStockData(): Promise<StockData | null> {
     const possiblePaths = [
       `${basePath}/liveprice_nav.csv?_t=${Date.now()}`,
       `/liveprice_nav.csv?_t=${Date.now()}`,
-      ...(isProduction ? [] : [`/api/csv?_t=${Date.now()}`]), // API route only works in development
       `/public/liveprice_nav.csv?_t=${Date.now()}`,
       `./liveprice_nav.csv?_t=${Date.now()}`,
       `./public/liveprice_nav.csv?_t=${Date.now()}`
