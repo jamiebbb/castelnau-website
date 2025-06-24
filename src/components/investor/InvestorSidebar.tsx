@@ -48,30 +48,20 @@ const InvestorSidebar: React.FC = () => {
       <div className="bg-gray-50 p-6 rounded-lg">
         <h3 className="text-xl font-bold text-castelnau-green mb-4">Quick Links</h3>
         <div className="space-y-2">
-          <a href="#share-price" 
+          <a href="#reports-factsheets" 
              className="block text-castelnau-green hover:underline"
-             onClick={(e) => handleLinkClick(e, 'share-price')}>
-            Share Price
+             onClick={(e) => handleLinkClick(e, 'reports-factsheets')}>
+            Reports & Factsheets
+          </a>
+          <a href="#rns-feed" 
+             className="block text-castelnau-green hover:underline"
+             onClick={(e) => handleLinkClick(e, 'rns-feed')}>
+            RNS Feed
           </a>
           <a href="#regulatory-documents" 
              className="block text-castelnau-green hover:underline"
              onClick={(e) => handleLinkClick(e, 'regulatory-documents')}>
             Regulatory Documents
-          </a>
-          <a href="#factsheets" 
-             className="block text-castelnau-green hover:underline"
-             onClick={(e) => handleLinkClick(e, 'factsheets')}>
-            Factsheets
-          </a>
-          <a href="#rns" 
-             className="block text-castelnau-green hover:underline"
-             onClick={(e) => handleLinkClick(e, 'rns')}>
-            RNS Announcements
-          </a>
-          <a href="#reports" 
-             className="block text-castelnau-green hover:underline"
-             onClick={(e) => handleLinkClick(e, 'reports')}>
-            Reports & Presentations
           </a>
         </div>
       </div>
