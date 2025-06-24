@@ -127,14 +127,40 @@ function fixPriceScaling(price: number): number {
 // Function to load data from CSV file
 async function getCSVStockData(): Promise<StockData | null> {
   try {
-    // Force fresh fetch of CSV data with cache busting
-    const response = await fetch(`/liveprice_nav.csv?_t=${Date.now()}`);
-    if (!response.ok) {
-      console.log('CSV stock data file not found, will try JSON fallback');
+    // Try multiple possible paths for the CSV file
+    const possiblePaths = [
+      `/liveprice_nav.csv?_t=${Date.now()}`,
+      `/api/csv?_t=${Date.now()}`,
+      `/public/liveprice_nav.csv?_t=${Date.now()}`,
+      `./liveprice_nav.csv?_t=${Date.now()}`,
+      `./public/liveprice_nav.csv?_t=${Date.now()}`
+    ];
+    
+    let response: Response | null = null;
+    let csvText = '';
+    
+    // Try each path until one works
+    for (const path of possiblePaths) {
+      try {
+        console.log(`Trying to fetch CSV from: ${path}`);
+        response = await fetch(path);
+        if (response.ok) {
+          csvText = await response.text();
+          console.log(`✅ Successfully loaded CSV from: ${path}`);
+          break;
+        } else {
+          console.log(`❌ Failed to load CSV from: ${path} (Status: ${response.status})`);
+        }
+      } catch (error) {
+        console.log(`❌ Error fetching from ${path}:`, error);
+      }
+    }
+    
+    if (!csvText) {
+      console.log('❌ Could not load CSV from any path, will try JSON fallback');
       return null;
     }
     
-    const csvText = await response.text();
     const lines = csvText.split('\n').slice(1); // Skip header row
     
     console.log(`CSV file has ${lines.length} data lines`);
