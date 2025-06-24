@@ -45,7 +45,7 @@ export default function StockPriceDisplay() {
           <span className="text-white font-bold text-base group-hover:scale-105 transition-transform">£1.00</span>
         </div>
         <div className="text-white/60 text-xs mt-1">
-          Updated: 24/06/25
+          Updated: 31/05/25
         </div>
       </div>
       

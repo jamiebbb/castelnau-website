@@ -127,7 +127,8 @@ function fixPriceScaling(price: number): number {
 // Function to load data from CSV file
 async function getCSVStockData(): Promise<StockData | null> {
   try {
-    const response = await fetch('/liveprice_nav.csv');
+    // Force fresh fetch of CSV data with cache busting
+    const response = await fetch(`/liveprice_nav.csv?_t=${Date.now()}`);
     if (!response.ok) {
       console.log('CSV stock data file not found, will try JSON fallback');
       return null;
@@ -214,62 +215,19 @@ async function getCSVStockData(): Promise<StockData | null> {
   }
 }
 
-// Function to load data from local JSON file
+// Function to load data from local files
 async function getLocalStockData(): Promise<StockData | null> {
   try {
-    // First try merged CSV + API data (highest priority)
-    const mergedData = await getMergedStockData();
-    if (mergedData) {
-      return mergedData;
-    }
-    
-    // Fallback to CSV only
+    // Primary: CSV file (highest priority)
     const csvData = await getCSVStockData();
     if (csvData) {
+      console.log('Using CSV data as primary source');
       return csvData;
     }
     
-    // Fallback to JSON file
-    const response = await fetch('/stock-data-history.json');
-    if (!response.ok) {
-      console.log('Local stock data file not found, will use API fallback');
-      return null;
-    }
-    
-    const localData = await response.json();
-    
-    // Convert the daily data format to our expected format
-    const dailyEntries = Object.entries(localData.dailyData).sort(([a], [b]) => 
-      new Date(a).getTime() - new Date(b).getTime()
-    );
-    
-    // Get the last 250 entries for better chart performance
-    const recentEntries = dailyEntries.slice(-250);
-    
-    const transformedData: StockData = {
-      currentPrice: localData.currentPrice,
-      marketCap: localData.marketCap,
-      lastUpdated: localData.lastUpdated,
-      historicalData: {
-        labels: recentEntries.map(([date]) => {
-          const d = new Date(date);
-          return d.toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-          });
-        }),
-        prices: recentEntries.map(([, data]: [string, any]) => data.close)
-      },
-      dailyData: {
-        labels: recentEntries.map(([date]) => new Date(date).toLocaleDateString('en-GB')),
-        prices: recentEntries.map(([, data]: [string, any]) => data.close),
-        volumes: recentEntries.map(([, data]: [string, any]) => data.volume)
-      }
-    };
-    
-    console.log('Using local stock data file - no API calls needed');
-    return transformedData;
+    // No JSON file fallback - we deleted it to force CSV usage
+    console.log('CSV file not found, will use API fallback');
+    return null;
   } catch (error) {
     console.error('Error loading local stock data:', error);
     return null;
