@@ -15,7 +15,7 @@ export default function StockPriceDisplay() {
       const data = await getStockData();
       // Format price as £0.XX instead of XXp
       setPrice('£' + (data.currentPrice / 100).toFixed(2));
-      setMarketCap((data.marketCap / 1000000).toFixed(0) + 'M');
+      setMarketCap((data.marketCap / 1000000).toFixed(1) + 'M');
       setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     };
     fetchData();

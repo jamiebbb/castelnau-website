@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <Image
-                src="/brand/logos/castelnau-logo.png"
+                src="https://jamiebbb.github.io/castelnau-website/brand/logos/castelnau-logo.png"
                 alt="Castelnau Group"
                 width={120}
                 height={60}
