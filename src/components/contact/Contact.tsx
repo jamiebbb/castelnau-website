@@ -39,15 +39,6 @@ const Contact = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <p className="text-castelnau-green font-medium mb-2">Get in touch</p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-castelnau-dark-green mb-4">
-              Contact us
-            </h2>
-            <div className="w-16 h-1 bg-castelnau-green mx-auto"></div>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -208,29 +199,23 @@ const Contact = () => {
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-castelnau-green" />
-                    <a href="tel:02088768101" className="text-castelnau-green hover:underline">
-                      Fax: 0208 876 8101
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-castelnau-green" />
-                    <a href="mailto:phoenix@pamplc.com" className="text-castelnau-green hover:underline">
-                      Email: phoenix@pamplc.com
+                    <a href="mailto:info@pamp.com" className="text-castelnau-green hover:underline">
+                      Email: info@pamp.com
                     </a>
                   </div>
                 </div>
-
-                <p className="text-sm text-gray-600 mt-6">
-                  <a href="#" className="text-castelnau-green hover:underline">Click here</a> for the complaints procedure.
-                </p>
               </div>
 
               {/* Castelnau Group Limited */}
               <div className="bg-white p-8 rounded-lg shadow-lg">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-castelnau-green rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-bold text-lg">C</span>
+                  <div className="w-12 h-12 bg-transparent rounded-lg flex items-center justify-center mr-4">
+                    <img 
+                      src="/brand/logos/logo-green-transparent.png" 
+                      alt="Castelnau Group" 
+                      className="w-10 h-10"
+                    />
                   </div>
                   <h3 className="text-xl font-bold text-castelnau-dark-green">Castelnau Group Limited</h3>
                 </div>
@@ -261,9 +246,11 @@ const Contact = () => {
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="w-5 h-5 bg-blue-600 rounded"></div>
+                    <svg className="h-5 w-5 text-castelnau-green" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
                     <a href="https://www.linkedin.com/company/castelnau-group-ltd" target="_blank" rel="noopener noreferrer" className="text-castelnau-green hover:underline">
-                      Castelnau Group Ltd LinkedIn
+                      LinkedIn
                     </a>
                   </div>
                 </div>
