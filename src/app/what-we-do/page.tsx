@@ -10,6 +10,7 @@ const WhatWeDoPage = () => {
       <PageHero 
         title="What We Do"
         description="Learn about our investment philosophy and approach to value creation"
+        waveColor="#f9fafb"
       />
       <WhatWeDo />
     </>

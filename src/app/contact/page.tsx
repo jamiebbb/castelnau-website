@@ -10,6 +10,7 @@ const ContactPage = () => {
       <PageHero 
         title="Contact Us"
         description="Get in touch with our team for any inquiries or opportunities"
+        waveColor="#f9fafb"
       />
       <Contact />
     </>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -19,6 +19,51 @@ const Navbar = () => {
   const [whoWeAreOpen, setWhoWeAreOpen] = useState(false);
   const [investorOpen, setInvestorOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Refs for managing dropdown timeouts
+  const whoWeAreTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const investorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Helper functions for dropdown hover behavior
+  const handleWhoWeAreMouseEnter = () => {
+    if (whoWeAreTimeoutRef.current) {
+      clearTimeout(whoWeAreTimeoutRef.current);
+      whoWeAreTimeoutRef.current = null;
+    }
+    setWhoWeAreOpen(true);
+  };
+
+  const handleWhoWeAreMouseLeave = () => {
+    whoWeAreTimeoutRef.current = setTimeout(() => {
+      setWhoWeAreOpen(false);
+    }, 150); // 150ms delay before closing
+  };
+
+  const handleInvestorMouseEnter = () => {
+    if (investorTimeoutRef.current) {
+      clearTimeout(investorTimeoutRef.current);
+      investorTimeoutRef.current = null;
+    }
+    setInvestorOpen(true);
+  };
+
+  const handleInvestorMouseLeave = () => {
+    investorTimeoutRef.current = setTimeout(() => {
+      setInvestorOpen(false);
+    }, 150); // 150ms delay before closing
+  };
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (whoWeAreTimeoutRef.current) {
+        clearTimeout(whoWeAreTimeoutRef.current);
+      }
+      if (investorTimeoutRef.current) {
+        clearTimeout(investorTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleWhoWeAreSectionClick = (
     sectionId: string,
@@ -33,7 +78,9 @@ const Navbar = () => {
         scrollToElement(sectionId);
       }
     } else {
-      window.location.href = `/who-we-are#${sectionId}`;
+      window.location.href = `${
+        process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+      }/who-we-are#${sectionId}`;
     }
   };
 
@@ -207,8 +254,8 @@ const Navbar = () => {
                 <Button
                   variant="transparent"
                   className="text-white hover:text-white text-base px-4 py-2"
-                  onMouseEnter={() => setWhoWeAreOpen(true)}
-                  onMouseLeave={() => setWhoWeAreOpen(false)}
+                  onMouseEnter={handleWhoWeAreMouseEnter}
+                  onMouseLeave={handleWhoWeAreMouseLeave}
                   onClick={() => setWhoWeAreOpen(false)}
                 >
                   Who We Are <ChevronDown className="h-4 w-4 ml-1" />
@@ -217,11 +264,13 @@ const Navbar = () => {
               {whoWeAreOpen && (
                 <div
                   className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 min-w-[200px] z-50"
-                  onMouseEnter={() => setWhoWeAreOpen(true)}
-                  onMouseLeave={() => setWhoWeAreOpen(false)}
+                  onMouseEnter={handleWhoWeAreMouseEnter}
+                  onMouseLeave={handleWhoWeAreMouseLeave}
                 >
                   <Link
-                    href="/who-we-are#our-values"
+                    href={`${
+                      process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                    }/who-we-are#our-values`}
                     onClick={(e) => handleWhoWeAreSectionClick("our-values", e)}
                   >
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
@@ -229,7 +278,9 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <Link
-                    href="/who-we-are#our-team"
+                    href={`${
+                      process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                    }/who-we-are#our-team`}
                     onClick={(e) => handleWhoWeAreSectionClick("our-team", e)}
                   >
                     <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
@@ -259,8 +310,8 @@ const Navbar = () => {
                 <Button
                   variant="transparent"
                   className="text-white hover:text-white text-base px-4 py-2"
-                  onMouseEnter={() => setInvestorOpen(true)}
-                  onMouseLeave={() => setInvestorOpen(false)}
+                  onMouseEnter={handleInvestorMouseEnter}
+                  onMouseLeave={handleInvestorMouseLeave}
                   onClick={() => setInvestorOpen(false)}
                 >
                   Investor Relations
@@ -270,8 +321,8 @@ const Navbar = () => {
               {investorOpen && (
                 <div
                   className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 min-w-[200px] z-50"
-                  onMouseEnter={() => setInvestorOpen(true)}
-                  onMouseLeave={() => setInvestorOpen(false)}
+                  onMouseEnter={handleInvestorMouseEnter}
+                  onMouseLeave={handleInvestorMouseLeave}
                 >
                   <Link
                     href={`${

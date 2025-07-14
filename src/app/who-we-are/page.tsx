@@ -12,6 +12,7 @@ const WhoWeArePage = () => {
       <PageHero 
         title="Who We Are"
         description="Meet our team and discover the values that drive our investment approach"
+        waveColor="#f9fafb"
       />
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">

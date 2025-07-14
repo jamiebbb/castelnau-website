@@ -16,6 +16,7 @@ export default function InvestorRelationsPage() {
       <PageHero
         title="Investor Relations"
         description="Access key information, financial reports, and updates for Castelnau Group Limited shareholders and investors."
+        waveColor="#f9fafb"
       />
 
       <div className="container mx-auto px-4 py-8">

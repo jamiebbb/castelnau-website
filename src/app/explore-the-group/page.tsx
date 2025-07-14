@@ -137,6 +137,7 @@ const ExploreTheGroup = () => {
       <PageHero 
         title="Explore the Group"
         description="Discover our portfolio of exceptional businesses built for the long term"
+        waveColor="#f9fafb"
       />
 
       {/* Stats Section */}

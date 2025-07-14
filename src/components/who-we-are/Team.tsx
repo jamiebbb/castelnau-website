@@ -49,13 +49,6 @@ const TeamMember = ({ name, role, imageSrc, slug }: TeamMemberProps) => (
 const Team = () => {
   const castelnauTeam: TeamMemberData[] = [
     {
-      name: "Gary Channon",
-      role: "Chief Investment Officer",
-      bio: "Gary co-founded Phoenix Asset Management Partners Ltd in 1998 and has been the Chief Investment Officer since inception. Using the same strategy applied to the flagship Phoenix UK Fund, Gary also manages additional segregated accounts for institutional clients. Gary brings over 33 years of business and financial services experience. His career began in Fixed Income Trading at Nikko Securities Europe in 1987. He joined Goldman Sachs in 1989, working in Global Equity Derivative Products Trading. In 1992, Gary joined Nomura International PLC as Head of Equity Derivative Trading. He remained at Nomura International as Co-Head of Equity and Equity Derivatives Trading until moving on to co-found Phoenix. Gary's investment approach at Phoenix is long-term, value-based and focused. He looks out for businesses run by competent, honest managers, who act in the interest of shareholders. Ideal companies have strong pricing power to generate an enduring high return on capital. Gary identifies great companies with good management, and waits for the opportunity to invest in them at attractive prices. He lives and works in Barnes, South West London.",
-      imageSrc: "/team_images/gary_channon.jpg",
-      slug: "gary-channon",
-    },
-    {
       name: "Richard Brown",
       role: "Chief Executive Officer",
       bio: "A former investment banker, Richard has over 14 years of corporate finance experience. He has advised firms ranging from the largest FTSE 100 companies to private businesses, UK-focused as well as international. Richard has also played an instrumental part in numerous high-profile M&A and ECM transactions and has significant experience of acting more generally as a key boardroom adviser. Richard most recently worked for more than seven years at Morgan Stanley in its UK investment banking and corporate broking team. He has previously worked at Peel Hunt and Barclays, having initially qualified as a chartered accountant at KPMG.",
@@ -151,6 +144,23 @@ const Team = () => {
     },
   ];
 
+  const phoenixTeam: TeamMemberData[] = [
+    {
+      name: "Gary Channon",
+      role: "Chief Investment Officer & Co-Founder",
+      bio: "Gary co-founded Phoenix Asset Management Partners Ltd in 1998 and has been the Chief Investment Officer since inception. Using the same strategy applied to the flagship Phoenix UK Fund, Gary also manages additional segregated accounts for institutional clients. Gary brings over 33 years of business and financial services experience. His career began in Fixed Income Trading at Nikko Securities Europe in 1987. He joined Goldman Sachs in 1989, working in Global Equity Derivative Products Trading. In 1992, Gary joined Nomura International PLC as Head of Equity Derivative Trading. He remained at Nomura International as Co-Head of Equity and Equity Derivatives Trading until moving on to co-found Phoenix. Gary's investment approach at Phoenix is long-term, value-based and focused. He looks out for businesses run by competent, honest managers, who act in the interest of shareholders. Ideal companies have strong pricing power to generate an enduring high return on capital. Gary identifies great companies with good management, and waits for the opportunity to invest in them at attractive prices. He lives and works in Barnes, South West London.",
+      imageSrc: "/team_images/gary_channon.jpg",
+      slug: "gary-channon",
+    },
+    {
+      name: "Lorraine Smyth",
+      role: "Phoenix Partner, Chief of Staff",
+      bio: "Lorraine joined Phoenix in early 2016 to head up the Fund Operations and Accounting team. In early 2020 she transitioned to the role of COO of Castelnau Group and is now Chief of Staff. Lorraine has over twenty years' experience working in the finance industry. This includes working in the fund accounting and investment accounting sector for large banks in Dublin and London. She also worked as a client operations manager for a software vendor and has been involved in multiple accounting software implementation projects. Lorraine holds a Bachelor (Hons) degree in Economics, from University College Dublin. Away from work, Lorraine enjoys running, tag rugby, travelling and lots of coffee.",
+      imageSrc: "/team_images/lorraine_smyth.jpg",
+      slug: "lorraine-smyth",
+    },
+  ];
+
   return (
     <div id="our-team" className="scroll-mt-40 pt-16">
       {/* Castelnau Team Section */}
@@ -182,6 +192,26 @@ const Team = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {boardMembers.map((member, index) => (
+            <TeamMember 
+              key={index} 
+              name={member.name}
+              role={member.role}
+              imageSrc={member.imageSrc}
+              slug={member.slug}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Phoenix Team Section */}
+      <div className="mb-16">
+        <h2 className="text-4xl font-serif font-bold text-castelnau-green mb-2">
+          Phoenix Team
+        </h2>
+        <div className="w-full h-1 bg-gradient-to-r from-green-500 via-green-600 to-green-700 mb-8"></div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {phoenixTeam.map((member, index) => (
             <TeamMember 
               key={index} 
               name={member.name}

@@ -8,12 +8,14 @@ interface PageHeroProps {
   title: string;
   description?: string;
   showButtons?: boolean;
+  waveColor?: string;
 }
 
 const PageHero: React.FC<PageHeroProps> = ({
   title,
   description,
   showButtons = false,
+  waveColor = "#FFFFFF",
 }) => {
   return (
     <section className="relative min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center">
@@ -60,7 +62,7 @@ const PageHero: React.FC<PageHeroProps> = ({
           preserveAspectRatio="none"
         >
           <path
-            fill="#FFFFFF"
+            fill={waveColor}
             fillOpacity="1"
             d="M0,96L80,90C160,84,320,72,480,78C640,84,800,108,960,114C1120,120,1280,96,1360,84L1440,72L1440,150L1360,150C1280,150,1120,150,960,150C800,150,640,150,480,150C320,150,160,150,80,150L0,150Z"
           ></path>
