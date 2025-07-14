@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Castelnau</h3>
+            <h3 className="text-xl font-serif mb-4">Castelnau</h3>
             <p className="text-gray-400">
               A dynamic investment management company focused on long-term value creation.
             </p>

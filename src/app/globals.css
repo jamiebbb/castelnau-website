@@ -97,7 +97,7 @@
   }
 
   .section-title {
-    @apply text-3xl font-serif font-bold text-castelnau-green mb-8;
+    @apply text-3xl font-serif text-castelnau-green mb-8;
   }
 
   .section-subtitle {
@@ -146,7 +146,7 @@
   }
 
   .page-title {
-    @apply text-5xl sm:text-6xl md:text-7xl font-serif font-bold max-w-4xl leading-tight mb-10;
+    @apply text-5xl sm:text-6xl md:text-7xl font-serif max-w-4xl leading-tight mb-10;
   }
 
   .page-content {

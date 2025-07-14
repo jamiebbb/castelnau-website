@@ -159,7 +159,7 @@ export const Factsheets = () => {
             onClick={() => setActiveFilter(filter.key as FilterType)}
             className={`text-sm ${
               activeFilter === filter.key 
-                ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                ? 'bg-castelnau-green text-white hover:bg-castelnau-green/80' 
                 : 'text-gray-600 border-gray-300 hover:bg-gray-50'
             }`}
           >
@@ -168,7 +168,7 @@ export const Factsheets = () => {
               variant="secondary" 
               className={`ml-2 text-xs ${
                 activeFilter === filter.key 
-                  ? 'bg-blue-500 text-white' 
+                  ? 'bg-white/20 text-white' 
                   : 'bg-gray-200 text-gray-700'
               }`}
             >
@@ -189,12 +189,12 @@ export const Factsheets = () => {
           filteredReports.map((report) => (
             <div 
               key={report.id} 
-              className="group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200"
+              className="group p-4 border border-gray-200 rounded-lg hover:border-castelnau-green hover:shadow-sm transition-all duration-200"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3 flex-1">
-                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-                    <FileText className="h-4 w-4 text-blue-600" />
+                  <div className="p-2 bg-castelnau-green/10 rounded-lg group-hover:bg-castelnau-green/20 transition-colors">
+                    <FileText className="h-4 w-4 text-castelnau-green" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-1">
@@ -224,7 +224,7 @@ export const Factsheets = () => {
                     variant="ghost" 
                     size="sm" 
                     onClick={() => handleDownload(report)}
-                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                    className="text-castelnau-green hover:text-castelnau-dark-green hover:bg-castelnau-green/10"
                   >
                     <Download className="h-4 w-4" />
                   </Button>

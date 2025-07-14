@@ -5,7 +5,7 @@ import { Check, Heart, HandHeart, Users } from 'lucide-react';
 const Values = () => {
   return (
     <div id="our-values" className="mb-20 scroll-mt-40">
-      <h2 className="text-3xl font-serif font-bold text-castelnau-green mb-10 text-center">Our Core Values</h2>
+      <h2 className="text-3xl font-serif text-castelnau-green mb-10 text-center">Our Core Values</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <ValueCard
           icon={<Heart className="h-8 w-8 text-white" />}

@@ -34,7 +34,7 @@ const DavidStevensonPage = () => {
             </div>
             <div className="text-center md:text-left text-white">
               <div className="text-sm uppercase tracking-wide text-white/80 mb-2">Board of Directors</div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">David Stevenson</h1>
+              <h1 className="text-4xl md:text-5xl font-serif mb-4">David Stevenson</h1>
               <p className="text-xl md:text-2xl text-white/90">Non-executive director (Non-independent)</p>
             </div>
           </div>

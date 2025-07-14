@@ -24,7 +24,7 @@ const PageHero: React.FC<PageHeroProps> = ({
       {/* Content container */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="py-12 sm:py-16 md:py-20 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4 sm:mb-6 leading-tight max-w-4xl mx-auto">
             {title}
           </h1>
           {description && (

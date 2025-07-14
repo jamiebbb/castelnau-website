@@ -8,7 +8,8 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useScrollToSection from "@/hooks/useScrollToSection";
 import StockPriceDisplay from "./StockPriceDisplay";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -58,61 +59,54 @@ const Navbar = () => {
   return (
     <header className="bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green shadow-lg">
       <div className="container mx-auto px-4 py-3">
-        <div className="flex justify-between items-center min-h-[60px]">
-          <div className="flex items-center space-x-6 md:space-x-10">
-            <Link href="/" className="mr-4 md:mr-8">
+        <div className="flex justify-between items-center min-h-[80px]">
+          {/* Logo - Top Left */}
+          <div className="hidden md:flex items-center">
+            <Link href="/" className="flex items-center">
               <Image
                 alt="Castelnau Group"
-                className="h-12 md:h-16 lg:h-18 w-auto object-contain"
+                className="h-16 md:h-20 lg:h-24 w-auto object-contain"
                 src={`${
                   process.env.NODE_ENV === "production"
                     ? "/castelnau-website"
                     : ""
                 }/brand/logos/castelnau-logo.png`}
-                width={160}
-                height={72}
+                width={200}
+                height={96}
                 priority
                 quality={100}
-                style={{ minHeight: "48px" }}
+                style={{ minHeight: "64px" }}
               />
             </Link>
-
-            <div className="hidden lg:block">
-              <StockPriceDisplay />
-            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-            <Link href="/castelnau-library">
-              <Button
-                variant="transparent"
-                className="text-white hover:text-white text-sm lg:text-base px-3 lg:px-4 py-2"
-              >
-                Castelnau Library
-              </Button>
-            </Link>
-            <Link href="/sell-your-business">
-              <Button
-                variant="transparent"
-                className="text-white hover:text-white text-sm lg:text-base px-3 lg:px-4 py-2"
-              >
-                Looking to Sell your Business
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                variant="transparent"
-                className="text-white hover:text-white text-sm lg:text-base px-4 lg:px-6 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors"
-              >
-                Contact us
-              </Button>
+          {/* Stock Price Display - Top Right */}
+          <div className="hidden md:block">
+            <StockPriceDisplay />
+          </div>
+
+          {/* Mobile Logo */}
+          <div className="md:hidden flex items-center">
+            <Link href="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+              <Image
+                alt="Castelnau Group"
+                className="h-12 w-auto object-contain"
+                src={`${
+                  process.env.NODE_ENV === "production"
+                    ? "/castelnau-website"
+                    : ""
+                }/brand/logos/castelnau-logo.png`}
+                width={150}
+                height={48}
+                priority
+                quality={100}
+              />
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <Sheet>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-white">
                   <Menu className="h-6 w-6" />
@@ -122,11 +116,16 @@ const Navbar = () => {
                 side="right"
                 className="w-[300px] bg-castelnau-dark-green text-white overflow-y-auto"
               >
+                <SheetHeader>
+                  <SheetTitle>
+                    <VisuallyHidden>Mobile Menu</VisuallyHidden>
+                  </SheetTitle>
+                </SheetHeader>
                 <div className="flex flex-col space-y-4 mt-8 px-4">
                   <div className="mb-6">
-                    <StockPriceDisplay />
+                    <StockPriceDisplay onNavigate={() => setIsMobileMenuOpen(false)} />
                   </div>
-                  <Link href="/castelnau-library">
+                  <Link href="/castelnau-library" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button
                       variant="ghost"
                       className="w-full text-white hover:text-white text-left justify-start"
@@ -134,7 +133,7 @@ const Navbar = () => {
                       Castelnau Library
                     </Button>
                   </Link>
-                  <Link href="/sell-your-business">
+                  <Link href="/sell-your-business" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button
                       variant="ghost"
                       className="w-full text-white hover:text-white text-left justify-start"
@@ -142,7 +141,7 @@ const Navbar = () => {
                       Looking to Sell your Business
                     </Button>
                   </Link>
-                  <Link href="/contact">
+                  <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button
                       variant="ghost"
                       className="w-full text-white hover:text-white text-left justify-start"
@@ -151,7 +150,7 @@ const Navbar = () => {
                     </Button>
                   </Link>
                   <div className="pt-4 border-t border-white/20">
-                    <Link href="/who-we-are">
+                    <Link href="/who-we-are" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button
                         variant="ghost"
                         className="w-full text-white hover:text-white text-left justify-start"
@@ -159,7 +158,7 @@ const Navbar = () => {
                         Who We Are
                       </Button>
                     </Link>
-                    <Link href="/what-we-do">
+                    <Link href="/what-we-do" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button
                         variant="ghost"
                         className="w-full text-white hover:text-white text-left justify-start"
@@ -167,7 +166,7 @@ const Navbar = () => {
                         What We Do
                       </Button>
                     </Link>
-                    <Link href="/explore-the-group">
+                    <Link href="/explore-the-group" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button
                         variant="ghost"
                         className="w-full text-white hover:text-white text-left justify-start"
@@ -175,7 +174,7 @@ const Navbar = () => {
                         Explore the Group
                       </Button>
                     </Link>
-                    <Link href="/investor-relations">
+                    <Link href="/investor-relations" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button
                         variant="ghost"
                         className="w-full text-white hover:text-white text-left justify-start"
@@ -183,15 +182,7 @@ const Navbar = () => {
                         Investor Relations
                       </Button>
                     </Link>
-                    <Link href="/graduate-programme">
-                      <Button
-                        variant="ghost"
-                        className="w-full text-white hover:text-white text-left justify-start"
-                      >
-                        Graduate Programme
-                      </Button>
-                    </Link>
-                    <Link href="/media-library">
+                    <Link href="/media-library" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button
                         variant="ghost"
                         className="w-full text-white hover:text-white text-left justify-start"
@@ -210,7 +201,7 @@ const Navbar = () => {
       {/* Desktop Navigation Bar */}
       <div className="hidden md:block">
         <div className="container mx-auto px-4">
-          <nav className="flex py-4 space-x-6">
+          <nav className="flex items-center justify-center py-4 space-x-6">
             <div className="relative">
               <Link href="/who-we-are">
                 <Button
@@ -245,18 +236,15 @@ const Navbar = () => {
                       Our Team
                     </div>
                   </Link>
+                  <Link href="/what-we-do">
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      What We Do
+                    </div>
+                  </Link>
                 </div>
               )}
             </div>
 
-            <Link href="/what-we-do">
-              <Button
-                variant="transparent"
-                className="text-white hover:text-white text-base px-4 py-2"
-              >
-                What We Do
-              </Button>
-            </Link>
             <Link href="/explore-the-group">
               <Button
                 variant="transparent"
@@ -337,25 +325,39 @@ const Navbar = () => {
                       RNS
                     </div>
                   </Link>
+                  <Link href="/media-library">
+                    <div className="px-4 py-2 hover:bg-castelnau-green/10 cursor-pointer text-base">
+                      Media Library
+                    </div>
+                  </Link>
                 </div>
               )}
             </div>
 
-            <Link href="/graduate-programme">
+            <Link href="/castelnau-library">
               <Button
                 variant="transparent"
                 className="text-white hover:text-white text-base px-4 py-2"
               >
-                Graduate Programme
+                Castelnau Library
               </Button>
             </Link>
-            
-            <Link href="/media-library">
+
+            <Link href="/sell-your-business">
               <Button
                 variant="transparent"
                 className="text-white hover:text-white text-base px-4 py-2"
               >
-                Media Library
+                Looking to Sell your Business
+              </Button>
+            </Link>
+
+            <Link href="/contact">
+              <Button
+                variant="transparent"
+                className="text-white hover:text-white text-base px-4 py-2 font-medium border border-white/30 hover:bg-white/10 transition-colors"
+              >
+                Contact us
               </Button>
             </Link>
           </nav>

@@ -614,132 +614,15 @@ const CastelnauLibrary = () => {
               ))}
             </div>
 
-            {/* Podcast Recommendations Section */}
-            <div className="mt-32">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4 text-center">
-                Podcast Recommendations
-              </h2>
-              <p className="text-xl text-white/80 mb-12 text-center max-w-2xl mx-auto">
-                Listen to our team's favorite podcasts on investment philosophy, market analysis, and business strategy.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Podcast Card 1 */}
-                <motion.div
-                  className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="aspect-video relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
-                      <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
-                        <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Investment Philosophy
-                        </h3>
-                        <p className="text-white/80 text-sm">
-                          Deep dives into value investing principles
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <Play className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      The Compound
-                    </h4>
-                    <p className="text-white/80 text-sm mb-4">
-                      Hosted by Michael Batnick and Josh Brown
-                    </p>
-                    <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
-                      <Play className="w-4 h-4" />
-                      Listen to Podcast
-                    </button>
-                  </div>
-                </motion.div>
 
-                {/* Podcast Card 2 */}
-                <motion.div
-                  className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="aspect-video relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
-                      <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
-                        <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Market Analysis
-                        </h3>
-                        <p className="text-white/80 text-sm">
-                          Weekly market insights and trends
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <Play className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      Masters in Business
-                    </h4>
-                    <p className="text-white/80 text-sm mb-4">
-                      Hosted by Barry Ritholtz
-                    </p>
-                    <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
-                      <Play className="w-4 h-4" />
-                      Listen to Podcast
-                    </button>
-                  </div>
-                </motion.div>
-
-                {/* Podcast Card 3 */}
-                <motion.div
-                  className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="aspect-video relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-castelnau-dark-green to-castelnau-green flex items-center justify-center">
-                      <div className="text-center p-6 transform group-hover:scale-105 transition-transform duration-300">
-                        <h3 className="text-xl font-serif font-bold text-white mb-2">
-                          Business Philosophy
-                        </h3>
-                        <p className="text-white/80 text-sm">
-                          Leadership and management insights
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <Play className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h4 className="text-lg font-serif font-bold text-white mb-2">
-                      How I Built This
-                    </h4>
-                    <p className="text-white/80 text-sm mb-4">
-                      Hosted by Guy Raz
-                    </p>
-                    <button className="w-full bg-white text-castelnau-green px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
-                      <Play className="w-4 h-4" />
-                      Listen to Podcast
-                    </button>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
 
             {/* Newsletter Signup */}
             <div className="mt-20">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 text-center">
+              <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 text-center">
                 Stay Updated
               </h2>
               <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg max-w-2xl mx-auto">
-                <h3 className="text-2xl font-serif font-bold text-white mb-4 text-center">
+                <h3 className="text-2xl font-serif text-white mb-4 text-center">
                   Subscribe to Our Newsletter
                 </h3>
                 <p className="text-white/80 mb-6 text-center">
@@ -769,7 +652,7 @@ const CastelnauLibrary = () => {
       <Dialog open={!!selectedBook} onOpenChange={() => setSelectedBook(null)}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-serif font-bold text-castelnau-green">
+            <DialogTitle className="text-2xl font-serif text-castelnau-green">
               {selectedBook?.title}
             </DialogTitle>
           </DialogHeader>

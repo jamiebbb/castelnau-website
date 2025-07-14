@@ -48,11 +48,11 @@ const options = {
     tooltip: {
       mode: 'index' as const,
       intersect: false,
-      backgroundColor: 'rgba(0, 0, 0, 0.9)',
+      backgroundColor: 'rgba(0, 66, 37, 0.95)',
       titleColor: '#ffffff',
       bodyColor: '#ffffff',
-      borderColor: '#3B82F6',
-      borderWidth: 1,
+      borderColor: '#009725',
+      borderWidth: 2,
       padding: 12,
               callbacks: {
           label: function(context: any) {
@@ -221,8 +221,8 @@ export const SharePriceGraph = () => {
         {
           label: 'Share Price',
           data: prices,
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderColor: '#009725',
+          backgroundColor: 'rgba(0, 151, 37, 0.1)',
           fill: true,
           tension: 0.4,
           pointRadius: 0,
@@ -234,7 +234,7 @@ export const SharePriceGraph = () => {
 
   if (loading) {
     return (
-      <div className="bg-gray-900 rounded-lg p-6 h-[500px] flex items-center justify-center">
+      <div className="bg-gradient-to-br from-castelnau-dark-green to-castelnau-green rounded-lg p-6 h-[500px] flex items-center justify-center">
         <div className="text-white">Loading share price data...</div>
       </div>
     );
@@ -242,14 +242,14 @@ export const SharePriceGraph = () => {
 
   if (error) {
     return (
-      <div className="bg-gray-900 rounded-lg p-6 h-[500px] flex items-center justify-center">
-        <div className="text-red-500">{error}</div>
+      <div className="bg-gradient-to-br from-castelnau-dark-green to-castelnau-green rounded-lg p-6 h-[500px] flex items-center justify-center">
+        <div className="text-red-300">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-900 rounded-lg p-6">
+    <div className="bg-gradient-to-br from-castelnau-dark-green to-castelnau-green rounded-lg p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -257,7 +257,7 @@ export const SharePriceGraph = () => {
           {priceChange && (
             <div className="flex items-center space-x-4">
               <div className={`flex items-center space-x-1 ${
-                priceChange.percentage >= 0 ? 'text-green-400' : 'text-red-400'
+                priceChange.percentage >= 0 ? 'text-castelnau-light-green' : 'text-red-300'
               }`}>
                 {priceChange.percentage >= 0 ? (
                   <TrendingUp className="h-4 w-4" />
@@ -269,7 +269,7 @@ export const SharePriceGraph = () => {
                   ({priceChange.percentage >= 0 ? '+' : ''}{priceChange.percentage.toFixed(2)}%)
                 </span>
               </div>
-              <span className="text-gray-400 text-sm">
+              <span className="text-white/70 text-sm">
                 {timePeriod === 'ALL' ? 'Since inception' : `Past ${timePeriod}`}
               </span>
             </div>
@@ -285,8 +285,8 @@ export const SharePriceGraph = () => {
             onClick={() => setTimePeriod(period.key)}
             className={`px-3 py-1.5 text-xs rounded-lg transition-all duration-200 ${
               timePeriod === period.key 
-                ? 'bg-blue-600 text-white shadow-lg' 
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+                ? 'bg-castelnau-gold text-castelnau-dark-green shadow-lg' 
+                : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'
             }`}
           >
             {period.label}
@@ -300,8 +300,8 @@ export const SharePriceGraph = () => {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 pt-4 border-t border-gray-700">
-        <div className="flex justify-between text-xs text-gray-500">
+      <div className="mt-4 pt-4 border-t border-white/20">
+        <div className="flex justify-between text-xs text-white/60">
           <span>Historical price and NAV data • Real market data</span>
           <span>Prices in pence</span>
         </div>

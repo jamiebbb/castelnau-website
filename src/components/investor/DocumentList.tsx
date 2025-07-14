@@ -120,7 +120,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
 
   const getCategoryColor = (category: string) => {
     const colorMap: { [key: string]: string } = {
-      'annual-reports': 'bg-blue-100 text-blue-800',
+      'annual-reports': 'bg-castelnau-green/20 text-castelnau-dark-green',
       'interim-reports': 'bg-green-100 text-green-800',
       'factsheets': 'bg-purple-100 text-purple-800',
       'rns': 'bg-orange-100 text-orange-800',
@@ -179,7 +179,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
     <Card className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Recent Documents</h3>
-        <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+        <Button variant="outline" size="sm" className="text-castelnau-green border-castelnau-green/30 hover:bg-castelnau-green/10">
           <ExternalLink className="h-3 w-3 mr-1" />
           View All
         </Button>
@@ -193,11 +193,11 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
           </div>
         ) : (
           documents.map((doc) => (
-            <div key={doc.id} className="group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all duration-200">
+            <div key={doc.id} className="group p-4 border border-gray-200 rounded-lg hover:border-castelnau-green hover:shadow-sm transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3 flex-1 min-w-0">
-                  <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors flex-shrink-0">
-                    <FileText className="h-4 w-4 text-blue-600" />
+                                      <div className="p-2 bg-castelnau-green/10 rounded-lg group-hover:bg-castelnau-green/20 transition-colors flex-shrink-0">
+                      <FileText className="h-4 w-4 text-castelnau-green" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-1">
@@ -224,7 +224,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ className = '' }) => {
                     variant="ghost" 
                     size="sm" 
                     onClick={() => handleDownload(doc)}
-                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                    className="text-castelnau-green hover:text-castelnau-dark-green hover:bg-castelnau-green/10"
                   >
                     <Download className="h-4 w-4" />
                   </Button>

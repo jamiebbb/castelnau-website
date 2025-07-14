@@ -34,7 +34,7 @@ const GaryChannonPage = () => {
             </div>
             <div className="text-center md:text-left text-white">
               <div className="text-sm uppercase tracking-wide text-white/80 mb-2">Who We Are</div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Gary Channon</h1>
+              <h1 className="text-4xl md:text-5xl font-serif mb-4">Gary Channon</h1>
               <p className="text-xl md:text-2xl text-white/90">Chief Investment Officer</p>
             </div>
           </div>

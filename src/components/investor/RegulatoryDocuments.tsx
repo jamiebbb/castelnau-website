@@ -167,7 +167,7 @@ export const RegulatoryDocuments = () => {
             onClick={() => setSelectedType(type.key)}
             className={`text-sm ${
               selectedType === type.key 
-                ? 'bg-castelnau-green text-black hover:bg-castelnau-green/80' 
+                ? 'bg-castelnau-green text-white hover:bg-castelnau-green/80' 
                 : 'text-gray-600 border-gray-300 hover:bg-gray-50'
             }`}
           >
@@ -176,7 +176,7 @@ export const RegulatoryDocuments = () => {
               variant="secondary" 
               className={`ml-2 text-xs ${
                 selectedType === type.key 
-                  ? 'bg-white/20 text-black' 
+                  ? 'bg-white/20 text-white' 
                   : 'bg-gray-200 text-gray-700'
               }`}
             >
@@ -186,10 +186,10 @@ export const RegulatoryDocuments = () => {
         ))}
       </div>
 
-      {/* Documents Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Documents List */}
+      <div className="space-y-3">
         {filteredDocuments.length === 0 ? (
-          <div className="col-span-full text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-500">
             <FileText className="h-8 w-8 mx-auto mb-2 text-gray-400" />
             <p>No documents found for the selected category</p>
           </div>
@@ -197,60 +197,48 @@ export const RegulatoryDocuments = () => {
           filteredDocuments.map((doc) => (
             <div 
               key={doc.id} 
-              className="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300"
+              className="group p-4 border border-gray-200 rounded-lg hover:border-castelnau-green hover:shadow-sm transition-all duration-200"
             >
-              {/* Document Preview Header */}
-              <div className="bg-castelnau-green p-6 text-center relative">
-                <div className="absolute top-4 left-4">
-                  <div className="text-white text-xs font-medium opacity-80">
-                    Castelnau
+              <div className="flex items-start justify-between">
+                <div className="flex items-start space-x-3 flex-1">
+                  <div className="p-2 bg-castelnau-green/10 rounded-lg group-hover:bg-castelnau-green/20 transition-colors flex-shrink-0">
+                    <FileText className="h-4 w-4 text-castelnau-green" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <h3 className="font-medium text-gray-900 truncate">{doc.title}</h3>
+                      <Badge 
+                        variant="secondary" 
+                        className={`text-xs ${getTypeColor(doc.type)}`}
+                      >
+                        {doc.type}
+                      </Badge>
+                    </div>
+                    {doc.description && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {doc.description}
+                      </p>
+                    )}
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      <span className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {doc.date}
+                      </span>
+                      {doc.size && (
+                        <span>{doc.size}</span>
+                      )}
+                      <span className="uppercase">{doc.filename.split('.').pop()}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="pt-4">
-                  <div className="w-16 h-20 mx-auto bg-white/10 rounded-lg flex items-center justify-center mb-4">
-                    <FileText className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-white font-semibold text-lg leading-tight">
-                    {doc.title}
-                  </h3>
-                  <p className="text-white/80 text-sm mt-1">
-                    {doc.date}
-                  </p>
-                </div>
-              </div>
-
-              {/* Document Details */}
-              <div className="p-4 flex flex-col h-[140px]">
-                <div className="flex items-center justify-between mb-3">
-                  <Badge 
-                    variant="secondary" 
-                    className={`text-xs ${getTypeColor(doc.type)}`}
-                  >
-                    {doc.type}
-                  </Badge>
-                  {doc.size && (
-                    <span className="text-xs text-gray-500">{doc.size}</span>
-                  )}
-                </div>
-
-                {doc.description && (
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1">
-                    {doc.description}
-                  </p>
-                )}
-
-                <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center text-xs text-gray-500">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    {doc.date}
-                  </div>
-                  <Button
-                    size="sm"
+                <div className="ml-4 flex-shrink-0">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
                     onClick={() => handleDownload(doc)}
-                    className="bg-castelnau-green text-black hover:bg-castelnau-green/80 text-xs px-3 py-1.5"
+                    className="text-castelnau-green hover:text-castelnau-dark-green hover:bg-castelnau-green/10"
                   >
-                    <Download className="h-3 w-3 mr-1" />
-                    Download
+                    <Download className="h-4 w-4" />
                   </Button>
                 </div>
               </div>

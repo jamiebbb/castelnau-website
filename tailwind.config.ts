@@ -78,8 +78,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", ...fontFamily.sans],
-        serif: ["var(--font-playfair-display)", ...fontFamily.serif],
+        sans: ["var(--font-poppins)", ...fontFamily.sans],
+        serif: ["var(--font-dm-serif-display)", ...fontFamily.serif],
       },
       borderRadius: {
         lg: "var(--radius)",

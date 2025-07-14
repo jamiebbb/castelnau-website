@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getStockData } from '@/lib/stockData';
 
-export default function StockPriceDisplay() {
+interface StockPriceDisplayProps {
+  onNavigate?: () => void;
+}
+
+export default function StockPriceDisplay({ onNavigate }: StockPriceDisplayProps = {}) {
   const [price, setPrice] = useState<string | null>(null);
   const [marketCap, setMarketCap] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
@@ -23,10 +27,14 @@ export default function StockPriceDisplay() {
 
   const handleClick = () => {
     router.push('/investor-relations');
+    // Call the onNavigate callback if provided (for mobile menu closing)
+    if (onNavigate) {
+      onNavigate();
+    }
   };
 
   return (
-    <div className="flex items-start space-x-6 py-1">
+    <div className="flex flex-col md:flex-row md:items-start md:space-x-6 space-y-3 md:space-y-0 py-1">
       <div className="flex flex-col group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
         <div className="flex items-center space-x-1">
           <span className="text-white text-sm group-hover:text-white/90 transition-colors">Share Price:</span>
@@ -37,7 +45,7 @@ export default function StockPriceDisplay() {
         </div>
       </div>
       
-      <div className="h-8 w-px bg-white/30 mt-2"></div>
+      <div className="hidden md:block h-8 w-px bg-white/30 mt-2"></div>
       
       <div className="flex flex-col group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
         <div className="flex items-center space-x-1">
@@ -49,7 +57,7 @@ export default function StockPriceDisplay() {
         </div>
       </div>
       
-      <div className="h-8 w-px bg-white/30 mt-2"></div>
+      <div className="hidden md:block h-8 w-px bg-white/30 mt-2"></div>
       
       <div className="flex flex-col group cursor-pointer hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200" onClick={handleClick}>
         <div className="flex items-center space-x-1">

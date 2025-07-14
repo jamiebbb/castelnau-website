@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, ExternalLink, Filter, Calendar, Info } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { RefreshCw, ExternalLink, Filter, Calendar, Info, FileText } from 'lucide-react';
 
 interface RNSAnnouncement {
   id: string;
@@ -137,11 +138,14 @@ export const RNSFeed = () => {
   };
 
   return (
-    <div className="bg-gray-900 rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-white">Regulatory News Service</h2>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900">Regulatory News Service</h2>
+          <p className="text-sm text-gray-600 mt-1">Latest announcements and company updates</p>
+        </div>
         <div className="flex items-center space-x-3">
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-gray-500">
             Last updated: {lastUpdated.toLocaleTimeString()}
           </span>
           <Button
@@ -149,7 +153,7 @@ export const RNSFeed = () => {
             size="sm"
             onClick={fetchAnnouncements}
             disabled={loading}
-            className="text-white border-gray-600 hover:bg-gray-700"
+            className="text-castelnau-green border-castelnau-green/30 hover:bg-castelnau-green/10"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
             Refresh
@@ -158,12 +162,12 @@ export const RNSFeed = () => {
       </div>
 
       {/* Investegate Info Notice */}
-      <div className="mb-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <div className="flex items-start space-x-3">
-          <Info className="h-5 w-5 text-blue-400 mt-0.5" />
+          <Info className="h-5 w-5 text-blue-600 mt-0.5" />
           <div>
-            <h3 className="text-sm font-medium text-blue-200 mb-1">About Investegate Integration</h3>
-            <p className="text-xs text-blue-300">
+            <h3 className="text-sm font-medium text-blue-800 mb-1">About Investegate Integration</h3>
+            <p className="text-xs text-blue-700">
               Investegate does provide RNS feeds, but they require server-side integration and proper API credentials. 
               Currently showing manually curated announcements. For live integration, contact Investegate for API access 
               and implement server-side proxy to avoid CORS restrictions.
@@ -173,89 +177,100 @@ export const RNSFeed = () => {
       </div>
 
       {/* Filter Controls */}
-      <div className="flex items-center space-x-4 mb-6">
-        <Filter className="h-4 w-4 text-gray-400" />
-        <div className="flex flex-wrap gap-2">
-          {announcementTypes.map((type) => (
-            <Button
-              key={type}
-              variant={filter === type ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter(type)}
-              className={`text-xs ${
-                filter === type 
-                  ? 'bg-castelnau-green text-black hover:bg-castelnau-green/80' 
-                  : 'text-gray-300 border-gray-600 hover:bg-gray-700'
-              }`}
-            >
-              {type}
-            </Button>
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-2">
+        {announcementTypes.map((type) => (
+          <Button
+            key={type}
+            variant={filter === type ? "default" : "outline"}
+            size="sm"
+            onClick={() => setFilter(type)}
+            className={`text-sm ${
+              filter === type 
+                ? 'bg-castelnau-green text-white hover:bg-castelnau-green/80' 
+                : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            {type}
+          </Button>
+        ))}
       </div>
 
       {/* Announcements List */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {loading ? (
           <div className="flex items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-castelnau-green"></div>
-            <span className="ml-2 text-gray-400">Loading announcements...</span>
+            <span className="ml-2 text-gray-500">Loading announcements...</span>
           </div>
         ) : filteredAnnouncements.length > 0 ? (
           filteredAnnouncements.map((announcement) => (
-            <div key={announcement.id} className="p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors border border-gray-700">
+            <div key={announcement.id} className="group p-4 border border-gray-200 rounded-lg hover:border-castelnau-green hover:shadow-sm transition-all duration-200">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <h3 className="text-white font-medium">{announcement.title}</h3>
-                    <span className="text-xs bg-gray-600 text-gray-200 px-2 py-1 rounded-full">
-                      Manual
-                    </span>
+                <div className="flex items-start space-x-3 flex-1">
+                  <div className="p-2 bg-castelnau-green/10 rounded-lg group-hover:bg-castelnau-green/20 transition-colors flex-shrink-0">
+                    <Calendar className="h-4 w-4 text-castelnau-green" />
                   </div>
-                  
-                  {announcement.description && (
-                    <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                      {announcement.description}
-                    </p>
-                  )}
-                  
-                  <div className="flex items-center space-x-4 text-sm text-gray-400">
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="h-3 w-3" />
-                      <span>{formatDate(announcement.date)}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <h3 className="font-medium text-gray-900 truncate">{announcement.title}</h3>
+                      <Badge 
+                        variant="secondary" 
+                        className="text-xs bg-castelnau-green/20 text-castelnau-dark-green"
+                      >
+                        {announcement.type}
+                      </Badge>
                     </div>
-                    <span>{announcement.time}</span>
-                    <span className="px-2 py-1 bg-gray-700 rounded-full text-xs">
-                      {announcement.type}
-                    </span>
+                    {announcement.description && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {announcement.description}
+                      </p>
+                    )}
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      <span className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {formatDate(announcement.date)}
+                      </span>
+                      <span>{announcement.time}</span>
+                      <span className="font-medium">Manual</span>
+                    </div>
                   </div>
                 </div>
-                
-                <a 
-                  href={announcement.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="ml-4 flex items-center justify-center p-2 text-castelnau-green hover:text-green-400 hover:bg-gray-600 rounded-lg transition-colors"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+                <div className="ml-4 flex-shrink-0">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    asChild
+                    className="text-castelnau-green hover:text-castelnau-dark-green hover:bg-castelnau-green/10"
+                  >
+                    <a 
+                      href={announcement.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-8 text-gray-400">
-            No announcements found for the selected filter.
+          <div className="text-center py-8 text-gray-500">
+            <FileText className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+            <p>No announcements found for the selected filter.</p>
           </div>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-gray-700">
-        <p className="text-xs text-gray-500 text-center">
-          Regulatory announcements • Managed through admin interface • 
-          <a href="/admin" className="text-castelnau-green hover:underline ml-1">Add new announcements</a>
-        </p>
-      </div>
+      {/* Summary */}
+      {filteredAnnouncements.length > 0 && (
+        <div className="pt-4 border-t border-gray-200">
+          <p className="text-xs text-gray-500 text-center">
+            Showing {filteredAnnouncements.length} {filter === 'all' ? 'announcements' : `${filter.toLowerCase()} announcements`}
+            {filter !== 'all' && ` • ${announcements.length} total available`}
+          </p>
+        </div>
+      )}
     </div>
   );
 }; 

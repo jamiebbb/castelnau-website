@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PageHero } from '@/components/ui/page-hero';
+import PageHero from '@/components/common/PageHero';
 import { Button } from "@/components/ui/button";
 import { Mail, Target, Shield, Zap, TrendingUp, Users, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
@@ -21,7 +21,9 @@ const SellYourBusiness = () => {
             <div className="text-center mb-16">
               <div className="flex justify-center mb-8">
                 <Image
-                  src="/brand/logos/logo-green-transparent.png"
+                  src={`${
+                    process.env.NODE_ENV === "production" ? "/castelnau-website" : ""
+                  }/brand/logos/castelnau-logo.png`}
                   alt="Castelnau Group"
                   width={200}
                   height={100}
@@ -33,7 +35,7 @@ const SellYourBusiness = () => {
                 If you're seeking a partner that can provide permanent capital and work collaboratively with you to build 
                 long-term success, we'd love to hear from you.
               </p>
-              <div className="flex items-center justify-center space-x-2 text-[#2D5A3D]">
+              <div className="flex items-center justify-center space-x-2 text-castelnau-dark-green">
                 <Mail className="h-6 w-6" />
                 <a href="mailto:info@castelnaugroup.com" className="text-xl font-semibold hover:underline">
                   info@castelnaugroup.com
@@ -43,13 +45,13 @@ const SellYourBusiness = () => {
 
             {/* Why Choose Castelnau Group */}
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-[#2D5A3D] mb-12 text-center">Why Choose Castelnau Group?</h2>
+              <h2 className="text-3xl font-serif text-castelnau-dark-green mb-12 text-center">Why Choose Castelnau Group?</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <Shield className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Permanent Capital</h3>
+                    <Shield className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Permanent Capital</h3>
                   </div>
                   <p className="text-gray-700">
                     We have no exit investment horizon; our ideal investment would be permanently held. We think this makes us 
@@ -57,20 +59,20 @@ const SellYourBusiness = () => {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <Users className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Empowering Leadership</h3>
+                    <Users className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Empowering Leadership</h3>
                   </div>
                   <p className="text-gray-700">
                     We look to empower rather than interfere with strong leadership teams.
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <Zap className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Flexibility and Speed</h3>
+                    <Zap className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Flexibility and Speed</h3>
                   </div>
                   <p className="text-gray-700">
                     We can be flexible in terms of transaction structuring, adapting to what makes most sense for both parties. 
@@ -78,10 +80,10 @@ const SellYourBusiness = () => {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <TrendingUp className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Strengthening Businesses</h3>
+                    <TrendingUp className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Strengthening Businesses</h3>
                   </div>
                   <p className="text-gray-700">
                     Beyond capital, we can offer strategic guidance, access to a valuable network of business expertise, 
@@ -89,10 +91,10 @@ const SellYourBusiness = () => {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <Target className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Respect for Culture</h3>
+                    <Target className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Respect for Culture</h3>
                   </div>
                   <p className="text-gray-700">
                     We value company culture, seeing it as fundamental to long-term success. In fact, companies with unique 
@@ -100,10 +102,10 @@ const SellYourBusiness = () => {
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-castelnau-green/5 to-castelnau-light-green/10 p-8 rounded-xl border border-castelnau-green/20 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
-                    <CheckCircle className="h-8 w-8 text-[#2D5A3D] mr-3" />
-                    <h3 className="text-xl font-semibold text-[#2D5A3D]">Proven Success</h3>
+                    <CheckCircle className="h-8 w-8 text-castelnau-green mr-3" />
+                    <h3 className="text-xl font-serif text-castelnau-dark-green">Proven Success</h3>
                   </div>
                   <p className="text-gray-700">
                     Backed by Phoenix Asset Management Partners, we have a track record of successful acquisitions and a 
@@ -115,14 +117,14 @@ const SellYourBusiness = () => {
 
             {/* What Type of Business */}
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-[#2D5A3D] mb-12 text-center">What Type of Business Are We Looking For?</h2>
+              <h2 className="text-3xl font-serif text-castelnau-dark-green mb-12 text-center">What Type of Business Are We Looking For?</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-3 h-3 bg-[#2D5A3D] rounded-full mt-2"></div>
+                    <div className="flex-shrink-0 w-3 h-3 bg-castelnau-green rounded-full mt-2"></div>
                     <div>
-                      <h4 className="font-semibold text-[#2D5A3D] mb-2">Clear Growth Potential</h4>
+                      <h4 className="font-serif text-castelnau-dark-green mb-2">Clear Growth Potential</h4>
                       <p className="text-gray-700">
                         Scalable businesses that will benefit from strategic investment, operating in a market that provides 
                         significant headroom for growth.
@@ -131,9 +133,9 @@ const SellYourBusiness = () => {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-3 h-3 bg-[#2D5A3D] rounded-full mt-2"></div>
+                    <div className="flex-shrink-0 w-3 h-3 bg-castelnau-green rounded-full mt-2"></div>
                     <div>
-                      <h4 className="font-semibold text-[#2D5A3D] mb-2">Competitive Advantage/Economic Moat</h4>
+                      <h4 className="font-serif text-castelnau-dark-green mb-2">Competitive Advantage/Economic Moat</h4>
                       <p className="text-gray-700">
                         Businesses with strong market position, brand recognition, and customer loyalty. Long-term durability 
                         of the business model.
@@ -142,9 +144,9 @@ const SellYourBusiness = () => {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-3 h-3 bg-[#2D5A3D] rounded-full mt-2"></div>
+                    <div className="flex-shrink-0 w-3 h-3 bg-castelnau-green rounded-full mt-2"></div>
                     <div>
-                      <h4 className="font-semibold text-[#2D5A3D] mb-2">Technological Adaptability</h4>
+                      <h4 className="font-serif text-castelnau-dark-green mb-2">Technological Adaptability</h4>
                       <p className="text-gray-700">
                         Opportunity to benefit from technological changes and innovation.
                       </p>
@@ -178,15 +180,15 @@ const SellYourBusiness = () => {
 
             {/* Case Study */}
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-[#2D5A3D] mb-12 text-center">Case Studies</h2>
+              <h2 className="text-3xl font-serif text-castelnau-dark-green mb-12 text-center">Case Studies</h2>
               
-              <div className="bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-xl p-8">
+              <div className="bg-gradient-to-r from-castelnau-green/5 to-castelnau-light-green/10 border border-castelnau-green/20 rounded-xl p-8">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-[#2D5A3D] rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-castelnau-green rounded-full flex items-center justify-center mr-4">
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-[#2D5A3D]">Guy Stainthorpe, Co-founder of Corgi Model Club</h3>
+                    <h3 className="text-2xl font-serif text-castelnau-dark-green">Guy Stainthorpe, Co-founder of Corgi Model Club</h3>
                   </div>
                 </div>
 
@@ -209,7 +211,7 @@ const SellYourBusiness = () => {
                     supporting its direct-to-consumer strategy and future brand growth.
                   </p>
 
-                  <div className="bg-white p-6 rounded-lg border border-green-300">
+                  <div className="bg-white p-6 rounded-lg border border-castelnau-green/30">
                     <p className="text-sm italic text-gray-600 mb-4">
                       Watch Guy reflect on the journey from launching Corgi Model Club to joining the Hornby Group and how Castelnau 
                       supported a smooth transition.
@@ -231,8 +233,8 @@ const SellYourBusiness = () => {
 
             {/* Call to Action */}
             <div className="text-center">
-              <div className="bg-gradient-to-r from-[#2D5A3D] via-[#4A7C59] to-[#6B8E6B] text-white p-12 rounded-xl shadow-xl">
-                <h2 className="text-3xl font-bold mb-6">Let's Start the Conversation</h2>
+              <div className="bg-gradient-to-r from-castelnau-dark-green via-castelnau-green to-castelnau-light-green text-white p-12 rounded-xl shadow-xl">
+                <h2 className="text-3xl font-serif mb-6">Let's Start the Conversation</h2>
                 <p className="text-xl mb-8 opacity-90">
                   If you are thinking about selling all or part of your business, or are seeking a long-term partner to drive 
                   its future growth, we'd love to hear from you.
@@ -253,7 +255,7 @@ const SellYourBusiness = () => {
 
                 <Button 
                   asChild
-                  className="bg-white text-[#2D5A3D] hover:bg-gray-100 font-semibold text-lg px-8 py-3"
+                  className="bg-white text-castelnau-dark-green hover:bg-gray-100 font-semibold text-lg px-8 py-3"
                 >
                   <a href="mailto:info@castelnaugroup.com">
                     Contact Us Today
